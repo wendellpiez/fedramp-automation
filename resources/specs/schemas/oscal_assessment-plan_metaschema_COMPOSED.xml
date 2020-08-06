@@ -1,0 +1,2400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<METASCHEMA xmlns="http://csrc.nist.gov/ns/oscal/metaschema/1.0"
+            module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-plan_metaschema.xml">
+   <schema-name>OSCAL Assessment Plan Format</schema-name>
+   <schema-version>1.0.0-milestone3</schema-version>
+   <short-name>oscal-ap</short-name>
+   <namespace>http://csrc.nist.gov/ns/oscal/1.0</namespace>
+   <remarks>
+      <p>The OSCAL assessment plan format is used to describe the information typically provided by an assessor during the preparation for an assessment.</p>
+      <p>The root of the OSCAL assessment plan format is <code>assessment-plan</code>.</p>
+   </remarks>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_control-common_metaschema.xml"
+                    name="part">
+      <formal-name>Part</formal-name>
+      <description>A partition or component of a control or part</description>
+      <flag as-type="NCName" ref="id"/>
+      <flag as-type="NCName" ref="name" required="yes"/>
+      <flag as-type="string" ref="ns"/>
+      <flag as-type="NCName" ref="class"/>
+      <model>
+         <field ref="title"/>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_control-common_metaschema.xml"
+                       name="prop"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>prop field ... </description>
+            <json-value-key>value</json-value-key>
+            <group-as name="properties" in-json="ARRAY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_control-common_metaschema.xml"
+                         name="name">
+               <formal-name>name flag</formal-name>
+               <description>name flag ... </description>
+               <constraint>
+                  <allowed-values allow-other="yes">
+                     <enum value="method">An assessment method.</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+            <flag as-type="NCName" ref="id"/>
+            <flag as-type="string" ref="ns"/>
+            <flag as-type="NCName" ref="class"/>
+         </define-field>
+         <field ref="prose" in-xml="UNWRAPPED"/>
+         <assembly ref="part" max-occurs="unbounded">
+            <group-as name="parts" in-json="ARRAY"/>
+         </assembly>
+         <field ref="link" max-occurs="unbounded">
+            <group-as name="links" in-json="ARRAY"/>
+         </field>
+         <any/>
+      </model>
+      <remarks>
+         <p>A <code>part</code> provides for logical partitioning of prose, and can be thought of as a grouping structure (e.g., section). A <code>part</code> can have child parts allowing for arbitrary nesting of prose content (e.g., statement hierarchy). A <code>part</code> can contain <code>prop</code> objects that allow for enriching prose text with structured name/value information.</p>
+         <p>A <code>part</code> can be assigned an optional <code>id</code>, which allows for internal and external references to the textual concept contained within a <code>part</code>. A <code>id</code> provides a means for an OSCAL profile, or a higher layer OSCAL model to reference a specific part within a <code>catalog</code>. For example, an <code>id</code> can be used to reference or to make modifications to a control statement in a profile.</p>
+         <p>Use of <code>part</code> and <code>prop</code> provides for a wide degree of extensibility within the OSCAL catalog model. The optional <code>ns</code> provides a means to qualify a part's <code>name</code>, allowing for organization-specific vocabularies to be defined with clear semantics. Any organization that extends OSCAL in this way should consistently assign a <code>ns</code> value that represents the organization, making a given namespace qualified <code>name</code> unique to that organization. This allows the combination of <code>ns</code> and <code>name</code> to always be unique and unambiguous, even when mixed with extensions from other organizations. Each organization is responsible for governance of their own extensions, and is strongly encouraged to publish their extensions as standards to their user community. If no <code>ns</code> is provided, the name is expected to be in the "OSCAL" namespace.</p>
+         <p>To ensure a <code>ns</code> is unique to an organization and naming conflicts are avoided, a URI containing a DNS or other globally defined organization name should be used. For example, if FedRAMP and DoD both extend OSCAL, FedRAMP will use the <code>ns</code> "https://fedramp.gov", while DoD will use the <code>ns</code> "https://defense.gov" for any organization specific <code>name</code>.</p>
+         <p>Tools that process OSCAL content are not required to interpret unrecognized OSCAL extensions; however, OSCAL-compliant tools should not modify or remove unrecognized extensions, unless there is a compelling reason to do so, such as data sensitivity.</p>
+      </remarks>
+      <example>
+         <description>Multiple Parts with Different Organization-Specific Names</description>
+         <part xmlns="http://csrc.nist.gov/ns/oscal/1.0"
+               name="statement"
+               id="statement-A">
+            <part ns="https://fedramp.gov" name="status" id="statement-A-FedRAMP">Something FedRAMP Cares About</part>
+            <part ns="https://defense.gov" name="status" id="statement-A-DoD">Something DoD Cares About</part>
+         </part>
+      </example>
+   </define-assembly>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_control-common_metaschema.xml"
+                 name="prose"
+                 as-type="markup-multiline">
+      <formal-name>Prose</formal-name>
+      <description>Prose permits multiple paragraphs, lists, tables etc.</description>
+   </define-field>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                    name="metadata">
+      <formal-name>Publication metadata</formal-name>
+      <description>Provides information about the publication and availability of the containing document.</description>
+      <model>
+         <field ref="title" min-occurs="1"/>
+         <field ref="published"/>
+         <field ref="last-modified" min-occurs="1"/>
+         <field ref="version" min-occurs="1"/>
+         <field ref="oscal-version" min-occurs="1"/>
+         <assembly ref="revision" max-occurs="unbounded">
+            <group-as name="revision-history" in-xml="GROUPED" in-json="ARRAY"/>
+         </assembly>
+         <field ref="doc-id" max-occurs="unbounded">
+            <group-as name="document-ids" in-json="ARRAY"/>
+         </field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                       name="prop"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>prop field ... </description>
+            <json-value-key>value</json-value-key>
+            <group-as name="properties" in-json="ARRAY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                         name="name">
+               <formal-name>name flag</formal-name>
+               <description>name flag ... </description>
+               <constraint>
+                  <allowed-values allow-other="yes">
+                     <enum value="keywords">Used to provide a listing of keywords. This is typically used on a <code>prop</code> in the <code>metadata</code> to provide keywords for the document.</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+            <flag as-type="NCName" ref="id"/>
+            <flag as-type="string" ref="ns"/>
+            <flag as-type="NCName" ref="class"/>
+         </define-field>
+         <field ref="link" max-occurs="unbounded">
+            <group-as name="links" in-json="ARRAY"/>
+         </field>
+         <assembly ref="role" max-occurs="unbounded">
+            <group-as name="roles" in-json="ARRAY"/>
+         </assembly>
+         <assembly ref="location" max-occurs="unbounded">
+            <group-as name="locations" in-json="ARRAY"/>
+         </assembly>
+         <assembly ref="party" max-occurs="unbounded">
+            <group-as name="parties" in-json="ARRAY"/>
+         </assembly>
+         <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                          name="responsible-party"
+                          max-occurs="unbounded">
+            <formal-name>Responsible Party</formal-name>
+            <description>A reference to a set of organizations or persons that have responsibility for performing a referenced role relative to the parent context.</description>
+            <json-key flag-name="role-id"/>
+            <group-as name="responsible-parties" in-json="BY_KEY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                         required="yes"
+                         name="role-id"
+                         as-type="NCName">
+               <formal-name>Responsible Role</formal-name>
+               <description>The role that the party is responsible for.</description>
+               <constraint>
+                  <allowed-values allow-other="yes">
+                     <enum value="prepared-by">Indicates the organization that created this content.</enum>
+                     <enum value="prepared-for">Indicates the organization for which this content was created.</enum>
+                     <enum value="content-approver">Indicates the organization responsible for all content represented in the "document".</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+            <model>
+               <field ref="party-uuid" min-occurs="1" max-occurs="unbounded">
+                  <group-as name="party-uuids" in-json="ARRAY"/>
+               </field>
+               <field ref="prop" max-occurs="unbounded">
+                  <group-as name="properties" in-json="ARRAY"/>
+               </field>
+               <assembly ref="annotation" max-occurs="unbounded">
+                  <group-as name="annotations" in-json="ARRAY"/>
+               </assembly>
+               <field ref="link" max-occurs="unbounded">
+                  <group-as name="links" in-json="ARRAY"/>
+               </field>
+               <field ref="remarks" in-xml="WITH_WRAPPER"/>
+            </model>
+         </define-assembly>
+         <field ref="remarks" in-xml="WITH_WRAPPER"/>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                    name="back-matter">
+      <formal-name>Back matter</formal-name>
+      <description>A collection of citations and resource references.</description>
+      <model>
+         <assembly ref="resource" max-occurs="unbounded">
+            <group-as name="resources" in-json="ARRAY"/>
+         </assembly>
+      </model>
+      <remarks>
+         <p>Provides a collection of identified <code>citation</code> and <code>resource</code> objects that can be referenced by a <code>link</code> with a <code>rel</code> value of "reference" and an <code>href</code> value that is a fragment "#" followed by a reference to a citation identifier. A <code>citation</code> can reference a <code>resource</code> by specifying a local target value using the same fragment-identifier approach.</p>
+      </remarks>
+      <example>
+         <description>Use of link, citation, and resource</description>
+         <remarks>
+            <p>The following is a contrived example to show the use of link, citation, and resource.</p>
+         </remarks>
+         <profile xmlns="http://csrc.nist.gov/ns/oscal/1.0">
+            <metadata>
+               <link rel="citation" href="#resource1">My citation</link>
+            </metadata>
+            <back-matter>
+               <resource id="resource1">
+                  <rlink href="https://example.org/some-resource"/>
+               </resource>
+            </back-matter>
+         </profile>
+      </example>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                    name="revision">
+      <formal-name>Revision History Entry</formal-name>
+      <description>An entry in a sequential list of revisions to the containing document in reverse chronological order (i.e., most recent previous revision first).</description>
+      <model>
+         <field ref="title"/>
+         <field ref="published"/>
+         <field ref="last-modified"/>
+         <field ref="version"/>
+         <field ref="oscal-version"/>
+         <field ref="prop" max-occurs="unbounded">
+            <group-as name="properties" in-json="ARRAY"/>
+         </field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                       name="link"
+                       as-type="markup-line"
+                       max-occurs="unbounded">
+            <formal-name>link field</formal-name>
+            <description>link field ... </description>
+            <json-value-key>text</json-value-key>
+            <group-as name="links" in-json="ARRAY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                         name="rel">
+               <formal-name>rel flag</formal-name>
+               <description>rel flag ... </description>
+               <constraint>
+                  <allowed-values>
+                     <enum value="source">Indicates that the href points to the source resource for the revision entry.</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+            <flag as-type="uri-reference" ref="href" required="yes"/>
+            <flag as-type="string" ref="media-type"/>
+         </define-field>
+         <field ref="remarks" in-xml="WITH_WRAPPER"/>
+      </model>
+      <remarks>
+         <p>While <code>published</code>, <code>last-modified</code>, <code>oscal-version</code>, and <code>version</code> are not required, values for these entries should be provided if the information is known. For a revision entry to be considered valid, at least one of the following items must be provided: <code>published</code>, <code>last-modified</code>, <code>version</code>, or <code>link</code>.</p>
+      </remarks>
+   </define-assembly>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="link"
+                 as-type="markup-line">
+      <formal-name>Link</formal-name>
+      <description>A reference to a local or remote resource</description>
+      <json-value-key>text</json-value-key>
+      <flag as-type="uri-reference" ref="href" required="yes"/>
+      <flag as-type="NCName" ref="rel"/>
+      <flag as-type="string" ref="media-type"/>
+      <remarks>
+         <p>This is a rough analog to an HTML anchor (<code>a</code>), except this is a line-oriented (block) element.</p>
+         <p>The <code>href</code> must point to a local or remote resource. If a local resource is used, this will be indicated by a fragment "#" followed by an identifier which references an identified <code>citation</code> or <code>resource</code> in the document's <code>back-matter</code>. If a remote resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced resource. A relative URI can be resolved relative to the location of the document containing the link.</p>
+         <p>To provide a cryptographic hash for a remote target resource, a local reference to a <code>resource</code> is needed. The resource allows one or more hash values to be provided using the <code>rlink</code>
+            <code>hash</code> object.</p>
+         <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a>
+         </p>
+      </remarks>
+      <example>
+         <description>Providing for link integrity</description>
+         <remarks>
+            <p>The following is a contrived example to show the use of link, citation, and resource.</p>
+         </remarks>
+         <oscal xmlns="http://csrc.nist.gov/ns/oscal/1.0">
+            <link rel="reference" href="#resource1">My Hashed Resource</link>
+        ...snip...
+        <back-matter>
+               <resource id="resource1">
+                  <rlink href="https://example.org/some-resource">
+                     <hash algorithm="sha512">C2E9C1..snip..F88D2E</hash>
+                  </rlink>
+               </resource>
+            </back-matter>
+         </oscal>
+      </example>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="published"
+                 as-type="dateTime-with-timezone">
+      <formal-name>Publication Timestamp</formal-name>
+      <description>The date and time this document was published.</description>
+      <remarks>
+         <p>This value represents the point in time when the OSCAL document was published. The date value must be an ISO 8601 formatted date with full time and time zone indicated. Ordinarily, a date value will be machine generated at time of creation or modification.</p>
+         <p>In some cases, an OSCAL document may be derived from some source material in a different format. In such a case, the last-modified-date value should indicate the modification time of the OSCAL document, not the source material. (The nominal publication date of the original source material can be captured as a named property or custom metadata construct.)</p>
+         <p>A publisher of OSCAL content can use this data point along with its sibling <code>last-modified</code> to establish commonality across OSCAL instances that are intended to be considered as successive <q>current versions</q> of a given publication.</p>
+      </remarks>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="last-modified"
+                 as-type="dateTime-with-timezone">
+      <formal-name>Last modified timestamp</formal-name>
+      <description>Date and time of last modification.</description>
+      <remarks>
+         <p>This value represents the point in time when the OSCAL document was last updated. The date value must be an ISO 8601 formatted date with full time and time zone indicated. Ordinarily, a date value will be machine generated at time of creation or modification.</p>
+         <p>In some cases, an OSCAL document may be derived from some source material in a different format. In such a case, the last-modified value should indicate the modification time of the OSCAL document, not the source material.</p>
+      </remarks>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="version">
+      <formal-name>Document version</formal-name>
+      <description>The version of the document content.</description>
+      <remarks>
+         <p>A string indicating the document's version, by release number, date, or other identifier. This version is typically set by the document owner or by the tool used to maintain the content.</p>
+      </remarks>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="oscal-version">
+      <formal-name>OSCAL version</formal-name>
+      <description>OSCAL model version.</description>
+      <remarks>
+         <p>Indicates the version of the OSCAL model to which this data set conforms, for example <q>1.0-M1</q>.</p>
+      </remarks>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="doc-id">
+      <formal-name>Document Identifier</formal-name>
+      <description>A document identifier qualified by an identifier <code>type</code>.</description>
+      <json-value-key>identifier</json-value-key>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                   name="type"
+                   required="yes">
+         <formal-name>type flag</formal-name>
+         <description>Qualifies the kind of document identifier.</description>
+         <constraint>
+            <allowed-values allow-other="yes">
+               <enum value="doi">A <a href="https://www.doi.org/hb.html">Digital Object Identifier</a> (DOI); use is preferred, since this allows for retrieval of a full bibliographic record.</enum>
+            </allowed-values>
+         </constraint>
+      </define-flag>
+      <remarks>
+         <p>A document identifier or name, qualified by a <code>type</code> that indicates the naming system of the identifier. A document identifier may provide a hint to the persistent location of <q>the same</q> or <q>another version</q> of the document.</p>
+         <p>Specific usage rules, nomenclatures, and recognized file types (e.g., DOIs, CMS locators, etc.) may be defined at application level. The value of this field may also be a hash or checksum.</p>
+      </remarks>
+   </define-field>
+   <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                name="type"
+                as-type="string">
+      <formal-name>Type</formal-name>
+      <description>Indicating the type of identifier, address, email or other data item.</description>
+      <remarks>
+         <p>Generally, this flag is used to relate to schemes and taxonomies defined outside the OSCAL application in some public form; i.e. they can be looked up. The values may be constrained to a locally defined list.</p>
+      </remarks>
+   </define-flag>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="prop">
+      <formal-name>Property</formal-name>
+      <description>A value with a name, attributed to the containing control, part, or group.</description>
+      <json-value-key>value</json-value-key>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                   name="name"
+                   required="yes">
+         <formal-name>name flag</formal-name>
+         <description>name flag ... </description>
+         <constraint>
+            <allowed-values allow-other="yes">
+               <enum value="marking">A label or descriptor that is tied to a sensitivity or classification marking system. An optional class can be used to define the specific marking system used for the associated value.</enum>
+            </allowed-values>
+         </constraint>
+      </define-flag>
+      <flag as-type="NCName" ref="id"/>
+      <flag as-type="string" ref="ns"/>
+      <flag as-type="NCName" ref="class"/>
+      <remarks>
+         <p>Properties permit the deployment and management of arbitrary controlled values, with and among control objects (controls, parts, and extensions), for any purpose useful to an application or implementation of those controls. Typically, properties will be used to sort, select, order, and arrange controls or relate them to one another or to class hierarchies, taxonomies, or external authorities.</p>
+         <p>The value of a property is a simple scalar value or list of values.</p>
+         <p>The lexical composition of properties may be constrained by external processes to ensure consistency.</p>
+         <p>Because properties are often used as selectors or identifiers for OSCAL operations, their values can be expected frequently to be normalized (e.g., with respect to whitespace) in use; however, this is application defined.</p>
+      </remarks>
+   </define-field>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                    name="annotation">
+      <formal-name>Annotation</formal-name>
+      <description>A name/value pair with optional explanatory remarks.</description>
+      <flag as-type="NCName" ref="name" required="yes"/>
+      <flag as-type="NCName" ref="id"/>
+      <flag as-type="string" ref="ns"/>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                   name="value"
+                   as-type="string">
+         <formal-name>Value</formal-name>
+         <description>Indicates the value of the characteristic.</description>
+      </define-flag>
+      <model>
+         <field ref="remarks" in-xml="WITH_WRAPPER"/>
+      </model>
+      <remarks>
+         <p>Annotations permit the deployment and management of arbitrary controlled values for any purpose useful to an application or implementation scenario.</p>
+         <p>The <code>value</code> (flag) of an annotation is a simple scalar value or list of values. The body of the annotation offers remarks in explanation of or reference to this value.</p>
+      </remarks>
+   </define-assembly>
+   <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                name="name"
+                as-type="NCName">
+      <formal-name>Name</formal-name>
+      <description>Identifying the purpose and intended use of the property, part or other object.</description>
+      <remarks>
+         <p>This flag is intended to be used as a control point for validation of properties and parts with respect to constraints related to local semantics. A name is not necessarily expected to be unique, even within the scope of the parent (containing) structure. In some local applications, it is possible for a name to be unique and uniqueness of a name can be validated in such cases.</p>
+         <p>The definition of a name is subject to its namespace, offered by an <code>ns</code> flag (q.v.). When <code>ns</code> is not given, the namespace is assumed to be <q>oscal</q> and the name should be one of the recognized values for names in OSCAL.</p>
+      </remarks>
+   </define-flag>
+   <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                name="ns"
+                as-type="string">
+      <formal-name>Namespace</formal-name>
+      <description>A namespace qualifying the name.</description>
+      <remarks>
+         <p>Identifies an organization or compliance regime defining the information needs (requirements) addressed by an object. When this attribute is not given, its value should be assumed to be <code>oscal</code> and the name should be a name defined by this specification.</p>
+      </remarks>
+   </define-flag>
+   <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                name="class"
+                as-type="NCName">
+      <formal-name>Class</formal-name>
+      <description>Indicating the type or classification of the containing object</description>
+      <remarks>
+         <p>A <code>class</code> can be used in validation rules to express extra constraints over items of a specific <code>class</code> value. Some objects where this flag appears also permit a <code>name</code> and a <code>ns</code> to be assigned, which can provide for more rigor in validation.</p>
+      </remarks>
+   </define-flag>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                    name="location">
+      <formal-name>Location</formal-name>
+      <description>A location, with associated metadata that can be referenced.</description>
+      <flag as-type="uuid" ref="uuid" required="yes"/>
+      <model>
+         <field ref="title"/>
+         <assembly ref="address" min-occurs="1"/>
+         <field ref="email" max-occurs="unbounded">
+            <group-as name="email-addresses" in-json="ARRAY"/>
+         </field>
+         <field ref="phone" max-occurs="unbounded">
+            <group-as name="telephone-numbers" in-json="ARRAY"/>
+         </field>
+         <field ref="url" max-occurs="unbounded">
+            <group-as name="URLs" in-json="ARRAY"/>
+         </field>
+         <field ref="prop" max-occurs="unbounded">
+            <group-as name="properties" in-json="ARRAY"/>
+         </field>
+         <assembly ref="annotation" max-occurs="unbounded">
+            <group-as name="annotations" in-json="ARRAY"/>
+         </assembly>
+         <field ref="link" max-occurs="unbounded">
+            <group-as name="links" in-json="ARRAY"/>
+         </field>
+         <field ref="remarks" in-xml="WITH_WRAPPER"/>
+      </model>
+   </define-assembly>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="location-uuid"
+                 as-type="uuid">
+      <formal-name>Location Reference</formal-name>
+      <description>References a <code>location</code> defined in <code>metadata</code>.</description>
+   </define-field>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                    name="party">
+      <formal-name>Party (organization or person)</formal-name>
+      <description>A responsible entity, either singular (an organization or person) or collective (multiple persons)</description>
+      <flag as-type="uuid" ref="uuid" required="yes"/>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                   name="type"
+                   as-type="string"
+                   required="yes">
+         <formal-name>Party Type</formal-name>
+         <description>A category describing the kind of party the object describes.</description>
+         <constraint>
+            <allowed-values allow-other="no">
+               <enum value="person">An individual.</enum>
+               <enum value="organization">A group of individuals formed for a specific purpose.</enum>
+            </allowed-values>
+         </constraint>
+      </define-flag>
+      <model>
+         <field ref="party-name" min-occurs="1"/>
+         <field ref="short-name"/>
+         <field ref="external-id" max-occurs="unbounded">
+            <group-as name="external-ids" in-json="ARRAY"/>
+         </field>
+         <field ref="prop" max-occurs="unbounded">
+            <group-as name="properties" in-json="ARRAY"/>
+         </field>
+         <assembly ref="annotation" max-occurs="unbounded">
+            <group-as name="annotations" in-json="ARRAY"/>
+         </assembly>
+         <field ref="link" max-occurs="unbounded">
+            <group-as name="links" in-json="ARRAY"/>
+         </field>
+         <assembly ref="address" max-occurs="unbounded">
+            <group-as name="addresses" in-json="ARRAY"/>
+         </assembly>
+         <field ref="email" max-occurs="unbounded">
+            <group-as name="email-addresses" in-json="ARRAY"/>
+         </field>
+         <field ref="phone" max-occurs="unbounded">
+            <group-as name="telephone-numbers" in-json="ARRAY"/>
+         </field>
+         <field ref="member-of-organization" max-occurs="unbounded">
+            <group-as name="member-of-organizations" in-json="ARRAY"/>
+         </field>
+         <field ref="location-uuid" max-occurs="unbounded">
+            <group-as name="location-uuids" in-json="ARRAY"/>
+         </field>
+         <field ref="remarks" in-xml="WITH_WRAPPER"/>
+      </model>
+      <remarks>
+         <p>Parties of both the <code>person</code> or <code>organization</code> type can be associated with an organization using the <code>member-of-organization</code>.</p>
+      </remarks>
+   </define-assembly>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="party-uuid"
+                 as-type="uuid">
+      <formal-name>Party Reference</formal-name>
+      <description>References a <code>party</code> defined in <code>metadata</code>.</description>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="external-id">
+      <formal-name>Personal Identifier</formal-name>
+      <description>An identifier for a person (such as an ORCID) using a designated scheme.</description>
+      <json-value-key>id</json-value-key>
+      <flag as-type="string" ref="type" required="yes"/>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="member-of-organization"
+                 as-type="uuid">
+      <formal-name>Organizational Affiliation</formal-name>
+      <description>Identifies that the containing object is a member of the organization associated with the provided UUID.</description>
+   </define-field>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                    name="rlink">
+      <formal-name>Resource link</formal-name>
+      <description>A pointer to an external copy of a document with optional hash for verification</description>
+      <flag as-type="uri-reference" ref="href" required="yes"/>
+      <flag as-type="string" ref="media-type"/>
+      <model>
+         <field ref="hash" max-occurs="unbounded">
+            <group-as name="hashes" in-json="ARRAY"/>
+         </field>
+      </model>
+      <remarks>
+         <p>This is different from unstructured <code>link</code>, which makes no provision for a hash or formal title. It is also different from the element of the same name once proposed for HTML.</p>
+      </remarks>
+   </define-assembly>
+   <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                name="rel"
+                as-type="NCName">
+      <formal-name>Relation</formal-name>
+      <description>Describes the type of relationship provided by the link. This can be an indicator of the link's purpose.</description>
+      <constraint>
+         <allowed-values allow-other="yes">
+            <enum value="homepage">A link to a homepage related to the containing object.</enum>
+            <enum value="interview-notes">Interview Notes</enum>
+            <enum value="tool-output">Tool Output</enum>
+            <enum value="photograph">Photograph</enum>
+            <enum value="questionnaire">Questionnaire</enum>
+            <enum value="screen-shot">Screen Shot</enum>
+         </allowed-values>
+      </constraint>
+      <remarks>
+         <p>TO DO: discuss IANA link relation registry.</p>
+      </remarks>
+   </define-flag>
+   <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                name="media-type"
+                as-type="string">
+      <formal-name>Media type</formal-name>
+      <description>Describes the media type of the linked resource</description>
+      <remarks>
+         <p>TO DO: discuss IANA media type registry.</p>
+      </remarks>
+   </define-flag>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="party-name">
+      <formal-name>Party Name</formal-name>
+      <description>The full (legal) name of the party.</description>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="short-name">
+      <formal-name>short-name</formal-name>
+      <description>A common name, short name or acronym</description>
+      <remarks>
+         <p>This element is not expected to be used to identify individual persons, but rather an organization or system.</p>
+      </remarks>
+   </define-field>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                    name="address">
+      <formal-name>Address</formal-name>
+      <description>A postal address.</description>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                   name="type">
+         <formal-name>type flag</formal-name>
+         <description>Indicates the type of address.</description>
+         <constraint>
+            <allowed-values allow-other="yes">
+               <enum value="home">A home address.</enum>
+               <enum value="work">A work address.</enum>
+            </allowed-values>
+         </constraint>
+      </define-flag>
+      <model>
+         <field ref="addr-line" max-occurs="unbounded">
+            <group-as name="postal-address" in-json="ARRAY"/>
+         </field>
+         <field ref="city"/>
+         <field ref="state"/>
+         <field ref="postal-code"/>
+         <field ref="country"/>
+      </model>
+   </define-assembly>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="addr-line">
+      <formal-name>Address line</formal-name>
+      <description>A single line of an address.</description>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="city">
+      <formal-name>City</formal-name>
+      <description>City, town or geographical region for mailing address</description>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="state">
+      <formal-name>State</formal-name>
+      <description>State, province or analogous geographical region for mailing address</description>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="postal-code">
+      <formal-name>Postal Code</formal-name>
+      <description>Postal or ZIP code for mailing address</description>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="country">
+      <formal-name>Country</formal-name>
+      <description>Country for mailing address</description>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="email"
+                 as-type="email">
+      <formal-name>Email</formal-name>
+      <description>Email address</description>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="phone">
+      <formal-name>Telephone</formal-name>
+      <description>Contact number by telephone</description>
+      <json-value-key>number</json-value-key>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                   name="type">
+         <formal-name>type flag</formal-name>
+         <description>Indicates the type of phone number.</description>
+         <constraint>
+            <allowed-values allow-other="yes">
+               <enum value="home">A home phone number.</enum>
+               <enum value="office">An office phone number.</enum>
+               <enum value="mobile">A mobile phone number.</enum>
+            </allowed-values>
+         </constraint>
+      </define-flag>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="url"
+                 as-type="uri">
+      <formal-name>URL</formal-name>
+      <description>URL for web site or Internet presence</description>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="desc">
+      <formal-name>Description</formal-name>
+      <description>A short textual description</description>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="text"
+                 as-type="markup-line">
+      <formal-name>Text</formal-name>
+      <description>A line of textual content whose semantic is determined by the context of use.</description>
+   </define-field>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                    name="biblio">
+      <formal-name>Bibliographic Definition</formal-name>
+      <description>A container in which a set of bibliographic information can included. The model of this information is undefined by OSCAL.</description>
+      <model>
+         <any/>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                    name="resource">
+      <formal-name>Resource</formal-name>
+      <description>A resource associated with the present document, which may be a pointer to other data or a citation.</description>
+      <flag as-type="uuid" ref="uuid" required="yes"/>
+      <model>
+         <field ref="title"/>
+         <field ref="desc"/>
+         <field ref="prop" max-occurs="unbounded">
+            <group-as name="properties" in-json="ARRAY"/>
+         </field>
+         <field ref="doc-id" max-occurs="unbounded">
+            <group-as name="document-ids" in-json="ARRAY"/>
+         </field>
+         <assembly ref="citation"/>
+         <assembly ref="rlink" max-occurs="unbounded">
+            <group-as name="rlinks" in-json="ARRAY"/>
+         </assembly>
+         <field ref="base64" max-occurs="unbounded">
+            <group-as name="attachments" in-xml="UNGROUPED" in-json="ARRAY"/>
+         </field>
+         <field ref="remarks" in-xml="WITH_WRAPPER"/>
+         <any/>
+      </model>
+      <remarks>
+         <p>Use of resource allows for information that pertains to, authenticates, or supplements the document it is included in.</p>
+         <p>A resource can be used in two ways. 1) it may point to an specific retrievable network resource using a <code>rlink</code>, and 2) be included as an attachment using a <code>base64</code>. A resource may contain multiple <code>rlink</code> and <code>base64</code> entries that represent alternative download locations (rlink) and attachments (base64) for the same resource. Both rlink and base64 allow for a media-type to be specified, which is used to distiguish between different representations of the same resource (e.g., Microsoft Word, PDF). When multiple rlink and base64 entries are included for a given resource, all entries must contain equivalent information. This is extremely important when the entries represent OSCAL content that is represented in alternate formats (i.e., XML, JSON, YAML). A processor must be able to choose a preferred format to process (based on media-type) with the assumption that the same data can be processed from any of the available formats included by entries.</p>
+         <p>When a resource is used as a citation, then the <code>title</code> and <code>citation</code> properties must be included.</p>
+      </remarks>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                    name="citation">
+      <formal-name>Citation</formal-name>
+      <description>A citation consisting of end note text and optional structured bibliographic data.</description>
+      <model>
+         <field ref="text" min-occurs="1"/>
+         <field ref="prop" max-occurs="unbounded">
+            <group-as name="properties" in-json="ARRAY"/>
+         </field>
+         <assembly ref="biblio"/>
+      </model>
+      <remarks>
+         <p>A <code>text</code> is used to define the endnote text, without any explicit bibliographic structure. If structured bibliographic data is needed, then the <code>biblio&gt; can be used for this purpose.</code>
+         </p>
+         <p>A <code>biblio</code> can be used to capture a structured bibliograpical citation in an appropriate format.</p>
+      </remarks>
+   </define-assembly>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="hash">
+      <formal-name>Hash</formal-name>
+      <description>A representation of a cryptographic digest generated over a resource using a hash algorithm.</description>
+      <json-value-key>value</json-value-key>
+      <flag as-type="string" ref="algorithm" required="yes"/>
+      <remarks>
+         <p>A hash value can be used to authenticate that a referenced resource is the same resources as was pointed to by the author of the reference.</p>
+         <p>When appearing as part of a resource (data object), the hash should apply to the referenced object.</p>
+      </remarks>
+   </define-field>
+   <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                name="algorithm"
+                as-type="string">
+      <formal-name>Hash algorithm</formal-name>
+      <description>Method by which a hash is derived</description>
+      <constraint>
+         <allowed-values allow-other="yes">
+            <enum value="SHA-224"/>
+            <enum value="SHA-256"/>
+            <enum value="SHA-384"/>
+            <enum value="SHA-512"/>
+            <enum value="SHA3-224"/>
+            <enum value="SHA3-256"/>
+            <enum value="SHA3-384"/>
+            <enum value="SHA3-512"/>
+         </allowed-values>
+      </constraint>
+      <remarks>
+         <p>Valid values MUST be a value defined in the W3C <a href="http://www.w3.org/TR/xmlsec-algorithms/#digest-method">XML Security Algorithm Cross-Reference</a> Digest Methods (W3C, April 2013).</p>
+      </remarks>
+   </define-flag>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                    name="role">
+      <formal-name>Role</formal-name>
+      <description>Defining a role to be assigned to a party</description>
+      <flag as-type="NCName" ref="id" required="yes"/>
+      <model>
+         <field ref="title" min-occurs="1"/>
+         <field ref="short-name"/>
+         <field ref="desc"/>
+         <field ref="prop" max-occurs="unbounded">
+            <group-as name="properties" in-json="ARRAY"/>
+         </field>
+         <assembly ref="annotation" max-occurs="unbounded">
+            <group-as name="annotations" in-json="ARRAY"/>
+         </assembly>
+         <field ref="link" max-occurs="unbounded">
+            <group-as name="links" in-json="ARRAY"/>
+         </field>
+         <field ref="remarks" in-xml="WITH_WRAPPER"/>
+      </model>
+      <remarks>
+         <p>Permissible values to be determined closer to the application (e.g. by a receiving authority).</p>
+      </remarks>
+   </define-assembly>
+   <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                name="href"
+                as-type="uri-reference">
+      <formal-name>hypertext reference</formal-name>
+      <description>A link to a document or document fragment (actual, nominal or projected)</description>
+      <remarks>
+         <p>Note in particular that <code>href</code> targets include elements (locations) in representations of documents that exist only by virtue of dynamic application, such as (for example) the results of profile resolution.</p>
+      </remarks>
+   </define-flag>
+   <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                name="id"
+                as-type="NCName">
+      <formal-name>Identifier</formal-name>
+      <description>Unique identifier of the containing object</description>
+      <remarks>
+         <p>No mechanism is proposed to ensure that <code>id</code> values do not collide across different catalogs. Use profiling without <q>merge</q> to detect such clashes.</p>
+      </remarks>
+      <example>
+         <citation xmlns="http://csrc.nist.gov/ns/oscal/1.0" id="xyz2">Some <strong>citation</strong> of some sort</citation>
+      </example>
+   </define-flag>
+   <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                name="uuid"
+                as-type="uuid">
+      <formal-name>Universally Unique Identifier</formal-name>
+      <description>A RFC 4122 version 4 Universally Unique Identifier (UUID) for the containing object.</description>
+   </define-flag>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="title"
+                 as-type="markup-line">
+      <formal-name>Title</formal-name>
+      <description>A title for display and navigation</description>
+      <remarks>
+         <p>A title for the containing object as it should appear in a formatted document.</p>
+      </remarks>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="base64"
+                 as-type="base64Binary">
+      <formal-name>Base64</formal-name>
+      <description>The Base64 alphabet in RFC 2045 - aligned with XSD.</description>
+      <json-value-key>value</json-value-key>
+      <flag as-type="uri-reference" ref="filename"/>
+      <flag as-type="string" ref="media-type"/>
+   </define-field>
+   <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                name="filename"
+                as-type="uri-reference">
+      <formal-name>File Name</formal-name>
+      <description>Name of the file before it was encoded as Base64 to be embedded in a <code>resource</code>. This is the name that will be assigned to the file when the file is decoded.</description>
+   </define-flag>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="description"
+                 as-type="markup-multiline">
+      <formal-name>Description</formal-name>
+      <description>A description supporting the parent item.</description>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_metadata_metaschema.xml"
+                 name="remarks"
+                 as-type="markup-multiline">
+      <formal-name>Remarks</formal-name>
+      <description>Additional commentary on the parent item.</description>
+   </define-field>
+   <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_implementation-common_metaschema.xml"
+                name="component-type"
+                as-type="string">
+      <formal-name>Component Type</formal-name>
+      <description>A category describing the purpose of the component.</description>
+      <constraint>
+         <allowed-values allow-other="yes">
+            <enum value="software">Any software, operating system, or firmware</enum>
+            <enum value="hardware"/>
+            <enum value="service">A service that may provide APIs.</enum>
+            <enum value="interconnection">A connection to something outside this system.</enum>
+            <enum value="policy"/>
+            <enum value="process"/>
+            <enum value="procedure"/>
+            <enum value="plan"/>
+            <enum value="guidance">Any guideline or recommendation</enum>
+            <enum value="standard"/>
+            <enum value="validation">An external assessment performed on some other component, that has been validated by a third-party.</enum>
+         </allowed-values>
+      </constraint>
+   </define-flag>
+   <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_implementation-common_metaschema.xml"
+                name="control-id"
+                as-type="NCName">
+      <formal-name>Control Identifier Reference</formal-name>
+      <description>A reference to a control identifier.</description>
+   </define-flag>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                    name="user">
+      <formal-name>System User Class</formal-name>
+      <description>A type of user that interacts with the system based on an associated role.</description>
+      <json-key flag-name="uuid"/>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                   required="yes"
+                   name="uuid">
+         <formal-name>User Identifier</formal-name>
+         <description>The unique identifier for the user class.</description>
+      </define-flag>
+      <model>
+         <field ref="title" in-xml="WITH_WRAPPER"/>
+         <field ref="short-name"/>
+         <field ref="description" in-xml="WITH_WRAPPER"/>
+         <field ref="prop" max-occurs="unbounded">
+            <group-as name="properties" in-json="ARRAY"/>
+         </field>
+         <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                          name="annotation"
+                          max-occurs="unbounded">
+            <formal-name>Annotation</formal-name>
+            <description>A name/value pair with optional explanatory remarks.</description>
+            <group-as name="annotations" in-json="ARRAY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         name="name">
+               <formal-name>name flag</formal-name>
+               <description>name flag ... </description>
+               <constraint>
+                  <allowed-values allow-other="yes">
+                     <enum value="type">The type of user, such as internal, external, or general-public.</enum>
+                     <enum value="privilege-level">The user's privilege level within the system, such as privileged, non-privileged, no-logical-access.</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+            <flag as-type="NCName" ref="id"/>
+            <flag as-type="string" ref="ns"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         name="value"
+                         as-type="string">
+               <formal-name>Value</formal-name>
+               <description>Indicates the value of the characteristic.</description>
+            </define-flag>
+            <model>
+               <field ref="remarks" in-xml="WITH_WRAPPER"/>
+            </model>
+         </define-assembly>
+         <field ref="link" max-occurs="unbounded">
+            <group-as name="links" in-json="ARRAY"/>
+         </field>
+         <field ref="role-id" min-occurs="1" max-occurs="unbounded">
+            <group-as name="role-ids" in-json="ARRAY"/>
+         </field>
+         <assembly ref="authorized-privilege" max-occurs="unbounded">
+            <group-as name="authorized-privileges" in-json="ARRAY"/>
+         </assembly>
+         <field ref="remarks" in-xml="WITH_WRAPPER"/>
+      </model>
+      <remarks>
+         <p>Permissible values to be determined closer to the application, such as by a receiving authority.</p>
+      </remarks>
+   </define-assembly>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                 name="role-id"
+                 as-type="NCName">
+      <formal-name>Role Identifier Reference</formal-name>
+      <description>A reference to the roles served by the user.</description>
+      <constraint>
+         <allowed-values target="." allow-other="yes">
+            <enum value="asset-owner">Accountable for ensuring the asset is managed in accordance with organizational policies and procedures.</enum>
+            <enum value="asset-administrator">Responsible for administering a set of assets.</enum>
+            <enum value="soc">Members of the security operations center (SOC).</enum>
+            <enum value="noc">Members of the network operations center (NOC).</enum>
+            <enum value="incident-response">Members of the incident response team.</enum>
+            <enum value="help-desk">Members of the help desk.</enum>
+            <enum value="configuration-management-lead">Responsible for the configuration management processes governing changes to the asset.</enum>
+         </allowed-values>
+      </constraint>
+   </define-field>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                    name="authorized-privilege">
+      <formal-name>Privilege</formal-name>
+      <description>Identifies a specific system privilege held by the user, along with an associated description and/or rationale for the privilege.</description>
+      <model>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                       name="title"
+                       as-type="markup-line"
+                       min-occurs="1">
+            <formal-name>title field</formal-name>
+            <description>A human readable name for the privilege.</description>
+         </define-field>
+         <field ref="description" in-xml="WITH_WRAPPER"/>
+         <field ref="function-performed" min-occurs="1" max-occurs="unbounded">
+            <group-as name="functions-performed" in-json="ARRAY"/>
+         </field>
+      </model>
+   </define-assembly>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                 name="function-performed"
+                 as-type="string">
+      <formal-name>Functions Performed</formal-name>
+      <description>Describes a function performed for a given authorized privilege by this user class.</description>
+   </define-field>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                    name="component">
+      <formal-name>Component</formal-name>
+      <description>A defined component that can be part of an implemented system.</description>
+      <json-key flag-name="uuid"/>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                   required="yes"
+                   name="uuid">
+         <formal-name>Component Identifier</formal-name>
+         <description>The unique identifier for the component.</description>
+      </define-flag>
+      <flag as-type="string" ref="component-type" required="yes"/>
+      <model>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                       name="title"
+                       as-type="markup-line"
+                       min-occurs="1">
+            <formal-name>title field</formal-name>
+            <description>A human readable name for the system component.</description>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                       name="description"
+                       as-type="markup-multiline"
+                       min-occurs="1"
+                       in-xml="WITH_WRAPPER">
+            <formal-name>description field</formal-name>
+            <description>A description of the component, including information about its function.</description>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                       name="purpose"
+                       as-type="markup-line">
+            <formal-name>purpose field</formal-name>
+            <description>A summary of the technological or business purpose of the component.</description>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                       name="prop"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>prop field ... </description>
+            <json-value-key>value</json-value-key>
+            <group-as name="properties" in-json="ARRAY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         name="name">
+               <formal-name>name flag</formal-name>
+               <description>name flag ... </description>
+               <constraint>
+                  <allowed-values allow-other="yes">
+                     <enum value="version">The version of the component.</enum>
+                     <enum value="patch-level">The specific patch level of the component.</enum>
+                     <enum value="model">The model of the component.</enum>
+                     <enum value="date-released">The date the component was released, such as a software release date or policy publication date.</enum>
+                     <enum value="asset-type">Simple description of the component's function, such as Router, Storage Array, DNS Server.</enum>
+                     <enum value="software-identifier">If a "software" component-type, the identifier, such as a SWID tag, for the software component.</enum>
+                     <enum value="public">Identifies whether the component is intended to be publicly accessible (yes/no)</enum>
+                     <enum value="virtual">Identifies whether the component is virtualized (yes/no)</enum>
+                     <enum value="vlan-id">Virtual LAN identifier of the component.</enum>
+                     <enum value="asset-tag">An asset tag that is unique within the organization for the component.</enum>
+                     <enum value="isa-title">Title of the Interconnection Security Agreement (ISA).</enum>
+                     <enum value="isa-date">Date of the Interconnection Security Agreement (ISA).</enum>
+                     <enum value="isa-remote-system-name">The name of the remote interconnected system.</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+            <flag as-type="NCName" ref="id"/>
+            <flag as-type="string" ref="ns"/>
+            <flag as-type="NCName" ref="class"/>
+            <remarks>
+               <p>Some specific property names can be assigned to the component at large, or can be defined when a component is associated with an <code>inventory-item</code> within the <code>implemented-component</code> construct.</p>
+            </remarks>
+         </define-field>
+         <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                          name="annotation"
+                          max-occurs="unbounded">
+            <formal-name>Annotation</formal-name>
+            <description>A name/value pair with optional explanatory remarks.</description>
+            <group-as name="annotations" in-json="ARRAY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         name="name">
+               <formal-name>name flag</formal-name>
+               <description>name flag ... </description>
+               <constraint>
+                  <allowed-values allow-other="yes">
+                     <enum value="baseline-configuration-name">The name of the baseline configuration for the component.</enum>
+                     <enum value="allows-authenticated-scan">Can the component be check with an authenticated scan? (yes/no)</enum>
+                     <enum value="physical-location">The physical location of the component's hardware (e.g., Data Center ID, Cage#, Rack#, or other meaningful location identifiers).</enum>
+                     <enum value="function">The function provided by the component for the system.</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+            <flag as-type="NCName" ref="id"/>
+            <flag as-type="string" ref="ns"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         name="value"
+                         as-type="string">
+               <formal-name>Value</formal-name>
+               <description>Indicates the value of the characteristic.</description>
+            </define-flag>
+            <model>
+               <field ref="remarks" in-xml="WITH_WRAPPER"/>
+            </model>
+            <remarks>
+               <p>Some specific annotation names can be assigned to the component at large, or can be defined when a component is associated with an <code>inventory-item</code> within the <code>implemented-component</code> construct.</p>
+            </remarks>
+         </define-assembly>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                       name="link"
+                       as-type="markup-line"
+                       max-occurs="unbounded">
+            <formal-name>link field</formal-name>
+            <description>link field ... </description>
+            <json-value-key>text</json-value-key>
+            <group-as name="links" in-json="ARRAY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         name="rel">
+               <formal-name>rel flag</formal-name>
+               <description>rel flag ... </description>
+               <constraint>
+                  <allowed-values allow-other="yes">
+                     <enum value="depends-on">A reference to another component that this component has a dependency on.</enum>
+                     <enum value="validated-by">A reference to another component of type=validation, that is a validation (e.g., FIPS 140-2) for this component</enum>
+                     <enum value="proof-of-compliance">A pointer to a validation record (e.g., FIPS 140-2) or other compliance information.</enum>
+                     <enum value="baseline-template">A reference to the baseline template used to configure the asset.</enum>
+                     <enum value="used-by">This service is used by the referenced component identifier.</enum>
+                     <enum value="provided-by">This service is provided by the referenced component identifier.</enum>
+                     <enum value="agreement">A link to the system interconnection agreement.</enum>
+                     <enum value="system-security-plan">A link to the system security plan of the external system.</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+            <flag as-type="uri-reference" ref="href" required="yes"/>
+            <flag as-type="string" ref="media-type"/>
+         </define-field>
+         <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                          name="status"
+                          min-occurs="1">
+            <formal-name>Status</formal-name>
+            <description>Describes the operational status of the system.</description>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         name="state">
+               <formal-name>State</formal-name>
+               <description>XXX</description>
+               <constraint>
+                  <allowed-values>
+                     <enum value="under-development">The component is being designed, developed, or implemented.</enum>
+                     <enum value="operational">The component is currently operational and is available for use in the system.</enum>
+                     <enum value="disposition">The component is no longer operational.</enum>
+                     <enum value="other">Some other state.</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+            <model>
+               <field ref="remarks" in-xml="WITH_WRAPPER"/>
+            </model>
+         </define-assembly>
+         <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                          name="responsible-role"
+                          max-occurs="unbounded">
+            <formal-name>Responsible Role</formal-name>
+            <description>A reference to one or more roles with responsibility for performing a function relative to the control.</description>
+            <json-key flag-name="role-id"/>
+            <group-as name="responsible-roles" in-json="BY_KEY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         required="yes"
+                         name="role-id"
+                         as-type="NCName">
+               <formal-name>Role identifier</formal-name>
+               <description>Indicates the role assigned to the responsible party.</description>
+               <constraint>
+                  <allowed-values allow-other="yes">
+                     <enum value="asset-owner">Accountable for ensuring the asset is managed in accordance with organizational policies and procedures.</enum>
+                     <enum value="asset-administrator">Responsible for administering a set of assets.</enum>
+                     <enum value="soc">Members of the security operations center (SOC).</enum>
+                     <enum value="noc">Members of the network operations center (NOC).</enum>
+                     <enum value="incident-response">Members of the incident response team.</enum>
+                     <enum value="help-desk">Members of the help desk.</enum>
+                     <enum value="configuration-management-lead">Responsible for the configuration management processes governing changes to the asset.</enum>
+                     <enum value="maintainer">The organization responsible for the creation and maintenance of the component.</enum>
+                     <enum value="provider">The organization responsible for providing the component, if this is different from the "maintainer" (e.g., a reseller).</enum>
+                     <enum value="isa-poc-local">Interconnection Security Agreement (ISA) point of contact (POC) for this system.</enum>
+                     <enum value="isa-poc-remote">Interconnection Security Agreement (ISA) point of contact (POC) for the remote interconnected system.</enum>
+                     <enum value="isa-authorizing-official-local">Interconnection Security Agreement (ISA) authorizing official for this system.</enum>
+                     <enum value="isa-authorizing-official-remote">Interconnection Security Agreement (ISA) authorizing official for the remote interconnected system.</enum>
+                  </allowed-values>
+               </constraint>
+               <remarks>
+                  <p>The built in roles starting with <code>isa-</code> are used identify the parties that are establishing, authorizing and managing the system interconnection agreement. This allows the authorizing and managing parties on both sides of the interconnection to be defined.</p>
+               </remarks>
+            </define-flag>
+            <model>
+               <field ref="prop" max-occurs="unbounded">
+                  <group-as name="properties" in-json="ARRAY"/>
+               </field>
+               <assembly ref="annotation" max-occurs="unbounded">
+                  <group-as name="annotations" in-json="ARRAY"/>
+               </assembly>
+               <field ref="link" max-occurs="unbounded">
+                  <group-as name="links" in-json="ARRAY"/>
+               </field>
+               <field ref="party-uuid" max-occurs="unbounded">
+                  <group-as name="party-ids" in-json="ARRAY"/>
+               </field>
+               <field ref="remarks" in-xml="WITH_WRAPPER"/>
+            </model>
+            <remarks>
+               <p>A role defined in this way can be associated with a party or parties here, or where the component is referenced (e.g., <code>inventory-item</code>, <code>implemented-requirement</code>/<code>by-component</code>).</p>
+               <p>The roles "maintainer" or "provider" can be used to define the supplier. In such cases party-id(s) can be used to associate the providing organization. For products, services, and APIs, this is the vendor and/or retailer information. For policies, processes, plans, standards, and guidance, this is the authoring organization.</p>
+            </remarks>
+         </define-assembly>
+         <assembly ref="protocol" max-occurs="unbounded">
+            <group-as name="protocols" in-json="ARRAY"/>
+            <remarks>
+               <p>Used for <code>service</code> components to define the protocols supported by the service.</p>
+            </remarks>
+         </assembly>
+         <field ref="remarks" in-xml="WITH_WRAPPER"/>
+      </model>
+      <remarks>
+         <p>Components may be products, services, application programming interface (APIs), policies, processes, plans, guidance, standards, or other tangible items that enable security and/or privacy.</p>
+         <p>The <code>type</code> indicates which of these component types is represented.</p>
+         <p>When defining a <code>service</code> compoenent where are relationship to other components is known, one or more <code>link</code> entries with rel values of provided-by and used-by can be used to link to the specific component identifer(s) that provide and use the service respectively.</p>
+      </remarks>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                    name="protocol">
+      <formal-name>Protocol</formal-name>
+      <description>Information about the protocol used to provide a service.</description>
+      <flag as-type="uuid" ref="uuid"/>
+      <flag as-type="NCName" ref="name" required="yes">
+         <remarks>
+            <p>The short name of the protocol (e.g., TLS).</p>
+         </remarks>
+      </flag>
+      <model>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                       name="title"
+                       as-type="markup-line">
+            <formal-name>title field</formal-name>
+            <description>A human readable name for the protocol (e.g., Transport Layer Security).</description>
+         </define-field>
+         <field ref="port-range" max-occurs="unbounded">
+            <group-as name="port-ranges" in-json="ARRAY"/>
+         </field>
+      </model>
+   </define-assembly>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                 name="port-range"
+                 as-type="empty">
+      <formal-name>Port Range</formal-name>
+      <description>Where applicable this is the IPv4 port range on which the service operates.</description>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                   name="start"
+                   as-type="nonNegativeInteger">
+         <formal-name>Start</formal-name>
+         <description>Indicates the starting port number in a port range</description>
+         <remarks>
+            <p>Should be a number within a permitted range</p>
+         </remarks>
+      </define-flag>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                   name="end"
+                   as-type="nonNegativeInteger">
+         <formal-name>End</formal-name>
+         <description>Indicates the ending port number in a port range</description>
+         <remarks>
+            <p>Should be a number within a permitted range</p>
+         </remarks>
+      </define-flag>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                   name="transport"
+                   as-type="NCName">
+         <formal-name>Transport</formal-name>
+         <description>Indicates the transport type.</description>
+         <constraint>
+            <allowed-values>
+               <enum value="TCP">Transmission Control Protocol</enum>
+               <enum value="UDP">User Datagram Protocol</enum>
+            </allowed-values>
+         </constraint>
+      </define-flag>
+      <remarks>
+         <p>To be validated as a natural number (integer &gt;= 1). A single port uses the same value for start and end. Use multiple 'port-range' entries for non-contiguous ranges.</p>
+      </remarks>
+      <example>
+         <service xmlns="http://csrc.nist.gov/ns/oscal/1.0"
+                  id="svc-01"
+                  name="Domain Name Service (DNS) Lookup">
+            <protocol name="dns">
+               <port-range start="53" end="53" transport="tcp"/>
+            </protocol>
+         </service>
+      </example>
+   </define-field>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                    name="inventory-item">
+      <formal-name>Inventory Item</formal-name>
+      <description>A single managed inventory item within the system.</description>
+      <json-key flag-name="uuid"/>
+      <flag as-type="uuid" ref="uuid" required="yes"/>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                   name="asset-id"
+                   required="yes">
+         <formal-name>Asset Identifier</formal-name>
+         <description>Organizational asset identifier that is unique in the context of the system. This may be a reference to the identifier used in an asset tracking system or a vulnerability scanning tool.</description>
+      </define-flag>
+      <model>
+         <field ref="description" min-occurs="1" in-xml="WITH_WRAPPER"/>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                       name="prop"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>prop field ... </description>
+            <json-value-key>value</json-value-key>
+            <group-as name="properties" in-json="ARRAY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         name="name">
+               <formal-name>name flag</formal-name>
+               <description>name flag ... </description>
+               <constraint>
+                  <allowed-values allow-other="yes">
+                     <enum value="public">Identifies whether the asset is publicly accessible (yes/no)</enum>
+                     <enum value="virtual">Identifies whether the asset is virtualized (yes/no)</enum>
+                     <enum value="ipv4-address">The Internet Protocol v4 Address of the asset.</enum>
+                     <enum value="ipv6-address">The Internet Protocol v6 Address of the asset.</enum>
+                     <enum value="vlan-id">Virtual LAN identifier of the asset.</enum>
+                     <enum value="network-id">The network identifier of the asset.</enum>
+                     <enum value="fqdn">The full-qualified domain name (FQDN) of the asset.</enum>
+                     <enum value="uri">A Uniform Resource Identifier (URI) for the asset.</enum>
+                     <enum value="serial-number">A serial number for the asset.</enum>
+                     <enum value="asset-tag">An asset tag that is unique within the organization for the asset.</enum>
+                     <enum value="netbios-name">The NetBIOS name for the asset.</enum>
+                     <enum value="mac-address">The media access control (MAC) address for the asset.</enum>
+                     <enum value="os-name">The name of the operating system used by the asset.</enum>
+                     <enum value="os-version">The version of the operating system used by the asset.</enum>
+                     <enum value="asset-type">Simple description of the asset's function, such as Router, Storage Array, DNS Server.</enum>
+                     <enum value="hardware-model">The model number of the hardware used by the asset.</enum>
+                     <enum value="software-name">The software product name used by the asset.</enum>
+                     <enum value="software-version">The software product version used by the asset.</enum>
+                     <enum value="software-patch-level">The software product patch level used by the asset.</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+            <flag as-type="NCName" ref="id"/>
+            <flag as-type="string" ref="ns"/>
+            <flag as-type="NCName" ref="class"/>
+         </define-field>
+         <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                          name="annotation"
+                          max-occurs="unbounded">
+            <formal-name>Annotation</formal-name>
+            <description>A name/value pair with optional explanatory remarks.</description>
+            <group-as name="annotations" in-json="ARRAY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         name="name">
+               <formal-name>name flag</formal-name>
+               <description>name flag ... </description>
+               <constraint>
+                  <allowed-values allow-other="yes">
+                     <enum value="baseline-configuration-name">The name of the baseline configuration for the asset.</enum>
+                     <enum value="is-scanned">is the asset subjected to network scans? (yes/no)</enum>
+                     <enum value="allows-authenticated-scan">Can the asset be check with an authenticated scan? (yes/no)</enum>
+                     <enum value="physical-location">The physical location of the asset's hardware (e.g., Data Center ID, Cage#, Rack#, or other meaningful location identifiers).</enum>
+                     <enum value="function">The function provided by the asset for the system.</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+            <flag as-type="NCName" ref="id"/>
+            <flag as-type="string" ref="ns"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         name="value"
+                         as-type="string">
+               <formal-name>Value</formal-name>
+               <description>Indicates the value of the characteristic.</description>
+            </define-flag>
+            <model>
+               <field ref="remarks" in-xml="WITH_WRAPPER"/>
+            </model>
+         </define-assembly>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                       name="link"
+                       as-type="markup-line"
+                       max-occurs="unbounded">
+            <formal-name>link field</formal-name>
+            <description>link field ... </description>
+            <json-value-key>text</json-value-key>
+            <group-as name="links" in-json="ARRAY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         name="rel">
+               <formal-name>rel flag</formal-name>
+               <description>rel flag ... </description>
+               <constraint>
+                  <allowed-values allow-other="yes">
+                     <enum value="baseline-template">A reference to the baseline template used to configure the asset.</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+            <flag as-type="uri-reference" ref="href" required="yes"/>
+            <flag as-type="string" ref="media-type"/>
+         </define-field>
+         <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                          name="responsible-party"
+                          max-occurs="unbounded">
+            <formal-name>Responsible Party</formal-name>
+            <description>A reference to a set of organizations or persons that have responsibility for performing a referenced role relative to the parent context.</description>
+            <json-key flag-name="role-id"/>
+            <group-as name="responsible-parties" in-json="BY_KEY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         required="yes"
+                         name="role-id"
+                         as-type="NCName">
+               <formal-name>Role identifier</formal-name>
+               <description>Indicates the role assigned to the responsible party.</description>
+               <constraint>
+                  <allowed-values allow-other="yes">
+                     <enum value="asset-owner">Accountable for ensuring the asset is managed in accordance with organizational policies and procedures.</enum>
+                     <enum value="asset-administrator">Responsible for administering a set of assets.</enum>
+                     <enum value="soc">Members of the security operations center (SOC).</enum>
+                     <enum value="noc">Members of the network operations center (NOC).</enum>
+                     <enum value="incident-response">Members of the incident response team.</enum>
+                     <enum value="help-desk">Members of the help desk.</enum>
+                     <enum value="configuration-management-lead">Responsible for the configuration management processes governing changes to the asset.</enum>
+                     <enum value="maintainer">Organization responsible for the creation and maintenance of the component.</enum>
+                     <enum value="provider">Organization responsible for providing the component, if this is different from the "maintainer" (e.g., a reseller).</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+            <model>
+               <field ref="party-uuid" min-occurs="1" max-occurs="unbounded">
+                  <group-as name="party-uuids" in-json="ARRAY"/>
+               </field>
+               <field ref="prop" max-occurs="unbounded">
+                  <group-as name="properties" in-json="ARRAY"/>
+               </field>
+               <assembly ref="annotation" max-occurs="unbounded">
+                  <group-as name="annotations" in-json="ARRAY"/>
+               </assembly>
+               <field ref="link" max-occurs="unbounded">
+                  <group-as name="links" in-json="ARRAY"/>
+               </field>
+               <field ref="remarks" in-xml="WITH_WRAPPER"/>
+            </model>
+         </define-assembly>
+         <assembly ref="implemented-component" max-occurs="unbounded">
+            <group-as name="implemented-components" in-json="BY_KEY"/>
+         </assembly>
+         <field ref="remarks" in-xml="WITH_WRAPPER"/>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                    name="implemented-component">
+      <formal-name>Implemented Component</formal-name>
+      <description>The set of componenets that are implemented in a given system inventory item.</description>
+      <json-key flag-name="component-id"/>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                   required="yes"
+                   name="component-id"
+                   as-type="uuid">
+         <formal-name>Component Identifier Reference</formal-name>
+         <description>A reference to a component that is implemented as part of an inventory item.</description>
+      </define-flag>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                   name="use">
+         <formal-name>Implementation Use Type</formal-name>
+         <description>The type of implementation</description>
+         <constraint>
+            <allowed-values allow-other="yes">
+               <enum value="runs-software">The implemented component is a 'software' component that the inventory item has installed and uses.</enum>
+               <enum value="uses-hardware">The implemented component is a 'hardware' component that the inventory item has installed and uses.</enum>
+               <enum value="enforces-policy">The implemented component is a 'policy' component that the inventory item supports and enforces.</enum>
+               <enum value="implements-process">The implemented component is a 'process' component that the inventory item supports and enforces.</enum>
+            </allowed-values>
+         </constraint>
+      </define-flag>
+      <model>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                       name="prop"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>prop field ... </description>
+            <json-value-key>value</json-value-key>
+            <group-as name="properties" in-json="ARRAY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         name="name">
+               <formal-name>name flag</formal-name>
+               <description>name flag ... </description>
+               <constraint>
+                  <allowed-values allow-other="yes">
+                     <enum value="public">Identifies whether the asset is publicly accessible (yes/no)</enum>
+                     <enum value="virtual">Identifies whether the asset is virtualized (yes/no)</enum>
+                     <enum value="ipv4-address">The Internet Protocol v4 Address of the asset.</enum>
+                     <enum value="ipv6-address">The Internet Protocol v6 Address of the asset.</enum>
+                     <enum value="vlan-id">Virtual LAN identifier of the asset.</enum>
+                     <enum value="network-id">The network identifier of the asset.</enum>
+                     <enum value="fqdn">The full-qualified domain name (FQDN) of the asset.</enum>
+                     <enum value="uri">A Uniform Resource Identifier (URI) for the asset.</enum>
+                     <enum value="serial-number">A serial number for the asset.</enum>
+                     <enum value="asset-tag">An asset tag that is unique within the organization for the asset.</enum>
+                     <enum value="netbios-name">The NetBIOS name for the asset.</enum>
+                     <enum value="mac-address">The media access control (MAC) address for the asset.</enum>
+                     <enum value="asset-type">Simple description of the asset's function (e.g., Router, Storage Array, DNS Server, etc.).</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+            <flag as-type="NCName" ref="id"/>
+            <flag as-type="string" ref="ns"/>
+            <flag as-type="NCName" ref="class"/>
+         </define-field>
+         <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                          name="annotation"
+                          max-occurs="unbounded">
+            <formal-name>Annotation</formal-name>
+            <description>A name/value pair with optional explanatory remarks.</description>
+            <group-as name="annotations" in-json="ARRAY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         name="name">
+               <formal-name>name flag</formal-name>
+               <description>name flag ... </description>
+               <constraint>
+                  <allowed-values allow-other="yes">
+                     <enum value="baseline-configuration-name">The name of the baseline configuration for the asset.</enum>
+                     <enum value="is-scanned">is the asset subjected to network scans? (yes/no)</enum>
+                     <enum value="allows-authenticated-scan">Can the asset be check with an authenticated scan? (yes/no)</enum>
+                     <enum value="physical-location">The physical location of the asset's hardware (e.g., Data Center ID, Cage#, Rack#, or other meaningful location identifiers).</enum>
+                     <enum value="function">The function provided by the asset for the system.</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+            <flag as-type="NCName" ref="id"/>
+            <flag as-type="string" ref="ns"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         name="value"
+                         as-type="string">
+               <formal-name>Value</formal-name>
+               <description>Indicates the value of the characteristic.</description>
+            </define-flag>
+            <model>
+               <field ref="remarks" in-xml="WITH_WRAPPER"/>
+            </model>
+         </define-assembly>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                       name="link"
+                       as-type="markup-line"
+                       max-occurs="unbounded">
+            <formal-name>link field</formal-name>
+            <description>link field ... </description>
+            <json-value-key>text</json-value-key>
+            <group-as name="links" in-json="ARRAY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         name="rel">
+               <formal-name>rel flag</formal-name>
+               <description>rel flag ... </description>
+               <constraint>
+                  <allowed-values allow-other="yes">
+                     <enum value="baseline-template">A reference to the baseline template used to configure the asset.</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+            <flag as-type="uri-reference" ref="href" required="yes"/>
+            <flag as-type="string" ref="media-type"/>
+         </define-field>
+         <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                          name="responsible-party"
+                          max-occurs="unbounded">
+            <formal-name>Responsible Party</formal-name>
+            <description>A reference to a set of organizations or persons that have responsibility for performing a referenced role relative to the parent context.</description>
+            <json-key flag-name="role-id"/>
+            <group-as name="responsible-parties" in-json="BY_KEY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_ssp_metaschema.xml"
+                         required="yes"
+                         name="role-id"
+                         as-type="NCName">
+               <formal-name>Role identifier</formal-name>
+               <description>Indicates the role assigned to the responsible party.</description>
+               <constraint>
+                  <allowed-values allow-other="yes">
+                     <enum value="asset-owner">Accountable for ensuring the asset is managed in accordance with organizational policies and procedures.</enum>
+                     <enum value="asset-administrator">Responsible for administering a set of assets.</enum>
+                     <enum value="soc">Members of the security operations center (SOC).</enum>
+                     <enum value="noc">Members of the network operations center (NOC).</enum>
+                     <enum value="incident-response">Members of the incident response team.</enum>
+                     <enum value="help-desk">Members of the help desk.</enum>
+                     <enum value="configuration-management-lead">Responsible for the configuration management processes governing changes to the asset.</enum>
+                     <enum value="maintainer">Organization responsible for the creation and maintenance of the component.</enum>
+                     <enum value="provider">Organization responsible for providing the component, if this is different from the "maintainer" (e.g., a reseller).</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+            <model>
+               <field ref="party-uuid" min-occurs="1" max-occurs="unbounded">
+                  <group-as name="party-uuids" in-json="ARRAY"/>
+               </field>
+               <field ref="prop" max-occurs="unbounded">
+                  <group-as name="properties" in-json="ARRAY"/>
+               </field>
+               <assembly ref="annotation" max-occurs="unbounded">
+                  <group-as name="annotations" in-json="ARRAY"/>
+               </assembly>
+               <field ref="link" max-occurs="unbounded">
+                  <group-as name="links" in-json="ARRAY"/>
+               </field>
+               <field ref="remarks" in-xml="WITH_WRAPPER"/>
+            </model>
+            <remarks>
+               <p>This construct is used to either: 1) associate a party or parties to a role defined on the component using the <code>responsible-role</code> construct, or 2) to define a party or parties that are responsible for a role defined within the context of the containing <code>inventory-item</code>.</p>
+            </remarks>
+         </define-assembly>
+         <field ref="remarks" in-xml="WITH_WRAPPER"/>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="import-ssp">
+      <formal-name>Import System Security Plan</formal-name>
+      <description>Used by the assessment plan and POA&amp;M to import information about the system.</description>
+      <flag as-type="uri-reference" ref="href" required="yes"/>
+      <model>
+         <field ref="remarks"
+                in-xml="WITH_WRAPPER"
+                min-occurs="0"
+                max-occurs="1"/>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="objectives">
+      <formal-name>Objectives of Assessment</formal-name>
+      <description>Identifies the controls and control being assessed and their control objectives. In the assessment plans, these are the planned controls and objectives. In the assessment results, these are the actual controls and objectives, and reflects any changes from the plan.</description>
+      <model>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="description"
+                       min-occurs="0"
+                       max-occurs="1"
+                       in-xml="WITH_WRAPPER">
+            <formal-name>description field</formal-name>
+            <description>A human-readable description of assessment objectives.</description>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="prop"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>Provided as means of extending the OSCAL syntax.</description>
+            <group-as name="properties" in-json="ARRAY"/>
+         </define-field>
+         <assembly ref="annotation" min-occurs="0" max-occurs="unbounded">
+            <group-as name="annotations" in-json="ARRAY"/>
+            <remarks>
+               <p>Provided as means of extending the OSCAL syntax.</p>
+            </remarks>
+         </assembly>
+         <assembly ref="controls" min-occurs="1" max-occurs="unbounded">
+            <group-as name="control-group" in-json="ARRAY"/>
+         </assembly>
+         <assembly ref="control-objectives" min-occurs="0" max-occurs="unbounded">
+            <group-as name="control-objective-group" in-json="ARRAY"/>
+         </assembly>
+         <assembly ref="objective" min-occurs="0" max-occurs="1"/>
+         <assembly ref="method" min-occurs="0" max-occurs="unbounded">
+            <group-as name="method-definitions" in-json="ARRAY"/>
+         </assembly>
+         <field ref="remarks"
+                in-xml="WITH_WRAPPER"
+                min-occurs="0"
+                max-occurs="1"/>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="controls">
+      <formal-name>Assessed Controls</formal-name>
+      <description>Identifies the controls being assessed. In the assessment plan, these are the planned controls. In the assessment results, these are the actual controls, and reflects any changes from the plan.</description>
+      <model>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="description"
+                       min-occurs="0"
+                       max-occurs="1"
+                       in-xml="WITH_WRAPPER">
+            <formal-name>description field</formal-name>
+            <description>A human-readable description of controls specified for assessment.</description>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="prop"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>Provided as means of extending the OSCAL syntax.</description>
+            <group-as name="properties" in-json="ARRAY"/>
+         </define-field>
+         <assembly ref="annotation" min-occurs="0" max-occurs="unbounded">
+            <group-as name="annotations" in-json="ARRAY"/>
+            <remarks>
+               <p>Provided as means of extending the OSCAL syntax.</p>
+            </remarks>
+         </assembly>
+         <field ref="all" min-occurs="0" max-occurs="1"/>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="include-control"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>include-control field</formal-name>
+            <description>Identifies a specific control to include.</description>
+            <group-as name="include-controls" in-json="ARRAY"/>
+            <flag as-type="NCName" ref="control-id" required="yes"/>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="exclude-control"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>exclude-control field</formal-name>
+            <description>Identifies a specific control to include.</description>
+            <group-as name="exclude-controls" in-json="ARRAY"/>
+            <flag as-type="NCName" ref="control-id" required="yes"/>
+         </define-field>
+         <field ref="remarks"
+                in-xml="WITH_WRAPPER"
+                min-occurs="0"
+                max-occurs="1"/>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="control-objectives">
+      <formal-name>Control Objectives</formal-name>
+      <description>Identifies the control objectives of the assessment. In the assessment plan, these are the planned objectives. In the assessment results, these are the actual objectives, and reflects any changes from the plan.</description>
+      <model>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="description"
+                       min-occurs="0"
+                       max-occurs="1"
+                       in-xml="WITH_WRAPPER">
+            <formal-name>description field</formal-name>
+            <description>A human-readable description of assessment objectives specified for assessment.</description>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="prop"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>Provided as means of extending the OSCAL syntax.</description>
+            <group-as name="properties" in-json="ARRAY"/>
+         </define-field>
+         <assembly ref="annotation" min-occurs="0" max-occurs="unbounded">
+            <group-as name="annotations" in-json="ARRAY"/>
+            <remarks>
+               <p>Provided as means of extending the OSCAL syntax.</p>
+            </remarks>
+         </assembly>
+         <field ref="all" min-occurs="0" max-occurs="1"/>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="include-objective"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>include-objective field</formal-name>
+            <description>Identifies a specific control to include.</description>
+            <group-as name="include-objectives" in-json="ARRAY"/>
+            <flag as-type="NCName" ref="objective-id" required="yes"/>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="exclude-objective"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>exclude-objective field</formal-name>
+            <description>Identifies a specific control to include.</description>
+            <group-as name="exclude-objectives" in-json="ARRAY"/>
+            <flag as-type="NCName" ref="objective-id" required="yes"/>
+         </define-field>
+         <field ref="remarks"
+                in-xml="WITH_WRAPPER"
+                min-occurs="0"
+                max-occurs="1"/>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="objective">
+      <formal-name>Control Objective</formal-name>
+      <description>A local definition of a control objective. Uses catalog syntax for control objective and assessment actions.</description>
+      <flag as-type="NCName" ref="id" required="yes"/>
+      <flag as-type="NCName" ref="control-id" required="yes"/>
+      <model>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="description"
+                       min-occurs="0"
+                       max-occurs="1"
+                       in-xml="WITH_WRAPPER">
+            <formal-name>description field</formal-name>
+            <description>A human-readable description of the defined objective.</description>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="prop"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>Provided as means of extending the OSCAL syntax.</description>
+            <group-as name="properties" in-json="ARRAY"/>
+         </define-field>
+         <assembly ref="annotation" min-occurs="0" max-occurs="unbounded">
+            <group-as name="annotations" in-json="ARRAY"/>
+            <remarks>
+               <p>Provided as means of extending the OSCAL syntax.</p>
+            </remarks>
+         </assembly>
+         <assembly ref="part" min-occurs="1" max-occurs="1"/>
+         <field ref="assessment-method" min-occurs="0" max-occurs="unbounded">
+            <group-as name="methods" in-json="ARRAY"/>
+         </field>
+         <field ref="remarks"
+                in-xml="WITH_WRAPPER"
+                min-occurs="0"
+                max-occurs="1"/>
+      </model>
+   </define-assembly>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                 name="assessment-method">
+      <formal-name>Assessment Method</formal-name>
+      <description>Identifies a method for assessing the satisfaction of this objective.</description>
+      <flag as-type="uuid" ref="method-uuid" required="yes"/>
+   </define-field>
+   <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                name="method-uuid"
+                as-type="uuid">
+      <formal-name>Method ID</formal-name>
+      <description>Identifies the assessment method.</description>
+   </define-flag>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="method">
+      <formal-name>Assessment Method</formal-name>
+      <description>A local definition of a control objective. Uses catalog syntax for control objective and assessment actions.</description>
+      <flag as-type="uuid" ref="uuid" required="yes"/>
+      <model>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="description"
+                       min-occurs="0"
+                       max-occurs="1"
+                       in-xml="WITH_WRAPPER">
+            <formal-name>description field</formal-name>
+            <description>A human-readable description of the defined method.</description>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="prop"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>Provided as means of extending the OSCAL syntax.</description>
+            <group-as name="properties" in-json="ARRAY"/>
+         </define-field>
+         <assembly ref="annotation" min-occurs="0" max-occurs="unbounded">
+            <group-as name="annotations" in-json="ARRAY"/>
+            <remarks>
+               <p>Provided as means of extending the OSCAL syntax.</p>
+            </remarks>
+         </assembly>
+         <assembly ref="part" min-occurs="1" max-occurs="1"/>
+         <field ref="remarks"
+                in-xml="WITH_WRAPPER"
+                min-occurs="0"
+                max-occurs="1"/>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="include-subject">
+      <formal-name>Included Assessment Subject</formal-name>
+      <description>Identifies exactly what will be the focus of this assessment. Anything not explicitly defined is out-of-scope.</description>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                   name="name"
+                   required="yes">
+         <formal-name>name flag</formal-name>
+         <description>name flag ... </description>
+         <constraint>
+            <allowed-values allow-other="yes">
+               <enum value="component">Component</enum>
+               <enum value="inventory-item">Inventory Item</enum>
+               <enum value="location">Location</enum>
+               <enum value="party">Person to Interview</enum>
+               <enum value="user">User</enum>
+            </allowed-values>
+         </constraint>
+      </define-flag>
+      <flag as-type="NCName" ref="class"/>
+      <model>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="description"
+                       min-occurs="1"
+                       max-occurs="1"
+                       in-xml="WITH_WRAPPER">
+            <formal-name>description field</formal-name>
+            <description>A human-readable description of subjects being included.</description>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="prop"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>Provided as means of extending the OSCAL syntax.</description>
+            <group-as name="properties" in-json="ARRAY"/>
+         </define-field>
+         <assembly ref="annotation" min-occurs="0" max-occurs="unbounded">
+            <group-as name="annotations" in-json="ARRAY"/>
+            <remarks>
+               <p>Provided as means of extending the OSCAL syntax.</p>
+            </remarks>
+         </assembly>
+         <field ref="all" min-occurs="0" max-occurs="1"/>
+         <assembly ref="subject-reference" min-occurs="0" max-occurs="unbounded">
+            <group-as name="subject-references" in-json="ARRAY"/>
+         </assembly>
+         <field ref="remarks"
+                in-xml="WITH_WRAPPER"
+                min-occurs="0"
+                max-occurs="1"/>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="exclude-subject">
+      <formal-name>Excluded Assessment Subject</formal-name>
+      <description>Identifies what is explicitly excluded from this assessment. Used to remove a subset of items from groups of explicitly included items. Also used to explicitly clarify off-limit items, such as hosts to avoid scanning.</description>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                   name="name"
+                   required="yes">
+         <formal-name>name flag</formal-name>
+         <description>name flag ... </description>
+         <constraint>
+            <allowed-values allow-other="yes">
+               <enum value="component">Component</enum>
+               <enum value="inventory-item">Inventory Item</enum>
+               <enum value="location">Location</enum>
+               <enum value="party">Person to Avoid Interviewing</enum>
+               <enum value="user">User</enum>
+            </allowed-values>
+         </constraint>
+      </define-flag>
+      <flag as-type="NCName" ref="class"/>
+      <model>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="description"
+                       min-occurs="1"
+                       max-occurs="1"
+                       in-xml="WITH_WRAPPER">
+            <formal-name>description field</formal-name>
+            <description>A human-readable description of subjects being excluded.</description>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="prop"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>Provided as means of extending the OSCAL syntax.</description>
+            <group-as name="properties" in-json="ARRAY"/>
+         </define-field>
+         <assembly ref="annotation" min-occurs="0" max-occurs="unbounded">
+            <group-as name="annotations" in-json="ARRAY"/>
+            <remarks>
+               <p>Provided as means of extending the OSCAL syntax.</p>
+            </remarks>
+         </assembly>
+         <field ref="all" min-occurs="0" max-occurs="1"/>
+         <assembly ref="subject-reference" min-occurs="0" max-occurs="unbounded">
+            <group-as name="subject-references" in-json="ARRAY"/>
+         </assembly>
+         <field ref="remarks"
+                in-xml="WITH_WRAPPER"
+                min-occurs="0"
+                max-occurs="1"/>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="subject-reference">
+      <formal-name>Identifies the Subject</formal-name>
+      <description>A pointer to a resource based on its ID. Use type to indicate whether the identified resource is a component, inventory item, location, user, or something else.</description>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                   name="uuid-ref"
+                   required="yes">
+         <formal-name>UUID Reference</formal-name>
+         <description>A pointer to a component, inventory-item, location, party, user, or resource using it's UUID.</description>
+      </define-flag>
+      <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                   name="type"
+                   required="yes">
+         <formal-name>type flag</formal-name>
+         <description>type flag ... </description>
+         <constraint>
+            <allowed-values allow-other="yes">
+               <enum value="component">Component</enum>
+               <enum value="inventory-item">Inventory Item</enum>
+               <enum value="location">Location</enum>
+               <enum value="party">Interview Party</enum>
+               <enum value="user">User</enum>
+               <enum value="resource">Resource or Artifact</enum>
+            </allowed-values>
+         </constraint>
+      </define-flag>
+      <model>
+         <field ref="title" min-occurs="0" max-occurs="1"/>
+         <field ref="prop" min-occurs="0" max-occurs="unbounded">
+            <group-as name="props" in-json="ARRAY"/>
+         </field>
+      </model>
+      <remarks>
+         <p>The subject reference UUID could point to an item defined in the SSP, AP, or AR.</p>
+         <p>Tools should check look for the ID in every file imported directly or indirectly.</p>
+      </remarks>
+   </define-assembly>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                 name="all">
+      <formal-name>All</formal-name>
+      <description>A key word to indicate all </description>
+   </define-field>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="assets">
+      <formal-name>Assessment Assets</formal-name>
+      <description>Identifies the assets used to perform this assessment, such as the assessment team, scanning tools, and assumptions.</description>
+      <model>
+         <assembly ref="tools" min-occurs="0" max-occurs="1"/>
+         <assembly ref="origination" min-occurs="0" max-occurs="1"/>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="prop"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>Provided as means of extending the OSCAL syntax.</description>
+            <group-as name="properties" in-json="ARRAY"/>
+         </define-field>
+         <assembly ref="annotation" min-occurs="0" max-occurs="unbounded">
+            <group-as name="annotations" in-json="ARRAY"/>
+            <remarks>
+               <p>Provided as means of extending the OSCAL syntax.</p>
+            </remarks>
+         </assembly>
+         <assembly ref="part" min-occurs="0" max-occurs="unbounded">
+            <group-as name="parts" in-json="ARRAY"/>
+            <remarks>
+               <p>Provided to allow content such as assumptions and disclosures.</p>
+            </remarks>
+         </assembly>
+         <field ref="remarks"
+                in-xml="WITH_WRAPPER"
+                min-occurs="0"
+                max-occurs="1"/>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="tools">
+      <formal-name>Assessment Assets</formal-name>
+      <description>The technology tools used by the assessor to perform the assessment, such as vulnerability scanners. In the assessment plan these are the intended tools. In the assessment results, these are the actual tools used, including any differences from the assessment plan.</description>
+      <model>
+         <assembly ref="component" min-occurs="0" max-occurs="unbounded">
+            <group-as name="components" in-json="BY_KEY"/>
+         </assembly>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="origination">
+      <formal-name>Assessment Origination</formal-name>
+      <description>Identifies the origination of network-based assessment activities, such as the IP address of the tool performing assessment scans.</description>
+      <model>
+         <field ref="title" min-occurs="1" max-occurs="1"/>
+         <field ref="description" min-occurs="0" max-occurs="1"/>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="prop"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>prop field ... </description>
+            <group-as name="properties" in-json="ARRAY"/>
+            <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                         name="name">
+               <formal-name>name flag</formal-name>
+               <description>name flag ... </description>
+               <constraint>
+                  <allowed-values allow-other="yes">
+                     <enum value="ipv4-address">Internet Protocol Address (Version 4)</enum>
+                     <enum value="ipv6-address">Internet Protocol Address (Version 6)</enum>
+                     <enum value="fqdn">Fully Qualified Domain Name</enum>
+                  </allowed-values>
+               </constraint>
+            </define-flag>
+         </define-field>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="assessment-activities">
+      <formal-name>Assessment Activities</formal-name>
+      <description>Identifies the assessment activities and schedule. In the assessment plan, these are planned activities. In the assessment results, these are the actual activities performed.</description>
+      <model>
+         <assembly ref="test-method" min-occurs="0" max-occurs="unbounded">
+            <group-as name="test-methods" in-json="ARRAY"/>
+         </assembly>
+         <assembly ref="schedule" min-occurs="0" max-occurs="1"/>
+         <assembly ref="include-activity" min-occurs="0" max-occurs="unbounded">
+            <group-as name="include-activities" in-json="ARRAY"/>
+         </assembly>
+         <assembly ref="exclude-activity" min-occurs="0" max-occurs="unbounded">
+            <group-as name="exclude-activities" in-json="ARRAY"/>
+         </assembly>
+         <field ref="remarks"
+                in-xml="WITH_WRAPPER"
+                min-occurs="0"
+                max-occurs="1"/>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="test-method">
+      <formal-name>Test Method</formal-name>
+      <description>Identifies an individual test method.</description>
+      <flag as-type="uuid" ref="uuid" required="yes"/>
+      <model>
+         <field ref="title" min-occurs="0" max-occurs="1"/>
+         <field ref="description" min-occurs="0" max-occurs="1"/>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="prop"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>Provided as means of extending the OSCAL syntax.</description>
+            <group-as name="properties" in-json="ARRAY"/>
+         </define-field>
+         <assembly ref="annotation" min-occurs="0" max-occurs="unbounded">
+            <group-as name="annotations" in-json="ARRAY"/>
+            <remarks>
+               <p>Provided as means of extending the OSCAL syntax.</p>
+            </remarks>
+         </assembly>
+         <field ref="link" min-occurs="0" max-occurs="unbounded">
+            <group-as name="links" in-json="ARRAY"/>
+         </field>
+         <assembly ref="test-step" min-occurs="0" max-occurs="unbounded">
+            <group-as name="test-steps" in-json="ARRAY"/>
+         </assembly>
+         <field ref="compare-to" min-occurs="0" max-occurs="1"/>
+         <field ref="remarks"
+                in-xml="WITH_WRAPPER"
+                min-occurs="0"
+                max-occurs="1"/>
+      </model>
+   </define-assembly>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                 name="compare-to"
+                 as-type="string">
+      <formal-name>Compare To</formal-name>
+      <description>Typically used in when copying content from the assessment plan to the assessment results. The uuid should be changed in the assessment results file, and the compare-to field should be set to the original assessment plan uuid value. This enables the plan and results to be compared later to identify what changed between the two.</description>
+   </define-field>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="test-step">
+      <formal-name>Test Steps</formal-name>
+      <description>Identifies an individual test step.</description>
+      <flag as-type="uuid" ref="uuid" required="yes"/>
+      <model>
+         <field ref="sequence" min-occurs="0" max-occurs="1"/>
+         <field ref="description" min-occurs="1" max-occurs="1"/>
+         <field ref="role-id" min-occurs="0" max-occurs="unbounded">
+            <group-as name="role-ids" in-json="ARRAY"/>
+         </field>
+         <field ref="party-uuid" min-occurs="0" max-occurs="unbounded">
+            <group-as name="party-uuids" in-json="ARRAY"/>
+         </field>
+         <field ref="compare-to" min-occurs="0" max-occurs="1"/>
+         <field ref="remarks"
+                in-xml="WITH_WRAPPER"
+                min-occurs="0"
+                max-occurs="1"/>
+      </model>
+   </define-assembly>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                 name="sequence"
+                 as-type="integer">
+      <formal-name>Sequence Number</formal-name>
+      <description>Identifies the sequence number for the test step.</description>
+   </define-field>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="schedule">
+      <formal-name>Schedule</formal-name>
+      <description>Identifies the schedule for the assessment activities.</description>
+      <flag as-type="uuid" ref="uuid"/>
+      <model>
+         <assembly ref="task" min-occurs="1" max-occurs="unbounded">
+            <group-as name="tasks" in-json="ARRAY"/>
+         </assembly>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="task">
+      <formal-name>Task</formal-name>
+      <description>Identifies an individual task.</description>
+      <flag as-type="uuid" ref="uuid" required="yes"/>
+      <model>
+         <field ref="title" min-occurs="0" max-occurs="1"/>
+         <field ref="description" min-occurs="0" max-occurs="1"/>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="prop"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>Provided as means of extending the OSCAL syntax.</description>
+            <group-as name="properties" in-json="ARRAY"/>
+         </define-field>
+         <assembly ref="annotation" min-occurs="0" max-occurs="unbounded">
+            <group-as name="annotations" in-json="ARRAY"/>
+            <remarks>
+               <p>Provided as means of extending the OSCAL syntax.</p>
+            </remarks>
+         </assembly>
+         <field ref="start" min-occurs="0" max-occurs="1"/>
+         <field ref="end" min-occurs="0" max-occurs="1"/>
+         <field ref="activity-uuid" min-occurs="0" max-occurs="unbounded">
+            <group-as name="activity-uuids" in-json="ARRAY"/>
+         </field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="role-id"
+                       as-type="NCName"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>role-id field</formal-name>
+            <description>Identifies roles associated with performing this task.</description>
+            <group-as name="role-ids" in-json="ARRAY"/>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="party-uuid"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>party-uuid field</formal-name>
+            <description>Identifies people or organizations associated with performing this task.</description>
+            <group-as name="party-uuids" in-json="ARRAY"/>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="location-uuid"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>location-uuid field</formal-name>
+            <description>Identifies locations associated with performing this task.</description>
+            <group-as name="location-uuids" in-json="ARRAY"/>
+         </define-field>
+         <field ref="compare-to" min-occurs="0" max-occurs="1"/>
+         <field ref="remarks"
+                in-xml="WITH_WRAPPER"
+                min-occurs="0"
+                max-occurs="1"/>
+      </model>
+   </define-assembly>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                 name="start"
+                 as-type="dateTime-with-timezone">
+      <formal-name>Start</formal-name>
+      <description>Identifies the start of a task.</description>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                 name="end"
+                 as-type="dateTime-with-timezone">
+      <formal-name>End</formal-name>
+      <description>Identifies the end of a task.</description>
+   </define-field>
+   <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                 name="activity-uuid"
+                 as-type="uuid">
+      <formal-name>Activity ID</formal-name>
+      <description>Links the task to a defined activity.</description>
+   </define-field>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="include-activity">
+      <formal-name>Included Activity</formal-name>
+      <description>Identifies an assessment activity. In the assessment plan, this is an intended/in-scope activity. In the assessment results, this identifies an activity that was actually performed.</description>
+      <flag as-type="uuid" ref="uuid" required="yes"/>
+      <model>
+         <field ref="title" min-occurs="0" max-occurs="1"/>
+         <field ref="description" min-occurs="1" max-occurs="1"/>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="prop"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>Provided as means of extending the OSCAL syntax.</description>
+            <group-as name="properties" in-json="ARRAY"/>
+         </define-field>
+         <assembly ref="annotation" min-occurs="0" max-occurs="unbounded">
+            <group-as name="annotations" in-json="ARRAY"/>
+            <remarks>
+               <p>Provided as means of extending the OSCAL syntax.</p>
+            </remarks>
+         </assembly>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="role-id"
+                       as-type="NCName"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>role-id field</formal-name>
+            <description>Identifies roles associated with performing this activity.</description>
+            <group-as name="role-ids" in-json="ARRAY"/>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="party-uuid"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>party-uuid field</formal-name>
+            <description>Identifies people or organizations associated with performing this activity.</description>
+            <group-as name="party-uuids" in-json="ARRAY"/>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="location-uuid"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>location-uuid field</formal-name>
+            <description>Identifies locations associated with performing this activity.</description>
+            <group-as name="location-uuids" in-json="ARRAY"/>
+         </define-field>
+         <field ref="compare-to" min-occurs="0" max-occurs="1"/>
+         <field ref="remarks"
+                in-xml="WITH_WRAPPER"
+                min-occurs="0"
+                max-occurs="1"/>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                    name="exclude-activity">
+      <formal-name>Included Activity</formal-name>
+      <description>Identifies an activity explicitly excluded from the assessment. In the assessment plan, this clarifies activities that are out-of-scope or prohibited. In the assessment results, this could be used to explicitly identify an activity that was planned, but not performed.</description>
+      <flag as-type="uuid" ref="uuid" required="yes"/>
+      <model>
+         <field ref="title" min-occurs="0" max-occurs="1"/>
+         <field ref="description" min-occurs="1" max-occurs="1"/>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="prop"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>prop field</formal-name>
+            <description>Provided as means of extending the OSCAL syntax.</description>
+            <group-as name="properties" in-json="ARRAY"/>
+         </define-field>
+         <assembly ref="annotation" min-occurs="0" max-occurs="unbounded">
+            <group-as name="annotations" in-json="ARRAY"/>
+            <remarks>
+               <p>Provided as means of extending the OSCAL syntax.</p>
+            </remarks>
+         </assembly>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="role-id"
+                       as-type="NCName"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>role-id field</formal-name>
+            <description>Identifies roles associated with this activity exclusion.</description>
+            <group-as name="role-ids" in-json="ARRAY"/>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="party-uuid"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>party-uuid field</formal-name>
+            <description>Identifies people or organizations associated with this activity exclusion.</description>
+            <group-as name="party-uuids" in-json="ARRAY"/>
+         </define-field>
+         <define-field module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                       name="location-uuid"
+                       min-occurs="0"
+                       max-occurs="unbounded">
+            <formal-name>location-uuid field</formal-name>
+            <description>Identifies locations associated with this activity exclusion.</description>
+            <group-as name="location-uuids" in-json="ARRAY"/>
+         </define-field>
+         <field ref="compare-to" min-occurs="0" max-occurs="1"/>
+         <field ref="remarks"
+                in-xml="WITH_WRAPPER"
+                min-occurs="0"
+                max-occurs="1"/>
+      </model>
+   </define-assembly>
+   <define-flag module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-common_metaschema.xml"
+                name="objective-id"
+                as-type="NCName">
+      <formal-name>Objective ID</formal-name>
+      <description>Points to an assessment objective.</description>
+   </define-flag>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-plan_metaschema.xml"
+                    name="assessment-plan">
+      <formal-name>Security Assessment Plan (SAP)</formal-name>
+      <description>An assessment plan, such as those provided by a FedRAMP assessor.</description>
+      <root-name>assessment-plan</root-name>
+      <flag as-type="uuid" ref="uuid" required="yes"/>
+      <model>
+         <assembly ref="metadata" min-occurs="1" max-occurs="1"/>
+         <assembly ref="import-ssp" min-occurs="1" max-occurs="1">
+            <remarks>
+               <p>Used by the SAP to import information about the system being assessed.</p>
+            </remarks>
+         </assembly>
+         <assembly ref="objectives" min-occurs="1" max-occurs="1"/>
+         <assembly ref="assessment-subjects" min-occurs="0" max-occurs="1"/>
+         <assembly ref="assets" min-occurs="0" max-occurs="1"/>
+         <assembly ref="assessment-activities" min-occurs="0" max-occurs="1"/>
+         <assembly ref="back-matter" min-occurs="0" max-occurs="1"/>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-plan_metaschema.xml"
+                    name="assessment-subjects">
+      <formal-name>Subject of Assessment</formal-name>
+      <description>Identifies system elements being assessed, such as components, inventory items, and locations. In the assessment plan, this identifies the planned assessment subject. In the assessment results this is the actual assessment subject, and reflects any changes from the plan.</description>
+      <model>
+         <assembly ref="include-subject" min-occurs="1" max-occurs="unbounded">
+            <group-as name="includes" in-json="ARRAY"/>
+         </assembly>
+         <assembly ref="exclude-subject" min-occurs="0" max-occurs="unbounded">
+            <group-as name="excludes" in-json="ARRAY"/>
+         </assembly>
+         <assembly ref="local-definitions" min-occurs="0" max-occurs="1"/>
+         <field ref="remarks"
+                in-xml="WITH_WRAPPER"
+                min-occurs="0"
+                max-occurs="1"/>
+      </model>
+   </define-assembly>
+   <define-assembly module="file:/C:/Users/wap1/Documents/usnistgov/metaschema/test-suite/oscal/oscal_assessment-plan_metaschema.xml"
+                    name="local-definitions">
+      <formal-name>Local Definitions</formal-name>
+      <description>Allows control objectives, users, components, and inventory-items to be defined within the assessment plan or assessment results for circumstances where they are not appropriately defined in the SSP. NOTE: Use the assessment plan or assessment results metadata to define additional locations if needed.</description>
+      <model>
+         <assembly ref="component" min-occurs="0" max-occurs="unbounded">
+            <group-as name="components" in-json="BY_KEY"/>
+            <remarks>
+               <p>Used to add any components, not defined via the System Security Plan (AR-&gt;AP-&gt;SSP)</p>
+            </remarks>
+         </assembly>
+         <assembly ref="inventory-item" min-occurs="0" max-occurs="unbounded">
+            <group-as name="inventory-items" in-json="BY_KEY"/>
+            <remarks>
+               <p>Used to add any inventory-items, not defined via the System Security Plan (AR-&gt;AP-&gt;SSP)</p>
+            </remarks>
+         </assembly>
+         <assembly ref="user" min-occurs="0" max-occurs="unbounded">
+            <group-as name="users" in-json="BY_KEY"/>
+            <remarks>
+               <p>Used to add any users, not defined via the System Security Plan (AR-&gt;AP-&gt;SSP)</p>
+            </remarks>
+         </assembly>
+         <field ref="remarks"
+                in-xml="WITH_WRAPPER"
+                min-occurs="0"
+                max-occurs="1"/>
+      </model>
+   </define-assembly>
+</METASCHEMA>

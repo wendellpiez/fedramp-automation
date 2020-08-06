@@ -1,2 +1,18 @@
 documents/source
 utils
+
+# IDE configuration files
+*.xpr
+!oscal-tools-dev.xpr
+
+# Working files
+backup*
+local/
+__pycache__
+xspec/
+
+# test reports
+testing/*.html
+testing/**/*.html
+*-report.html
+*-result.html
