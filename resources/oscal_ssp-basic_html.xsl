@@ -9,17 +9,20 @@
                 exclude-result-prefixes="#all">
 
    <f:transformation validation="strict current">
-      <f:title>FedRAMP System Security Plan page display (HTML5) transformation</f:title>
-      <f:short-title>FedRAMP SSP HTML XSLT (basic page)</f:short-title>
-      <f:description><p>From OSCAL SSP provided with its baselines, produces a self-contained page display.</p></f:description>
-      <f:date-of-origin>2020-08-05</f:date-of-origin>
-      <f:date-last-modified>2020-08-06</f:date-last-modified>
+      <f:title             >FedRAMP System Security Plan page display (HTML5) transformation</f:title>
+      <f:short-title       >FedRAMP SSP HTML XSLT (basic page)</f:short-title>
+      <f:description       >From OSCAL SSP provided with its baselines, produces a self-contained page display.</f:description>
+      <f:date-of-origin    >2020-08-05</f:date-of-origin>
+      <f:date-last-modified>2020-08-07</f:date-last-modified>
+      
       <f:parameter name="html-page-title" as="xs:string">String for HTML page title (browser header bar)</f:parameter>
       <f:parameter name="css-link"        as="xs:string?">Literal value for link to out of line CSS (superseded inline CSS)</f:parameter>
       <f:parameter name="trace"           as="xs:string" default="'no'">Emit trace messages to STDOUT at runtime ('yes','true' or 'on')</f:parameter>
-      <f:dependency href="modules/oscal_catalog_html.xsl" role="import">Handles catalog contents, with metadata and fallback logic.</f:dependency>
+      
+      <f:dependency href="modules/oscal_general_html.xsl" role="import">Templates for OSCAL. Imports other modules to inherit handling for catalog contents, metadata and fallback logic.</f:dependency>
       <f:dependency href="css/oscal-ssp_html.css" role="inject">If $css-link is not provided, this CSS is injected as literal CSS in the HTML for a standalone result file.</f:dependency>
       <f:dependency href="ssp-oscal-schema.xsd" role="validate-source">When source provided is not a valid OSCAL SSP (Milestone 3), inputs will fall through unpredictably.</f:dependency>
+      
       <f:result-format>HTML 5 + CSS</f:result-format>
    </f:transformation>
    
@@ -32,9 +35,7 @@
    <xsl:param name="trace" as="xs:string">no</xsl:param>
    
 <!-- The imported XSLT handles catalog contents, with metadata and fallback logic. -->
-   <xsl:import href="modules/oscal_catalog_html.xsl"/>
-   
-   <xsl:variable name="css-injection" select="css/fedramp-oscal-ssp.css"/>
+   <xsl:import href="modules/oscal_general_html.xsl"/>
    
    <xsl:template match="/" expand-text="true">
       <xsl:call-template name="warn-if-tracing">
@@ -52,10 +53,36 @@
             <xsl:call-template name="css-inline" use-when="not(matches($css-link,'\w'))"/>
          </head>
          <body>
-            <xsl:apply-templates/>
+<!-- We produce the contents by processing a set of proxy elements through a filter. Each proxy
+            indicates a handle for expansion using logic bound to the proxy by template
+            match. -->
+            <xsl:apply-templates select="$section-specs" mode="boilerplate"/>
          </body>
       </html>
    </xsl:template>
+   
+<!-- Control which sections to include here. -->
+   <xsl:variable as="element()*" name="section-specs">
+      <f:generate section="1"/>
+      <f:generate section="2"/>
+      <f:generate section="3"/>
+   </xsl:variable>
+   
+   <xsl:template mode="boilerplate" match="f:generate" expand-text="true">
+      <!-- Any actual boilerplate is delivered by a matching template
+           in the imported XSLT. If no boilerplate is written, an error-marking
+           div is given, and a trace message emitted. -->
+      <xsl:variable name="copy">
+         <xsl:apply-imports/>
+      </xsl:variable>
+      <!-- But pasting in the boilerplate is not enough: we
+           must process it to expand out any further generation. -->
+      <xsl:apply-templates select="$copy" mode="boilerplate"/>
+   </xsl:template>
+   
+   <!-- Actual boilerplate is imported. Note that boilerplate is then passed
+     through 'boilerplate' mode (in the same XSLT) for expansion/adjustment. -->
+   <xsl:import href="modules/fedramp-ssp-boilerplate.xsl"/>
    
    <!--
    
@@ -78,7 +105,9 @@
    
    <xsl:template mode="add-class" match="*">
       <xsl:attribute name="class">
-         <xsl:apply-templates select="." mode="css-value"/>
+         <xsl:value-of separator=" ">
+            <xsl:apply-templates select="." mode="css-value"/>
+         </xsl:value-of>
       </xsl:attribute>
    </xsl:template>
 
@@ -116,14 +145,6 @@
    
    <xsl:template match="import-profile" mode="get-label">Profile import</xsl:template>
    
-   <xsl:template name="padded-label">
-      <xsl:param name="label"/>
-      <span class="lbl">
-         <xsl:sequence select="$label"/>
-      </span>
-      <xsl:text> </xsl:text>
-   </xsl:template>
-      
    <xsl:template match="system-characteristics | system-implementation | control-implementation">
       <section>
          <xsl:apply-templates select="." mode="add-class"/>
@@ -161,8 +182,7 @@
       <xsl:call-template name="warn-if-tracing">
          <xsl:with-param name="warning">Empty 'description' element...</xsl:with-param>
       </xsl:call-template>
-   </xsl:template>
-   
+   </xsl:template>  
    
    <xsl:template match="system-information">
       <div>
@@ -181,7 +201,6 @@
    </xsl:template>
    
    <xsl:template mode="get-label" match="security-sensitivity-level">Security sensitivity level</xsl:template>
-   
    
    <!--<xsl:template match="system-information">
       <div class="system-information">
@@ -255,7 +274,8 @@
             <xsl:for-each select="@state">
                <xsl:text>: </xsl:text>
                <xsl:value-of select="."/>
-            </xsl:for-each></p>
+            </xsl:for-each>
+         </p>
          <xsl:apply-templates/>
       </div>
    </xsl:template>
@@ -277,7 +297,7 @@
          <xsl:apply-templates select="." mode="add-class"/>
          <details>
             <summary>
-               <h4>System inventory</h4>
+               <span class="h4">System inventory</span>
             </summary>
             <xsl:apply-templates/>
          </details>
@@ -336,12 +356,63 @@
    </xsl:template>
    
    <xsl:template name="css-inline" expand-text="true">
+      <xsl:variable name="properties" as="map(*)">
+         <xsl:map>
+            <xsl:map-entry key="'header.face'">'Montserrat', Arial, Helvetica, sans-serif</xsl:map-entry>
+            <xsl:map-entry key="'body.face'">'Muli', Arial, Helvetica, sans-serif</xsl:map-entry>
+            <xsl:map-entry key="'light.blue'">#ccecfc</xsl:map-entry>
+            <xsl:map-entry key="'white'">#ffffff</xsl:map-entry>
+            <xsl:map-entry key="'cyan'">#1294c2</xsl:map-entry>
+            <xsl:map-entry key="'red'">#cc1d1d</xsl:map-entry>
+            <xsl:map-entry key="'vivid.blue'">#1a4480</xsl:map-entry>
+            <xsl:map-entry key="'deep.blue'">#162e51</xsl:map-entry>
+            <xsl:map-entry key="'bg.color'">#f2f2f2</xsl:map-entry>
+            <xsl:map-entry key="'heading.color'">#757575</xsl:map-entry>
+            <xsl:map-entry key="'body-color'">#454545</xsl:map-entry>
+         </xsl:map>
+      </xsl:variable>
+      
       <style type="text/css" xml:space="preserve">
+@import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
+@import url(http://fonts.googleapis.com/css?family=Muli:400,700);
+         
 details {{ padding: 1em }}
+
+html, body {{ background-color: {$properties?white};
+              color: { $properties?body-color };
+              font-family: {$properties?body.face} }}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {{ color: {$properties?heading.color};
+              font-family: {$properties?header.face} }}
+h1, .h1 {{ text-transform: uppercase }}
+
+section h1 {{ color: {$properties?red} }}
+
+h4.tablecaption {{ color: {$properties?red};
+  font-style: italic; font-weight: normal }}
 
 .lbl {{ font-family: sans-serif; font-weight: bold; font-size: 80% }}
 .lbl2 {{ font-family: sans-serif; font-size: 80% }}
 
+.tag {{ font-family: monospace; font-weight: bold }}
+
+div {{ padding: 0.2em; margin-top: 0.5em }}
+
+th {{ color: {$properties?white};
+      background-color: {$properties?vivid.blue} }}
+      
+div.instruction {{ border: thin solid {$properties?vivid.blue};
+  color: {$properties?vivid.blue} }}
+
+p:first-child {{ margin-top: 0em }}
+p:last-child  {{ margin-bottom: 0em }}
+
+span.choice {{ font-weight: 600; color: {$properties?heading.color} }}
       </style>
    </xsl:template>
+   
+   <xsl:variable name="gt">
+      <xsl:text disable-output-escaping="true">></xsl:text>
+   </xsl:variable>
 </xsl:stylesheet>
