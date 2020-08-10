@@ -6,15 +6,39 @@
             <serialized version="22.1" xml:space="preserve">
                 <serializableOrderedMap>
                     <entry>
+                        <String>enable.project.master.files.support</String>
+                        <Boolean>true</Boolean>
+                    </entry>
+                    <entry>
                         <String>scenario.associations</String>
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>resources/oscal_ssp-basic_html.xsl</String>
+                                    <String>templates/ssp/xml/FedRAMP-SSP-OSCAL-Template.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>Test run XSLT on FedRAMP SSP template (refresh only)</String>
+                                        <String>Refresh UUIDs</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioStorageLocations">
+                                    <list>
+                                        <Byte>2</Byte>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>resources/modules/fedramp-ssp-boilerplate.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>FedRAMP SSP workup - BASIC DISPLAY (refresh only)</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -30,11 +54,31 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>resources/FedRAMP-CIS%20-%20Working%20(2.0).xsl</String>
+                                    <String>resources/oscal_ssp-basic_html.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>Test run XSLT on FedRAMP SSP template (refresh and open)</String>
+                                        <String>FedRAMP SSP workup - BASIC DISPLAY (refresh only)</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioStorageLocations">
+                                    <list>
+                                        <Byte>2</Byte>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>local/FedRAMP-CIS.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>FedRAMP SSP workup - BASIC DISPLAY (refresh only)</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -73,6 +117,89 @@
                     <entry>
                         <String>scenarios</String>
                         <scenario-array>
+                            <scenario>
+                                <field name="advancedOptionsMap">
+                                    <null/>
+                                </field>
+                                <field name="name">
+                                    <String>Refresh UUIDs</String>
+                                </field>
+                                <field name="baseURL">
+                                    <String></String>
+                                </field>
+                                <field name="footerURL">
+                                    <String></String>
+                                </field>
+                                <field name="fOPMethod">
+                                    <String>pdf</String>
+                                </field>
+                                <field name="fOProcessorName">
+                                    <String>Apache FOP</String>
+                                </field>
+                                <field name="headerURL">
+                                    <String></String>
+                                </field>
+                                <field name="inputXSLURL">
+                                    <String>file:/C:/Users/wap1/Documents/usnistgov/fedramp-automation/resources/refresh-uuids.xsl</String>
+                                </field>
+                                <field name="inputXMLURL">
+                                    <String>${currentFileURL}</String>
+                                </field>
+                                <field name="defaultScenario">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="isFOPPerforming">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="type">
+                                    <String>XSL</String>
+                                </field>
+                                <field name="saveAs">
+                                    <Boolean>true</Boolean>
+                                </field>
+                                <field name="openInBrowser">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="outputResource">
+                                    <String>${cfn}-new-uuids.xml</String>
+                                </field>
+                                <field name="openOtherLocationInBrowser">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="locationToOpenInBrowserURL">
+                                    <null/>
+                                </field>
+                                <field name="openInEditor">
+                                    <Boolean>true</Boolean>
+                                </field>
+                                <field name="showInHTMLPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="showInXMLPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="showInSVGPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="showInResultSetPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="useXSLTInput">
+                                    <Boolean>true</Boolean>
+                                </field>
+                                <field name="xsltParams">
+                                    <list/>
+                                </field>
+                                <field name="cascadingStylesheets">
+                                    <String-array/>
+                                </field>
+                                <field name="xslTransformer">
+                                    <String>Saxon-PE</String>
+                                </field>
+                                <field name="extensionURLs">
+                                    <String-array/>
+                                </field>
+                            </scenario>
                             <scenario>
                                 <field name="advancedOptionsMap">
                                     <null/>
@@ -161,7 +288,7 @@
                                     <null/>
                                 </field>
                                 <field name="name">
-                                    <String>Test run XSLT on FedRAMP SSP template (refresh and open)</String>
+                                    <String>FedRAMP SSP workup - BASIC DISPLAY (refresh and open)</String>
                                 </field>
                                 <field name="baseURL">
                                     <String></String>
@@ -179,10 +306,10 @@
                                     <String></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String>${currentFileURL}</String>
+                                    <String>${pdu}/resources/oscal_ssp-basic_html.xsl</String>
                                 </field>
                                 <field name="inputXMLURL">
-                                    <String>${pdu}/templates/ssp/xml/FedRAMP-SSP-OSCAL-Template.xml</String>
+                                    <String>${pdu}/resources/specs/FedRAMP-SSP-OSCAL-workup.xml</String>
                                 </field>
                                 <field name="defaultScenario">
                                     <Boolean>false</Boolean>
@@ -200,7 +327,7 @@
                                     <Boolean>true</Boolean>
                                 </field>
                                 <field name="outputResource">
-                                    <String>${pd}/resources/test-results/${cfn}.html</String>
+                                    <String>${pd}/resources/test-results/FedRAMP-SSP-OSCAL-workup.html</String>
                                 </field>
                                 <field name="openOtherLocationInBrowser">
                                     <Boolean>false</Boolean>
@@ -244,7 +371,7 @@
                                     <null/>
                                 </field>
                                 <field name="name">
-                                    <String>Test run XSLT on FedRAMP SSP template (refresh only)</String>
+                                    <String>FedRAMP SSP workup - BASIC DISPLAY (refresh only)</String>
                                 </field>
                                 <field name="baseURL">
                                     <String></String>
@@ -262,10 +389,10 @@
                                     <String></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String>${currentFileURL}</String>
+                                    <String>${pdu}/resources/oscal_ssp-basic_html.xsl</String>
                                 </field>
                                 <field name="inputXMLURL">
-                                    <String>${pdu}/templates/ssp/xml/FedRAMP-SSP-OSCAL-Template.xml</String>
+                                    <String>${pdu}/resources/specs/FedRAMP-SSP-OSCAL-workup.xml</String>
                                 </field>
                                 <field name="defaultScenario">
                                     <Boolean>false</Boolean>
@@ -283,7 +410,7 @@
                                     <Boolean>false</Boolean>
                                 </field>
                                 <field name="outputResource">
-                                    <String>${pd}/resources/test-results/${cfn}.html</String>
+                                    <String>${pd}/resources/test-results/FedRAMP-SSP-OSCAL-workup.html</String>
                                 </field>
                                 <field name="openOtherLocationInBrowser">
                                     <Boolean>false</Boolean>
@@ -298,7 +425,7 @@
                                     <Boolean>false</Boolean>
                                 </field>
                                 <field name="showInXMLPane">
-                                    <Boolean>true</Boolean>
+                                    <Boolean>false</Boolean>
                                 </field>
                                 <field name="showInSVGPane">
                                     <Boolean>false</Boolean>
@@ -440,6 +567,10 @@
         </options>
     </meta>
     <projectTree name="oscal-tools-dev.xpr">
+        <folder masterFiles="true" name="Master Files">
+            <file name="resources/oscal_ssp-basic_html.xsl"/>
+        </folder>
         <folder path="."/>
+        <file name="resources/specs/FedRAMP-SSP-OSCAL-workup.xml"/>
     </projectTree>
 </project>

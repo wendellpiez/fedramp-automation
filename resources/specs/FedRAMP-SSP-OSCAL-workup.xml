@@ -1,0 +1,2458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Modified by conversion XSLT 2020-08-10T17:02:02.82-04:00 - UUIDs refreshed -->
+<system-security-plan xmlns="http://csrc.nist.gov/ns/oscal/1.0"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="https://raw.githubusercontent.com/usnistgov/OSCAL/master/xml/schema/oscal_ssp_schema.xsd"
+                      uuid="023e20e9-c49e-49d9-b068-0b66d2e63276">
+   <metadata>
+      <title>FedRAMP System Security Plan (SSP)</title>
+      <published>2020-07-01T00:00:00.00-04:00</published>
+      <last-modified>2020-07-01T00:00:00.00-04:00</last-modified>
+      <version>0.0</version>
+      <oscal-version>1.0-Milestone3</oscal-version>
+      <revision-history>
+         <revision>
+            <published>2019-06-01T00:00:00.00-04:00</published>
+            <version>1.0</version>
+            <oscal-version>1.0-Milestone3</oscal-version>
+            <prop name="party-uuid" ns="https://fedramp.gov/ns/oscal">6b286b5d-8f07-4fa7-8847-1dd0d88f73fb</prop>
+            <remarks>
+               <p>Initial publication.</p>
+            </remarks>
+         </revision>
+         <revision>
+            <published>2020-06-01T00:00:00.00-04:00</published>
+            <version>2.0</version>
+            <oscal-version>1.0-Milestone3</oscal-version>
+            <prop name="party-id" ns="https://fedramp.gov/ns/oscal">csp</prop>
+            <remarks>
+               <p>Updated for annual assessment.</p>
+            </remarks>
+         </revision>
+         <!-- Additional revision assemblies as needed. -->
+      </revision-history>
+      <prop name="marking">Controlled Unclassified Information</prop>
+      <!-- The following role definitions are required by FedRAMP -->
+      <!-- Do not change the ID's or titles. -->
+      <role id="prepared-by">
+         <title>Prepared By</title>
+         <desc>The organization that prepared this SSP. If developed in-house, this is the CSP itself.</desc>
+      </role>
+      <role id="prepared-for">
+         <title>Prepared For</title>
+         <desc>The organization for which this SSP was prepared. Typically the CSP.</desc>
+      </role>
+      <role id="content-approver">
+         <title>System Security Plan Approval</title>
+         <desc>The individual or individuals accountable for the accuracy of this SSP.</desc>
+      </role>
+      <role id="cloud-service-provider">
+         <title>Cloud Service Provider</title>
+         <short-name>CSP</short-name>
+      </role>
+      <role id="system-owner">
+         <title>Information System Owner</title>
+         <desc>The individual within the CSP who is ultimately accountable for everything related to this system.</desc>
+      </role>
+      <role id="authorizing-official">
+         <title>Authorizing Official</title>
+         <desc>The individual or individuals who must grant this system an authorization to operate.</desc>
+      </role>
+      <role id="authorizing-official-poc">
+         <title>Authorizing Official's Point of Contact</title>
+         <desc>The individual representing the authorizing official.</desc>
+      </role>
+      <role id="system-poc-management">
+         <title>Information System Management Point of Contact (POC)</title>
+         <desc>The highest level manager who responsible for system operation on behalf of the System Owner.</desc>
+      </role>
+      <role id="system-poc-technical">
+         <title>Information System Technical Point of Contact</title>
+         <desc>The individual or individuals leading the technical operation of the system.</desc>
+      </role>
+      <role id="system-poc-other">
+         <title>General Point of Contact (POC)</title>
+         <desc>A general point of contact for the system, designated by the system owner.</desc>
+      </role>
+      <role id="information-system-security-officer">
+         <title>System Information System Security Officer (or Equivalent)</title>
+         <desc>The individual accountable for the security posture of the system on behalf of the system owner.</desc>
+      </role>
+      <role id="privacy-poc">
+         <title>Privacy Official's Point of Contact</title>
+         <desc>The individual responsible for the privacy threshold analysis and if necessary the privacy impact assessment.</desc>
+      </role>
+      <role id="asset-owner">
+         <title>Owner of an inventory item within the system.</title>
+      </role>
+      <role id="asset-administrator">
+         <title>Administrative responsibility an inventory item within the system.</title>
+      </role>
+      <role id="isa-poc-local">
+         <title>ICA POC (Local)</title>
+         <desc>The point of contact for an interconnection on behalf of this system.</desc>
+         <remarks>
+            <p>Remove this role if there are no ICAs.</p>
+         </remarks>
+      </role>
+      <role id="isa-poc-remote">
+         <title>ICA POC (Remote)</title>
+         <desc>The point of contact for an interconnection on behalf of this external system to which this system connects.</desc>
+         <remarks>
+            <p>Remove this role if there are no ICAs.</p>
+         </remarks>
+      </role>
+      <role id="isa-authorizing-official-local">
+         <title>ICA Signatory (Local)</title>
+         <desc>Responsible for signing an interconnection security agreement on behalf of this system.</desc>
+         <remarks>
+            <p>Remove this role if there are no ICAs.</p>
+         </remarks>
+      </role>
+      <role id="isa-authorizing-official-remote">
+         <title>ICA Signatory (Remote)</title>
+         <desc>Responsible for signing an interconnection security agreement on behalf of the external system to which this system connects.</desc>
+         <remarks>
+            <p>Remove this role if there are no ICAs.</p>
+         </remarks>
+      </role>
+      <role id="consultant">
+         <title>Consultant</title>
+         <desc>Any consultants involved with developing or maintaining this content.</desc>
+      </role>
+      <!-- The following role definitions are samples and may be modified or deleted -->
+      <role id="admin-unix">
+         <title>[SAMPLE]Unix Administrator</title>
+         <desc>This is a sample role.</desc>
+      </role>
+      <role id="admin-client">
+         <title>[SAMPLE]Client Administrator</title>
+         <desc>This is a sample role.</desc>
+      </role>
+      <role id="program-director">
+         <title>[SAMPLE]Program Director</title>
+         <desc>This is a sample role.</desc>
+      </role>
+      <role id="fedramp-pmo">
+         <title>Federal Risk and Authorization Management Program (FedRAMP) Program Management Office (PMO)</title>
+         <short-name>FedRAMP PMO</short-name>
+      </role>
+      <role id="fedramp-jab">
+         <title>Federal Risk and Authorization Management Program (FedRAMP) Joint Authorization Board (JAB)</title>
+         <short-name>FedRAMP JAB</short-name>
+      </role>
+      <location uuid="fa87522b-6125-4b5d-a4c2-ae4c03e3a952">
+         <title>CSP HQ</title>
+         <address type="work">
+            <addr-line>Suite 0000</addr-line>
+            <addr-line>1234 Some Street</addr-line>
+            <city>Haven</city>
+            <state>ME</state>
+            <postal-code>00000</postal-code>
+         </address>
+         <remarks>
+            <p>There must be one location identifying the CSP's primary business address, such as the CSP's HQ, or the address of the system owner's primary business location.</p>
+         </remarks>
+      </location>
+      <location uuid="654c61e3-3421-48b4-8b25-f9e932c8b65c">
+         <title>Primary Data Center</title>
+         <address>
+            <addr-line>2222 Main Street</addr-line>
+            <city>Anywhere</city>
+            <state>--</state>
+            <postal-code>00000-0000</postal-code>
+         </address>
+         <prop name="conformity" ns="https://fedramp.gov/ns/oscal">data-center</prop>
+         <prop name="conformity" ns="https://fedramp.gov/ns/oscal">primary-data-center</prop>
+         <remarks>
+            <p>There must be one location for each data center.</p>
+            <p>There must be at least two data centers.</p>
+            <p>For a data center, briefly summarize the components at this location.</p>
+            <p>All data centers must have a conformity tag of "data-center".</p>
+            <p>A primary data center must also have a conformity tag of "primary-data-center".</p>
+         </remarks>
+      </location>
+      <location uuid="fdae5006-fd6a-49e1-afc3-3e56c7e54bf9">
+         <title>Secondary Data Center</title>
+         <address>
+            <addr-line>3333 Small Road</addr-line>
+            <city>Anywhere</city>
+            <state>--</state>
+            <postal-code>00000-0000</postal-code>
+         </address>
+         <prop name="conformity" ns="https://fedramp.gov/ns/oscal">data-center</prop>
+         <prop name="conformity" ns="https://fedramp.gov/ns/oscal">alternate-data-center</prop>
+         <remarks>
+            <p>There must be one location for each data center.</p>
+            <p>There must be at least two data centers.</p>
+            <p>For a data center, briefly summarize the components at this location.</p>
+            <p>All data centers must have a conformity tag of "data-center"</p>
+            <p>An alternate or backup data center must also have a conformity tag of "alternate-data-center".</p>
+         </remarks>
+      </location>
+      <!-- The following parties must be present. Preserving the ID is no longer required. -->
+      <!-- Change the content as needed. -->
+      <party uuid="80698f7b-6601-4d89-8353-3570339fd9ac" type="organization">
+         <party-name>Cloud Service Provider (CSP) Name</party-name>
+         <short-name>CSP Acronym/Short Name</short-name>
+         <location-uuid>fa87522b-6125-4b5d-a4c2-ae4c03e3a952</location-uuid>
+         <remarks>
+            <p>Replace sample CSP information.</p>
+         </remarks>
+      </party>
+      <!-- The following parties must be present. Preserving the ID is no longer required. -->
+      <!-- Do not change the FedRAMP PMO and JAB information unless instructed to do so by the FedRAMP PMO. -->
+      <party uuid="04ead818-0e39-4fd2-b8ab-789a1733649f" type="organization">
+         <party-name>Federal Risk and Authorization Management Program: Program Management Office</party-name>
+         <short-name>FedRAMP PMO</short-name>
+         <link href="https://fedramp.gov"/>
+         <address type="work">
+            <addr-line>1800 F St. NW</addr-line>
+            <addr-line/>
+            <city>Washington</city>
+            <state>DC</state>
+            <postal-code/>
+            <country>US</country>
+         </address>
+         <email>info@fedramp.gov</email>
+         <remarks>
+            <p>This party entry must be present in a FedRAMP SSP.</p>
+            <p>The uuid may be different; however, the uuid must be associated with the "fedramp-pmo" role in the responsible-party assemblies.</p>
+         </remarks>
+      </party>
+      <party uuid="599f362e-cb59-493d-9417-7d5884f19a04" type="organization">
+         <party-name>Federal Risk and Authorization Management Program: Joint Authorization Board</party-name>
+         <short-name>FedRAMP JAB</short-name>
+         <remarks>
+            <p>This party entry must be present in a FedRAMP SSP.</p>
+            <p>The uuid may be different; however, the uuid must be associated with the "fedramp-jab" role in the responsible-party assemblies.</p>
+         </remarks>
+      </party>
+      <!-- The following parties are samples, and may be modified or removed -->
+      <party uuid="e7a74da8-0cb0-49fc-9168-0deca2392012" type="organization">
+         <party-name>External Organization</party-name>
+         <short-name>External</short-name>
+         <remarks>
+            <p>Generic placeholder for any external organization.</p>
+         </remarks>
+      </party>
+      <party uuid="a6b23fe0-1011-4b4e-82ec-261d61cad28b" type="organization">
+         <party-name>Agency Name</party-name>
+         <short-name>A.N.</short-name>
+         <remarks>
+            <p>Generic placeholder for an authorizing agency.</p>
+         </remarks>
+      </party>
+      <party uuid="3d1248c2-163a-4543-92b2-e36b3d5968b3" type="organization">
+         <party-name>Name of Consulting Org</party-name>
+         <short-name>NOCO</short-name>
+         <link href="https://consulting.sample"/>
+         <address type="work">
+            <addr-line>3333 Corporate Way</addr-line>
+            <city>Washington</city>
+            <state>DC</state>
+            <postal-code/>
+            <country>US</country>
+         </address>
+         <email>poc@consulting.sample</email>
+      </party>
+      <party uuid="eac2fbb7-d54d-45fe-b36f-36f937b81c58" type="organization">
+         <party-name>[SAMPLE]Remote System Org Name</party-name>
+      </party>
+      <party uuid="20338b56-1bae-4953-a32a-86ce52008bb2" type="person">
+         <party-name>[SAMPLE]ICA POC's Name</party-name>
+         <prop name="title" ns="https://fedramp.gov/ns/oscal">Individual's Title</prop>
+         <email>person@ica.org.example</email>
+         <phone>202-555-1212</phone>
+         <member-of-organization>eac2fbb7-d54d-45fe-b36f-36f937b81c58</member-of-organization>
+      </party>
+      <party uuid="99678fe0-43be-4555-ad26-0524e4b32304" type="organization">
+         <party-name>[SAMPLE]Example IaaS Provider</party-name>
+         <short-name>E.I.P.</short-name>
+         <remarks>
+            <p>Underlying service provider. Leveraged Authorization.</p>
+         </remarks>
+      </party>
+      <party uuid="884faf70-d0b4-4c6c-a949-b6ca63ef9ca8" type="person">
+         <party-name>[SAMPLE]Person Name 1</party-name>
+         <prop name="title" ns="https://fedramp.gov/ns/oscal">Individual's Title</prop>
+         <address>
+            <addr-line>Mailstop A-1</addr-line>
+         </address>
+         <email>name@org.domain</email>
+         <phone>202-000-0001</phone>
+         <member-of-organization>80698f7b-6601-4d89-8353-3570339fd9ac</member-of-organization>
+         <location-uuid>fa87522b-6125-4b5d-a4c2-ae4c03e3a952</location-uuid>
+      </party>
+      <party uuid="3ae4016f-aa6a-4f2c-98cb-17238a33d240" type="person">
+         <party-name>[SAMPLE]Person Name 2</party-name>
+         <prop name="title" ns="https://fedramp.gov/ns/oscal">Individual's Title</prop>
+         <address type="work">
+            <addr-line>Address Line</addr-line>
+            <city>City</city>
+            <state>ST</state>
+            <postal-code>00000</postal-code>
+            <country>US</country>
+         </address>
+         <email>name@org.domain</email>
+         <phone>202-000-0002</phone>
+         <member-of-organization>80698f7b-6601-4d89-8353-3570339fd9ac</member-of-organization>
+      </party>
+      <party uuid="6f55dae9-8c2f-45a3-af24-d40a30b432d8" type="person">
+         <party-name>[SAMPLE]Person Name 3</party-name>
+         <prop name="title" ns="https://fedramp.gov/ns/oscal">Individual's Title</prop>
+         <address type="work">
+            <addr-line>Address Line</addr-line>
+            <city>City</city>
+            <state>ST</state>
+            <postal-code>00000</postal-code>
+            <country>US</country>
+         </address>
+         <email>name@org.domain</email>
+         <phone>202-000-0003</phone>
+         <member-of-organization>80698f7b-6601-4d89-8353-3570339fd9ac</member-of-organization>
+      </party>
+      <party uuid="5df5b23a-67b2-495c-9192-8d2d92129c68" type="person">
+         <party-name>[SAMPLE]Person Name 4</party-name>
+         <prop name="title" ns="https://fedramp.gov/ns/oscal">Individual's Title</prop>
+         <address type="work">
+            <addr-line>Address Line</addr-line>
+            <city>City</city>
+            <state>ST</state>
+            <postal-code>00000</postal-code>
+            <country>US</country>
+         </address>
+         <email>name@org.domain</email>
+         <phone>202-000-0004</phone>
+         <member-of-organization>80698f7b-6601-4d89-8353-3570339fd9ac</member-of-organization>
+      </party>
+      <party uuid="2f6873d4-a360-42b9-ae5f-966ed85a455f" type="person">
+         <party-name>[SAMPLE]Person Name 5</party-name>
+         <prop name="title" ns="https://fedramp.gov/ns/oscal">Individual's Title</prop>
+         <address type="work">
+            <addr-line>Address Line</addr-line>
+            <city>City</city>
+            <state>ST</state>
+            <postal-code>00000</postal-code>
+            <country>US</country>
+         </address>
+         <email>name@org.domain</email>
+         <phone>202-000-0005</phone>
+         <member-of-organization>80698f7b-6601-4d89-8353-3570339fd9ac</member-of-organization>
+      </party>
+      <party uuid="3eb3db07-e046-493d-9817-e039f7cea72c" type="person">
+         <party-name>[SAMPLE]Person Name 6</party-name>
+         <prop name="title" ns="https://fedramp.gov/ns/oscal">Individual's Title</prop>
+         <address type="work">
+            <addr-line>Address Line</addr-line>
+            <city>City</city>
+            <state>ST</state>
+            <postal-code>00000</postal-code>
+            <country>US</country>
+         </address>
+         <email>name@org.domain</email>
+         <phone>202-000-0006</phone>
+         <member-of-organization>e7a74da8-0cb0-49fc-9168-0deca2392012</member-of-organization>
+      </party>
+      <party uuid="1bdccd1c-1db5-43aa-a32a-cb3e25c866f1" type="person">
+         <party-name>[SAMPLE]Person Name 7</party-name>
+         <prop name="title" ns="https://fedramp.gov/ns/oscal">Individual's Title</prop>
+         <address type="work">
+            <addr-line>Address Line</addr-line>
+            <city>City</city>
+            <state>ST</state>
+            <postal-code>00000</postal-code>
+            <country>US</country>
+         </address>
+         <email>name@org.domain</email>
+         <phone>202-000-0007</phone>
+         <member-of-organization>80698f7b-6601-4d89-8353-3570339fd9ac</member-of-organization>
+      </party>
+      <party uuid="cb7cdbce-b82e-4b46-96a2-5571a4214725" type="organization">
+         <party-name>[SAMPLE] IT Department</party-name>
+      </party>
+      <party uuid="c7e2ca09-fcab-488c-8d45-d61f9b7f1a21" type="organization">
+         <party-name>[SAMPLE]Security Team</party-name>
+      </party>
+      <responsible-party role-id="cloud-service-provider">
+         <party-uuid>80698f7b-6601-4d89-8353-3570339fd9ac</party-uuid>
+         <remarks>
+            <p>Exactly one</p>
+         </remarks>
+      </responsible-party>
+      <!-- Page ii -->
+      <responsible-party role-id="prepared-by">
+         <party-uuid>884faf70-d0b4-4c6c-a949-b6ca63ef9ca8</party-uuid>
+         <remarks>
+            <p>Exactly one</p>
+         </remarks>
+      </responsible-party>
+      <responsible-party role-id="prepared-for"><!-- Exacty one -->
+         <party-uuid>80698f7b-6601-4d89-8353-3570339fd9ac</party-uuid>
+      </responsible-party>
+      <!-- Page vi -->
+      <responsible-party role-id="content-approver">
+         <party-uuid>884faf70-d0b4-4c6c-a949-b6ca63ef9ca8</party-uuid>
+         <party-uuid>3ae4016f-aa6a-4f2c-98cb-17238a33d240</party-uuid>
+         <remarks>
+            <p>One or more</p>
+         </remarks>
+      </responsible-party>
+      <responsible-party role-id="system-owner">
+         <party-uuid>884faf70-d0b4-4c6c-a949-b6ca63ef9ca8</party-uuid>
+         <remarks>
+            <p>Exactly one</p>
+         </remarks>
+      </responsible-party>
+      <responsible-party role-id="authorizing-official">
+         <party-uuid>599f362e-cb59-493d-9417-7d5884f19a04</party-uuid>
+         <party-uuid>3eb3db07-e046-493d-9817-e039f7cea72c</party-uuid>
+         <remarks>
+            <p>One or more</p>
+         </remarks>
+      </responsible-party>
+      <responsible-party role-id="system-poc-management">
+         <party-uuid>6f55dae9-8c2f-45a3-af24-d40a30b432d8</party-uuid>
+         <remarks>
+            <p>Exactly one</p>
+         </remarks>
+      </responsible-party>
+      <responsible-party role-id="system-poc-technical">
+         <party-uuid>5df5b23a-67b2-495c-9192-8d2d92129c68</party-uuid>
+         <remarks>
+            <p>Exactly one</p>
+         </remarks>
+      </responsible-party>
+      <responsible-party role-id="information-system-security-officer">
+         <party-uuid>2f6873d4-a360-42b9-ae5f-966ed85a455f</party-uuid>
+         <remarks>
+            <p>Exactly one</p>
+         </remarks>
+      </responsible-party>
+      <responsible-party role-id="authorizing-official-poc">
+         <party-uuid>3eb3db07-e046-493d-9817-e039f7cea72c</party-uuid>
+         <remarks>
+            <p>Exactly one</p>
+         </remarks>
+      </responsible-party>
+      <responsible-party role-id="privacy-poc">
+         <party-uuid>1bdccd1c-1db5-43aa-a32a-cb3e25c866f1</party-uuid>
+         <remarks>
+            <p>Exactly one</p>
+         </remarks>
+      </responsible-party>
+      <responsible-party role-id="fedramp-pmo">
+         <party-uuid>04ead818-0e39-4fd2-b8ab-789a1733649f</party-uuid>
+         <remarks>
+            <p>Exactly one</p>
+         </remarks>
+      </responsible-party>
+      <responsible-party role-id="fedramp-jab">
+         <party-uuid>599f362e-cb59-493d-9417-7d5884f19a04</party-uuid>
+         <remarks>
+            <p>Exactly one</p>
+         </remarks>
+      </responsible-party>
+      <remarks>
+         <p>This OSCAL-based FedRAMP SSP Template can be used for the FedRAMP Low, Moderate, and
+            High baselines.</p>
+         <p>Guidance for OSCAL-based FedRAMP Tailored content has not yet been developed.</p>
+      </remarks>
+   </metadata>
+   <!-- ====================================================
+      Link this SSP to the appropriate FedRAMP baseline using ONE of the import statements below.
+      NOTE: This points to a resource at the end of this file with links to both the XML and JSON
+            versions of the baseline. Tools must select the appropriate link 
+      FedRAMP HIGH Baseline: 
+      <import-profile href="#9f1aae37-7359-411f-86c1-768aaab85e63"/>
+      FedRAMP MODERATE Baseline:
+      <import-profile href="#890170c3-d4fa-4d25-ab96-8e4bf7cc237c"/>
+      FedRAMP LOW Baseline: 
+      <import-profile href="#2acaf846-5496-4d36-8565-9a15b48aef2c"/>
+   ==================================================== -->
+   <import-profile href="#890170c3-d4fa-4d25-ab96-8e4bf7cc237c"/>
+   <system-characteristics><!-- Table 1-1 Information System Name and Title -->
+      <system-id identifier-type="https://fedramp.gov">F00000000</system-id>
+      <system-name>Workup Implementation System Example System</system-name>
+      <system-name-short>WorkUP.SYS</system-name-short>
+      <!-- Section 9.1 (Old SSP Format Section 8.1) -->
+      <description>
+         <p>Describe the purpose and functions of this system here.</p>
+      </description>
+      <!-- FedRAMP Authorizatoin Type: fedramp-jab, fedramp-agency, or fedramp-li-saas -->
+      <prop name="authorization-type" ns="https://fedramp.gov/ns/oscal">fedramp-agency</prop>
+      <!-- Section 2.3 Digital Identity Determination and Attachment 3, Digital Identity Worksheet -->
+      <!-- 1 = low, 2= moderate, 3 = high  -->
+      <prop name="security-eauth-level"
+            class="security-eauth"
+            ns="https://fedramp.gov/ns/oscal">2</prop>
+      <!-- Attachment 3, Digital Identity Worksheet: Additional Detail - Not Required -->
+      <prop name="identity-assurance-level">2</prop>
+      <prop name="authenticator-assurance-level">2</prop>
+      <prop name="federation-assurance-level">2</prop>
+      <!-- Table 8-1 Service Layers Represented in this SSP -->
+      <annotation name="cloud-service-model" value="saas">
+         <remarks>
+            <p>Remarks are required if service model is "other". Optional otherwise.</p>
+         </remarks>
+      </annotation>
+      <!-- Table 8-2 Cloud Deployment Model Represented in this SSP -->
+      <annotation name="cloud-deployment-model" value="government-only-cloud">
+         <remarks>
+            <p>Remarks are required if deployment model is "hybrid-cloud" or "other". Optional
+               otherwise.</p>
+         </remarks>
+      </annotation>
+      <!-- Table 2-1 Security Categorization and 2-4 Baseline Security Configuration -->
+      <security-sensitivity-level>low</security-sensitivity-level>
+      <!-- Table 2-2, Table 15-9, and Attachment 4 -->
+      <system-information><!-- Attachment 4, PTA/PIA Designation -->
+         <prop name="privacy-sensitive">yes</prop>
+         <!-- Attachment 4, PTA Qualifying Questions -->
+         <!--Does the ISA collect, maintain, or share PII in any identifiable form? -->
+         <prop name="pta-1" class="pta" ns="https://fedramp.gov/ns/oscal">yes</prop>
+         <!--Does the ISA collect, maintain, or share PII information from or about the public? -->
+         <prop name="pta-2" class="pta" ns="https://fedramp.gov/ns/oscal">yes</prop>
+         <!--Has a Privacy Impact Assessment ever been performed for the ISA? -->
+         <prop name="pta-3" class="pta" ns="https://fedramp.gov/ns/oscal">yes</prop>
+         <!--Is there a Privacy Act System of Records Notice (SORN) for this ISA system? (If so, please specify the SORN ID.) -->
+         <prop name="pta-4" class="pta" ns="https://fedramp.gov/ns/oscal">no</prop>
+         <prop name="sorn-id" class="pta" ns="https://fedramp.gov/ns/oscal">[No SORN ID]</prop>
+         <information-type uuid="9290a054-c8d1-41b3-87aa-89058c128bd0">
+            <title>Information Type Name</title>
+            <description>
+               <p>A description of the information.</p>
+            </description>
+            <information-type-id system="https://doi.org/10.6028/NIST.SP.800-60v2r1">C.2.4.1</information-type-id>
+            <confidentiality-impact>
+               <base>fips-199-moderate</base>
+               <selected>fips-199-moderate</selected>
+               <adjustment-justification>
+                  <p>Required if the base and selected values do not match.</p>
+               </adjustment-justification>
+            </confidentiality-impact>
+            <integrity-impact>
+               <base>fips-199-moderate</base>
+               <selected>fips-199-moderate</selected>
+               <adjustment-justification>
+                  <p>Required if the base and selected values do not match.</p>
+               </adjustment-justification>
+            </integrity-impact>
+            <availability-impact>
+               <base>fips-199-moderate</base>
+               <selected>fips-199-moderate</selected>
+               <adjustment-justification>
+                  <p>Required if the base and selected values do not match.</p>
+               </adjustment-justification>
+            </availability-impact>
+         </information-type>
+      </system-information>
+      <!-- Table 2-3 Security Impact Level -->
+      <security-impact-level>
+         <security-objective-confidentiality>fips-199-moderate</security-objective-confidentiality>
+         <security-objective-integrity>fips-199-moderate</security-objective-integrity>
+         <security-objective-availability>fips-199-moderate</security-objective-availability>
+      </security-impact-level>
+      <!-- Section 2.3 Digital Identity Determination & Table 7-1 System Status -->
+      <status state="operational">
+         <remarks>
+            <p>Remarks are required if status/state is "other". Optional otherwise.</p>
+         </remarks>
+      </status>
+      <!-- Table 8-3 Leveraged Authorizations (Typically 0 or 1) -->
+      <!-- ***** REWORKING LEVERAGED AUTHORIZATIONS MODEL WITH NIST ****** -->
+      <!-- Section 9.2, Figure 9-1. Authorization Boundary Diagram -->
+      <authorization-boundary>
+         <description>
+            <p>A holistic, top-level explanation of the FedRAMP authorization boundary.</p>
+         </description>
+         <diagram uuid="79678614-0aa0-4024-b6a6-02766386cbbf">
+            <description>
+               <p>A diagram-specific explanation.</p>
+            </description>
+            <link href="#d2eb3c18-6754-4e3a-a933-03d289e3fad5" rel="diagram"/>
+            <caption>Authorization Boundary Diagram</caption>
+         </diagram>
+      </authorization-boundary>
+      <!-- Section 9.4, Figure 9-2. Network Diagram -->
+      <network-architecture>
+         <description>
+            <p>A holistic, top-level explanation of the network architecture.</p>
+         </description>
+         <diagram uuid="2123e4f4-818c-42b6-b548-1634dfa31a6c">
+            <description>
+               <p>A diagram-specific explanation.</p>
+            </description>
+            <link href="#61081e81-850b-43c1-bf43-1ecbddcb9e7f" rel="diagram"/>
+            <caption>Network Diagram</caption>
+         </diagram>
+      </network-architecture>
+      <!-- Section 10, Figure 10-1. Data Flow Diagram -->
+      <data-flow>
+         <description>
+            <p>A holistic, top-level explanation of the system's data flows.</p>
+         </description>
+         <diagram uuid="96089864-edd5-4157-a95e-34f24f698a43">
+            <description>
+               <p>A diagram-specific explanation.</p>
+            </description>
+            <link href="#ac5d7535-f3b8-45d3-bf3b-735c82c64547" rel="diagram"/>
+            <caption>Data Flow Diagram</caption>
+         </diagram>
+      </data-flow>
+   </system-characteristics>
+   <system-implementation><!-- Section 9.3 Types of Users - Internal and External Personnel Counts -->
+      <prop name="users-internal" ns="https://fedramp.gov/ns/oscal">0</prop>
+      <prop name="users-external" ns="https://fedramp.gov/ns/oscal">0</prop>
+      <prop name="users-internal-future" ns="https://fedramp.gov/ns/oscal">0</prop>
+      <prop name="users-external-future" ns="https://fedramp.gov/ns/oscal">0</prop>
+      <leveraged-authorization uuid="816601a4-6c29-4113-b6dd-9133c1391006">
+         <title>Name of Underlying System</title>
+         <party-uuid>99678fe0-43be-4555-ad26-0524e4b32304</party-uuid>
+         <date-authorized>2015-01-01</date-authorized>
+         <remarks>
+            <p>The leveraged-authorizaton assembly is supposed to have a required uuid flag instead of an optional id flag. This will be fixed in the syntax shortly.</p>
+            <p>Use one leveraged-authorization assembly for each underlying system. (In the legacy world, these may be general support systems.</p>
+         </remarks>
+      </leveraged-authorization>
+      <!-- Section 9.3, Table 9-1. Personnel Roles and Privileges -->
+      <user uuid="dfc040c3-1faf-404b-b170-40e3e3d2d2a4">
+         <title>[SAMPLE]Unix System Administrator</title>
+         <prop name="sensitivity" ns="https://fedramp.gov/ns/oscal">high</prop>
+         <annotation name="privilege-level" value="privileged"/>
+         <annotation name="type" value="internal"/>
+         <role-id>admin-unix</role-id>
+         <authorized-privilege>
+            <title>Full administrative access (root)</title>
+            <function-performed>Add/remove users and hardware</function-performed>
+            <function-performed>install and configure software</function-performed>
+            <function-performed>OS updates, patches and hotfixes</function-performed>
+            <function-performed>perform backups</function-performed>
+         </authorized-privilege>
+      </user>
+      <user uuid="09a79cef-bd3a-4318-9f9a-6b992802eb09">
+         <title>[SAMPLE]Client Administrator</title>
+         <prop name="sensitivity" ns="https://fedramp.gov/ns/oscal">moderate</prop>
+         <annotation name="privilege-level" value="non-privileged"/>
+         <annotation name="type" value="external"/>
+         <role-id>external</role-id>
+         <authorized-privilege>
+            <title>Portal administration</title>
+            <function-performed>Add/remove client users</function-performed>
+            <function-performed>Create, modify and delete client applications</function-performed>
+         </authorized-privilege>
+      </user>
+      <user uuid="6fe91674-68c7-42ea-903d-a82dd8f19d72">
+         <title>[SAMPLE]Program Director</title>
+         <prop name="sensitivity" ns="https://fedramp.gov/ns/oscal">limited</prop>
+         <annotation name="privilege-level" value="no-logical-access"/>
+         <annotation name="type" value="internal"/>
+         <role-id>program-director</role-id>
+         <authorized-privilege>
+            <title>Administrative Access Approver</title>
+            <function-performed>Approves access requests for administrative accounts.</function-performed>
+         </authorized-privilege>
+         <authorized-privilege>
+            <title>Access Approver</title>
+            <function-performed>Approves access requests for administrative accounts.</function-performed>
+         </authorized-privilege>
+      </user>
+      <component uuid="fd7aae0c-601c-42ab-a46d-322a0b73f51a" component-type="system">
+         <title>This System</title>
+         <description>
+            <p>The entire system as depicted in the system authorization boundary</p>
+         </description>
+         <status state="operational"/>
+      </component>
+      <component uuid="9107e85c-d1a9-498f-ab16-09003e14e965" component-type="system">
+         <title>Name of Leveraged System</title>
+         <description>
+            <p>If the leveraged system owner provides a UUID for their system (such as in an OSCAL-based CRM), it should be used as the UUID for this component.</p>
+         </description>
+         <prop name="leveraged-authorization-uuid">5a9c98ab-8e5e-433d-a7bd-515c07cd1497</prop>
+         <status state="operational"/>
+      </component>
+      <component uuid="c71d9913-3cc4-4c9a-b110-bc73ce5eacf0" component-type="validation">
+         <title>[SAMPLE]Module Name</title>
+         <description>
+            <p>[SAMPLE]FIPS 140-2 Validated Module</p>
+         </description>
+         <prop name="cert-no" ns="https://fedramp.gov/ns/oscal">0000</prop>
+         <link href="https://csrc.nist.gov/projects/cryptographic-module-validation-program/Certificate/0000"/>
+         <status state="operational"/>
+      </component>
+      <component uuid="9dfd3536-e742-413f-a439-69444f229064" component-type="software">
+         <title>[SAMPLE]Product Name</title>
+         <description>
+            <p>FUNCTION: Describe typical component function.</p>
+         </description>
+         <prop name="asset-type">os</prop>
+         <prop name="scan-type" ns="https://fedramp.gov/ns/oscal">infrastructure</prop>
+         <prop name="vendor-name" ns="https://fedramp.gov/ns/oscal">Vendor Name</prop>
+         <prop name="model">Model Number</prop>
+         <prop name="version">Version Number</prop>
+         <prop name="patch-level">Patch Level</prop>
+         <prop name="validation" ns="https://fedramp.gov/ns/oscal">fips-module-1</prop>
+         <status state="operational"/>
+         <responsible-role role-id="admin-unix">
+            <party-uuid>884faf70-d0b4-4c6c-a949-b6ca63ef9ca8</party-uuid>
+         </responsible-role>
+         <remarks>
+            <p>COMMENTS: Provide other comments as needed.</p>
+         </remarks>
+      </component>
+      <component uuid="b3a6d43b-0719-4d2c-abf2-2859fe461430" component-type="hardware">
+         <title>[SAMPLE]Product</title>
+         <description>
+            <p>FUNCTION: Describe typical component function.</p>
+         </description>
+         <prop name="asset-type">database</prop>
+         <prop name="scan-type" ns="https://fedramp.gov/ns/oscal">infrastructure</prop>
+         <prop name="scan-type" ns="https://fedramp.gov/ns/oscal">database</prop>
+         <prop name="vendor-name" ns="https://fedramp.gov/ns/oscal">Vendor Name</prop>
+         <prop name="model">Model Number</prop>
+         <prop name="version">Version Number</prop>
+         <status state="operational"/>
+         <responsible-role role-id="asset-administrator">
+            <party-uuid>cb7cdbce-b82e-4b46-96a2-5571a4214725</party-uuid>
+         </responsible-role>
+         <responsible-role role-id="asset-owner">
+            <party-uuid>3ae4016f-aa6a-4f2c-98cb-17238a33d240</party-uuid>
+         </responsible-role>
+         <remarks>
+            <p>COMMENTS: Provide other comments as needed.</p>
+         </remarks>
+      </component>
+      <component uuid="a9469014-865b-4a60-881b-034d29c30485" component-type="os">
+         <title>OS Sample</title>
+         <description>
+            <p>None</p>
+         </description>
+         <prop name="asset-type">os</prop>
+         <prop name="scan-type" ns="https://fedramp.gov/ns/oscal">infrastructure</prop>
+         <annotation name="baseline-configuration-name" value="Baseline Config. Name"/>
+         <annotation name="allows-authenticated-scan" value="yes"/>
+         <status state="operational"/>
+      </component>
+      <component uuid="e5ba6ce9-e66a-45a1-8160-1e638a3b7afa" component-type="software">
+         <title>Database Sample</title>
+         <description>
+            <p>None</p>
+         </description>
+         <prop name="asset-type">database</prop>
+         <prop name="scan-type" ns="https://fedramp.gov/ns/oscal">database</prop>
+         <annotation name="baseline-configuration-name" value="Baseline Config. Name"/>
+         <annotation name="allows-authenticated-scan" value="yes"/>
+         <status state="operational"/>
+      </component>
+      <component uuid="e2c9590e-3a2d-45f5-9b1b-d60d1d1f9412" component-type="software">
+         <title>Appliance Sample</title>
+         <description>
+            <p>None</p>
+         </description>
+         <prop name="asset-type">appliance</prop>
+         <prop name="scan-type" ns="https://fedramp.gov/ns/oscal">web</prop>
+         <prop name="login-url">https://admin.offering.com/login</prop>
+         <annotation name="baseline-configuration-name" value="Baseline Config. Name"/>
+         <annotation name="allows-authenticated-scan" value="no">
+            <remarks>
+               <p>Vendor appliance. No admin-level access.</p>
+            </remarks>
+         </annotation>
+         <status state="operational"/>
+      </component>
+      <!-- ****** SERVICES ARE NOW COMPONENTS WITH type='service' -->
+      <component uuid="792ba186-0743-40bd-b1af-af4fd8848a1f" component-type="service">
+         <title>[SAMPLE]Service Name</title>
+         <description>
+            <p>Describe the service</p>
+         </description>
+         <purpose>Describe the reason the service is needed.</purpose>
+         <prop name="used-by" ns="https://fedramp.gov/ns/oscal">What uses this service?</prop>
+         <prop name="protocol"/>
+         <status state="operational"/>
+         <protocol name="http">
+            <port-range start="80" end="80" transport="TCP"/>
+         </protocol>
+         <protocol name="https">
+            <port-range start="443" end="443" transport="TCP"/>
+         </protocol>
+         <remarks>
+            <p>Section 10.2, Table 10-1. Ports, Protocols and Services</p>
+            <p>
+               <b>SERVICES ARE NOW COMPONENTS WITH type='service'</b>
+            </p>
+         </remarks>
+      </component>
+      <!-- Section 11 Table 11-1 System Interconnections and  Section 13 Table 13-3 CA-3 Authorized Connections -->
+      <component uuid="7be65222-2380-4de5-b889-cbcb9fcfebb5"
+                 component-type="interconnection">
+         <title>[EXAMPLE]Authorized Connection Information System Name</title>
+         <description>
+            <p>Briefly describe the interconnection.</p>
+         </description>
+         <prop name="service-processor" ns="https://fedramp.gov/ns/oscal">[SAMPLE]Telco Name</prop>
+         <prop name="ipv4-address" class="local" ns="https://fedramp.gov/ns/oscal">10.1.1.1</prop>
+         <prop name="ipv4-address"
+               class="remote"
+               ns="https://fedramp.gov/ns/oscal">10.2.2.2</prop>
+         <prop name="direction" ns="https://fedramp.gov/ns/oscal">incoming-outgoing</prop>
+         <prop name="information" ns="https://fedramp.gov/ns/oscal">Describe the information being transmitted.</prop>
+         <prop name="port" ns="https://fedramp.gov/ns/oscal">80</prop>
+         <prop name="circuit" ns="https://fedramp.gov/ns/oscal">1</prop>
+         <annotation name="connection-security"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="ipsec">
+            <remarks>
+               <p>If "other", remarks are required. Optional otherwise.</p>
+            </remarks>
+         </annotation>
+         <link href="#9d6cf2b4-8e88-4040-a33c-7bc206553a1a" rel="agreement"/>
+         <status state="operational"/>
+         <responsible-role role-id="isa-poc-remote">
+            <party-uuid>20338b56-1bae-4953-a32a-86ce52008bb2</party-uuid>
+         </responsible-role>
+         <responsible-role role-id="isa-poc-local">
+            <party-uuid>20338b56-1bae-4953-a32a-86ce52008bb2</party-uuid>
+         </responsible-role>
+         <responsible-role role-id="isa-authorizing-official-remote">
+            <party-uuid>20338b56-1bae-4953-a32a-86ce52008bb2</party-uuid>
+         </responsible-role>
+         <responsible-role role-id="isa-authorizing-official-local">
+            <party-uuid>20338b56-1bae-4953-a32a-86ce52008bb2</party-uuid>
+         </responsible-role>
+         <remarks>
+            <p>Optional notes about this interconnection</p>
+         </remarks>
+      </component>
+      <system-inventory>
+         <inventory-item uuid="2d26029b-588d-4d34-8e01-f3f8f0ffacd0" asset-id="unique-asset-id">
+            <description>
+               <p>Flat-File Example (No implemented-component).</p>
+            </description>
+            <prop name="ipv4-address">10.1.1.1</prop>
+            <prop name="ipv6-address">0000:0000:0000:0000</prop>
+            <prop name="virtual">no</prop>
+            <prop name="public">no</prop>
+            <prop name="fqdn">dns.name</prop>
+            <prop name="uri">uniform.resource.identifier</prop>
+            <prop name="netbios-name">netbios-name</prop>
+            <prop name="mac-address">00:00:00:00:00:00</prop>
+            <prop name="software-name">software-name</prop>
+            <prop name="version">V 0.0.0</prop>
+            <prop name="asset-type">os</prop>
+            <prop name="vendor-name" ns="https://fedramp.gov/ns/oscal">Vendor Name</prop>
+            <prop name="model">Model Number</prop>
+            <prop name="patch-level">Patch-Level</prop>
+            <prop name="serial-number">Serial #</prop>
+            <prop name="asset-tag">Asset Tag</prop>
+            <prop name="vlan-id">VLAN Identifier</prop>
+            <prop name="network-id">Network Identifier</prop>
+            <prop name="scan-type" ns="https://fedramp.gov/ns/oscal">infrastructure</prop>
+            <prop name="scan-type" ns="https://fedramp.gov/ns/oscal">database</prop>
+            <prop name="validation" ns="https://fedramp.gov/ns/oscal">component-id</prop>
+            <annotation name="allows-authenticated-scan" value="no">
+               <remarks>
+                  <p>If no, explain why. If yes, omit remarks field.</p>
+               </remarks>
+            </annotation>
+            <annotation name="baseline-configuration-name" value="Baseline Config. Name"/>
+            <annotation name="physical-location" value="Physical location of Asset"/>
+            <annotation name="is-scanned" value="yes">
+               <remarks>
+                  <p>If no, explain why. If yes, omit remarks field.</p>
+               </remarks>
+            </annotation>
+            <annotation name="function" value="Required brief, text-based description.">
+               <remarks>
+                  <p>Optional, longer, formatted description.</p>
+               </remarks>
+            </annotation>
+            <responsible-party role-id="asset-owner">
+               <party-uuid>1bdccd1c-1db5-43aa-a32a-cb3e25c866f1</party-uuid>
+            </responsible-party>
+            <responsible-party role-id="asset-administrator">
+               <party-uuid>cb7cdbce-b82e-4b46-96a2-5571a4214725</party-uuid>
+            </responsible-party>
+            <remarks>
+               <p>COMMENTS: Additional information about this item.</p>
+            </remarks>
+         </inventory-item>
+         <inventory-item uuid="fcfdd3de-821e-474b-9dd7-da65a077365f" asset-id="unique-asset-ID">
+            <description>
+               <p>Component Inventory Example</p>
+            </description>
+            <prop name="ipv4-address">10.2.2.2</prop>
+            <prop name="ipv6-address">0000:0000:0000:0000</prop>
+            <prop name="mac-address">00:00:00:00:00:00</prop>
+            <prop name="virtual">no</prop>
+            <prop name="public">no</prop>
+            <prop name="fqdn">dns.name</prop>
+            <prop name="uri">uniform.resource.locator</prop>
+            <prop name="netbios-name">netbios-name</prop>
+            <prop name="patch-level">Patch-Level</prop>
+            <annotation name="baseline-configuration-name" value="Baseline Configuration Name"/>
+            <annotation name="physical-location" value="Physical location of Asset"/>
+            <annotation name="scan-authenticated"
+                        ns="https://fedramp.gov/ns/oscal"
+                        value="no">
+               <remarks>
+                  <p>If no, explain why. If yes, omit remark.</p>
+               </remarks>
+            </annotation>
+            <annotation name="scan-latest" ns="https://fedramp.gov/ns/oscal" value="yes">
+               <remarks>
+                  <p>If no, explain why. If yes, omit remark.</p>
+               </remarks>
+            </annotation>
+            <responsible-party role-id="asset-owner">
+               <party-uuid>884faf70-d0b4-4c6c-a949-b6ca63ef9ca8</party-uuid>
+            </responsible-party>
+            <responsible-party role-id="asset-administrator">
+               <party-uuid>cb7cdbce-b82e-4b46-96a2-5571a4214725</party-uuid>
+            </responsible-party>
+            <implemented-component component-uuid="05ceb8df-52e7-49db-9719-891723f366bd"/>
+            <remarks>
+               <p>COMMENTS: If needed, provide additional information about this inventory item.</p>
+            </remarks>
+         </inventory-item>
+         <inventory-item uuid="80ef000d-76a4-41c3-8fd1-9172f06bf54f" asset-id="unique-asset-id">
+            <description>
+               <p>None.</p>
+            </description>
+            <prop name="ipv4-address">10.3.3.3</prop>
+            <annotation name="is-scanned" value="yes"/>
+            <implemented-component component-uuid="1541015b-6d19-42cb-a991-624cc082ed4d"/>
+         </inventory-item>
+         <inventory-item uuid="5766097c-7cb8-42f6-a99e-213306a4c36e" asset-id="unique-asset-id">
+            <description>
+               <p>None.</p>
+            </description>
+            <prop name="ipv4-address">10.4.4.4</prop>
+            <annotation name="is-scanned" value="yes"/>
+            <implemented-component component-uuid="05ceb8df-52e7-49db-9719-891723f366bd"/>
+         </inventory-item>
+         <inventory-item uuid="d3c432bf-34af-4835-8500-fc47f7adee55" asset-id="unique-asset-id">
+            <description>
+               <p>None.</p>
+            </description>
+            <prop name="ipv4-address">10.5.5.5</prop>
+            <annotation name="is-scanned" value="yes"/>
+            <implemented-component component-uuid="8f230d84-2f9b-44a3-acdb-019566ab2554"/>
+         </inventory-item>
+         <inventory-item uuid="31920ad5-4840-4cd6-b65f-cca45c48fda7" asset-id="unique-asset-id">
+            <description>
+               <p>None.</p>
+            </description>
+            <prop name="ipv4-address">10.6.6.6</prop>
+            <annotation name="is-scanned" value="no">
+               <remarks>
+                  <p>Asset wasn't running at time of scan.</p>
+               </remarks>
+            </annotation>
+            <implemented-component component-uuid="05ceb8df-52e7-49db-9719-891723f366bd"/>
+         </inventory-item>
+         <inventory-item uuid="01b1fa47-41a1-481c-bce0-b43d6098bce7" asset-id="unique-asset-id">
+            <description>
+               <p>None.</p>
+            </description>
+            <prop name="ipv4-address">10.7.7.7</prop>
+            <annotation name="is-scanned" value="yes"/>
+            <implemented-component component-uuid="1541015b-6d19-42cb-a991-624cc082ed4d"/>
+         </inventory-item>
+         <inventory-item uuid="000a2f46-4526-458d-9414-c711f9a973b1" asset-id="unique-asset-id">
+            <description>
+               <p>None.</p>
+            </description>
+            <prop name="ipv4-address">10.8.8.8</prop>
+            <annotation name="is-scanned" value="no">
+               <remarks>
+                  <p>Asset wasn't running at time of scan.</p>
+               </remarks>
+            </annotation>
+            <implemented-component component-uuid="05ceb8df-52e7-49db-9719-891723f366bd"/>
+         </inventory-item>
+         <inventory-item uuid="1b4d4ea7-221f-4b3a-a66d-954052b72bde" asset-id="10.10.10.0">
+            <description>
+               <p>IPv4 Production Subnet.</p>
+            </description>
+            <prop name="ipv4-subnet">10.10.10.0/24</prop>
+            <annotation name="is-scanned" value="yes"/>
+         </inventory-item>
+         <inventory-item uuid="3d01e710-36ab-4b9b-ae9c-b3e1fcf280e5" asset-id="10.10.20.0">
+            <description>
+               <p>IPv4 Management Subnet.</p>
+            </description>
+            <prop name="ipv4-subnet">10.10.20.0/24</prop>
+            <annotation name="is-scanned" value="yes"/>
+         </inventory-item>
+      </system-inventory>
+   </system-implementation>
+   <!-- Section 13 -->
+   <control-implementation>
+      <description>
+         <p>FedRAMP SSP Template Section 13</p>
+         <p>This description field is required by OSCAL. FedRAMP does not require any specific
+            information here.</p>
+      </description>
+      <implemented-requirement control-id="ac-1" uuid="3450fe08-3f5d-4f0d-a0a5-cf9b6e6f46e2">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <set-parameter param-id="ac-1_prm_1">
+            <value>[replace with list of personnel or roles]</value>
+         </set-parameter>
+         <set-parameter param-id="ac-1_prm_2">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <set-parameter param-id="ac-1_prm_3">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <statement statement-id="ac-1_stmt.a" uuid="ec353e91-5acc-4ea4-8dcd-4233c0916dd4"><!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="0293fc87-c672-4afe-b864-b583f25b54c4">
+               <description>
+                  <p>Describe how Part a is satisfied within the system.</p>
+               </description>
+            </by-component>
+            <remarks>
+               <p>The specified component is the system itself.</p>
+               <p>Any control implementation response that can not be associated with another component is associated with the component representing the system.</p>
+            </remarks>
+         </statement>
+         <statement statement-id="ac-1_stmt.a.1"
+                    uuid="09898d08-da4d-487e-adef-032c58e86bd8">
+            <link href="#090ab379-2089-4830-b9fd-26d0729e22e9" rel="policy"/>
+            <remarks>
+               <p>This identifies a policy (attached in resources) that satisfies this control.</p>
+            </remarks>
+         </statement>
+         <statement statement-id="ac-1_stmt.a.2"
+                    uuid="8dbeb395-fe8e-47ec-bc06-cc7d08ca542e">
+            <link href="#att-process-1" rel="process"/>
+            <remarks>
+               <p>This identifies a process (attached in resources) that satisfies this control.</p>
+            </remarks>
+         </statement>
+         <statement statement-id="ac-1_stmt.b.1"
+                    uuid="4db5fa11-f469-4a22-8595-07603ce22ee8">
+            <description>
+               <p>Describe how Part b-1 is satisfied.</p>
+            </description>
+         </statement>
+         <statement statement-id="ac-1_stmt.b.2"
+                    uuid="a4aa914c-5879-4df4-b50d-27f0f214498d">
+            <description>
+               <p>Describe how Part b-2 is satisfied.</p>
+            </description>
+         </statement>
+      </implemented-requirement>
+      <implemented-requirement control-id="ac-2" uuid="83e34077-c78e-4fa6-9b79-021f320de2cd">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">Completion Date</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="partial">
+            <remarks>
+               <p>Describe the portion of the control that is not satisfied.</p>
+            </remarks>
+         </annotation>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="not-applicable">
+            <remarks>
+               <p>Describe the justification for marking this control Not Applicable.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="customer-configured">
+            <remarks>
+               <p>Describe any customer-configured requirements for satisfying this control.</p>
+            </remarks>
+         </annotation>
+         <responsible-role role-id="admin-unix"/>
+         <responsible-role role-id="program-director"/>
+         <set-parameter param-id="ac-2_prm_1">
+            <value>[SAMPLE]privileged, non-privileged</value>
+         </set-parameter>
+         <set-parameter param-id="ac-2_prm_2">
+            <value>[SAMPLE]all</value>
+         </set-parameter>
+         <set-parameter param-id="ac-2_prm_3">
+            <value>[SAMPLE]The Access Control Procedure</value>
+         </set-parameter>
+         <set-parameter param-id="ac-2_prm_4">
+            <value>[SAMPLE]annually</value>
+         </set-parameter>
+         <statement statement-id="ac-2_stmt.a" uuid="9dd257b4-158f-412b-b1d5-87fdecabe3ad">
+            <description>
+               <p>Do not respond to this statement here. Respond within the <code>by-component</code> assembly below.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="4105f03d-b732-49b1-aaa9-7e6a046b5b3b">
+               <description>
+                  <p>For the portion of the control satisfied by this system or its owning organization, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+               <annotation name="responsibility" value="customer">
+                  <remarks>
+                     <p>General customer responsibility description.</p>
+                  </remarks>
+               </annotation>
+               <remarks>
+                  <p>The component-uuid above points to the "this system" component.</p>
+                  <p>Any control response content that does not cleanly fit another system component is placed here. This includes customer responsibility content.</p>
+                  <p>This can also be used to provide a summary, such as a holistic overview of how multiple components work together.</p>
+                  <p>While the "this system" component is not expclicity required within every <code>statement</code>, it will typically be present.</p>
+               </remarks>
+            </by-component>
+            <!-- Inherited -->
+            <by-component component-uuid="b7364f67-bf65-4df2-b756-4b9c6b1c4a52"
+                          uuid="30546705-b4b1-4e26-be31-41d0357b8f97">
+               <description>
+                  <p>For the portion inherited from an underlying FedRAMP-authorized provider,
+                     describe <strong>what</strong> is inherited.</p>
+               </description>
+               <annotation name="responsibility" value="customer">
+                  <remarks>
+                     <p>Component-specific customer responsibility description.</p>
+                  </remarks>
+               </annotation>
+            </by-component>
+            <!-- Customer Responsibility -->
+            <by-component component-uuid="cae07d12-8566-443a-95de-7596b9cac953"
+                          uuid="c9783cc5-5300-4f92-8c13-5f7467182b6a">
+               <description>
+                  <p>For the portion of the control that must be configured by or provided by the
+                     customer, describe the customer responsibility here. This is what will appear
+                     in the Customer Responsibility Matrix.</p>
+               </description>
+            </by-component>
+         </statement>
+      </implemented-requirement>
+      <implemented-requirement control-id="at-1" uuid="15900da5-1de7-4d43-9d93-4d5eea5deee4">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <responsible-role role-id="program-director"/>
+         <set-parameter param-id="at-1_prm_1">
+            <value>[replace with list of personnel or roles]</value>
+         </set-parameter>
+         <set-parameter param-id="at-1_prm_2">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <set-parameter param-id="at-1_prm_3">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <statement statement-id="at-1_stmt.a" uuid="86af88e9-e51d-435a-850b-1d8791bd07aa">
+            <description>
+               <p>Component-based Approach</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="d8f3e9a1-f539-4dba-86ab-d90d454138a8">
+               <description>
+                  <p>Describe how Part a is satisfied.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="at-1_stmt.a.1"
+                    uuid="0e2b462d-371d-4cc6-a518-d752dace8840">
+            <link href="#090ab379-2089-4830-b9fd-26d0729e22e9" rel="policy"/>
+            <remarks>
+               <p>This identifies a policy (attached in resources) that satisfies this control.</p>
+            </remarks>
+         </statement>
+         <statement statement-id="at-1_stmt.a.2"
+                    uuid="22a90a63-d925-42a6-be28-03318251e941">
+            <link href="#att-process-1" rel="process"/>
+            <remarks>
+               <p>This identifies a process (attached in resources) that satisfies this control.</p>
+            </remarks>
+         </statement>
+         <statement statement-id="at-1_stmt.b.1"
+                    uuid="4771ec10-723c-4d22-91ef-ec6b40d0f017">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="68a9c763-9134-4d03-9d84-7980025c3615">
+               <description>
+                  <p>Describe how Part b-1 is satisfied.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="at-1_stmt.b.2"
+                    uuid="aee35ccb-c470-4df3-9e77-26a15733b983">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="b8986dd2-7877-496a-9e23-da9052a80c60">
+               <description>
+                  <p>Describe how Part b-2 is satisfied.</p>
+               </description>
+            </by-component>
+         </statement>
+      </implemented-requirement>
+      <implemented-requirement control-id="au-1" uuid="47bcb96f-8d29-4b71-9d6f-838daff3febd">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <responsible-role role-id="program-director"/>
+         <set-parameter param-id="au-1_prm_1">
+            <value>[replace with list of personnel or roles]</value>
+         </set-parameter>
+         <set-parameter param-id="au-1_prm_2">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <set-parameter param-id="au-1_prm_3">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <statement statement-id="au-1_stmt.a" uuid="6aebd2f1-c285-4b00-b19c-33c220ca9839">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="5614c0b9-25d2-4849-9af7-9654aa6272f1">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="au-1_stmt.b.1"
+                    uuid="a4d73f38-d2a6-4002-aa88-a84587cd9132">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="e6860ff9-0eca-4395-89de-94c26cf0290f">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="au-1_stmt.b.2"
+                    uuid="04b3e3e6-c39a-4f57-8ff1-751ea62d5323">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="c23b8f3f-361b-41ac-9d3b-8ae9322e4e22">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+      </implemented-requirement>
+      <implemented-requirement control-id="ca-1" uuid="5c76f209-c4ce-4ea0-981d-4641ae006c3b">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <responsible-role role-id="program-director"/>
+         <set-parameter param-id="ca-1_prm_1">
+            <value>[replace with list of personnel or roles]</value>
+         </set-parameter>
+         <set-parameter param-id="ca-1_prm_2">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <set-parameter param-id="ca-1_prm_3">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <statement statement-id="ca-1_stmt.a" uuid="3ba147c7-cc35-4d49-9e1a-7b57a6134778">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="d9503969-e4d9-4f00-b08a-4443e597e34f">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="ca-1_stmt.b.1"
+                    uuid="6d22ad8c-5290-4b0f-bf12-42996b4a55f5">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="8b6e5379-0481-4378-b9d2-47a2e8f1c019">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="ca-1_stmt.b.2"
+                    uuid="61e56c9c-79a8-446e-b477-bb317c40c493">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="64c9b6f6-ca0d-4d2a-802b-45761126d80f">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+      </implemented-requirement>
+      <implemented-requirement control-id="cm-1" uuid="c98777b1-d9ac-4356-bc40-2025d5a03cc2">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <responsible-role role-id="program-director"/>
+         <set-parameter param-id="cm-1_prm_1">
+            <value>[replace with list of personnel or roles]</value>
+         </set-parameter>
+         <set-parameter param-id="cm-1_prm_2">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <set-parameter param-id="cm-1_prm_3">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <statement statement-id="cm-1_stmt.a" uuid="90c681e1-b4fb-4f4a-a673-f346befcdd61">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="b1d9c36c-a0c1-48a4-9893-254635fe2e05">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="cm-1_stmt.b.1"
+                    uuid="6c861c29-db0e-48c1-b134-9eb5d8eca668">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="897dc781-742f-4bc7-adc8-79150de92366">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="cm-1_stmt.b.2"
+                    uuid="999febe1-e487-4f82-b887-ef22a1d44783">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="55270924-ffdb-430d-9a06-e1f056a75f15">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+      </implemented-requirement>
+      <implemented-requirement control-id="cp-1" uuid="c5b1f79f-18f7-4ebc-9f04-7e1258acb718">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <responsible-role role-id="program-director"/>
+         <set-parameter param-id="cp-1_prm_1">
+            <value>[replace with list of personnel or roles]</value>
+         </set-parameter>
+         <set-parameter param-id="cp-1_prm_2">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <set-parameter param-id="cp-1_prm_3">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <statement statement-id="cp-1_stmt.a" uuid="95038b85-6007-4de4-883e-63b045263454">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="ad1c23a1-5de7-49ec-a0d4-33834c00c67e">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="cp-1_stmt.b.1"
+                    uuid="ee906773-0771-449d-ac02-89937160b832">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="a73357be-2500-4a74-a075-66563ff29564">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="cp-1_stmt.b.2"
+                    uuid="dadb6594-ac78-4c88-acdb-46a7486684b5">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="856ccba8-a2ec-4d51-bb62-d0bef3b2240f">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+      </implemented-requirement>
+      <implemented-requirement control-id="ia-1" uuid="aed1deb3-9f17-4cc7-8e37-a47c982a4f83">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <responsible-role role-id="program-director"/>
+         <set-parameter param-id="ia-1_prm_1">
+            <value>[replace with list of personnel or roles]</value>
+         </set-parameter>
+         <set-parameter param-id="ia-1_prm_2">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <set-parameter param-id="ia-1_prm_3">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <statement statement-id="ia-1_stmt.a" uuid="f1e1a2bb-d8f2-471e-98f6-86ed437aced6">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="0a53bb33-7f55-4bc3-910f-04c419f02d0c">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="ia-1_stmt.b.1"
+                    uuid="28461e22-149a-4c28-a727-2e8b3cf9a6ed">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="ad73dfbb-10a4-4db9-9549-c2730183f389">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="ia-1_stmt.b.2"
+                    uuid="9f1eb87a-6660-405e-ac2e-0b20c24a5a2a">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="7b1941b4-3019-4302-bb33-8f0e50669078">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+      </implemented-requirement>
+      <implemented-requirement control-id="ir-1" uuid="3dc949ae-7df8-491f-8751-75d0bc5b9d6b">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <responsible-role role-id="program-director"/>
+         <set-parameter param-id="ir-1_prm_1">
+            <value>[replace with list of personnel or roles]</value>
+         </set-parameter>
+         <set-parameter param-id="ir-1_prm_2">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <set-parameter param-id="ir-1_prm_3">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <statement statement-id="ir-1_stmt.a" uuid="4f9fe252-460e-410e-ab25-16aaab5c9fcd">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="df96fcb5-31f2-494e-acca-a39d25b75358">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="ir-1_stmt.b.1"
+                    uuid="d9c1a35f-3e2e-4cc6-a9fa-0d5450cd7e84">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="261f7cf1-5fc4-48a3-8eac-2bbe1a398d99">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="ir-1_stmt.b.2"
+                    uuid="9f62c0b0-7104-48b4-b7d1-9d248328c850">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="c409bf2d-b905-4c65-9349-be0d1ca0f993">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+      </implemented-requirement>
+      <implemented-requirement control-id="ma-1" uuid="5da68ad9-ed87-4b58-a597-4b464e3b986e">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <responsible-role role-id="program-director"/>
+         <set-parameter param-id="ma-1_prm_1">
+            <value>[replace with list of personnel or roles]</value>
+         </set-parameter>
+         <set-parameter param-id="ma-1_prm_2">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <set-parameter param-id="ma-1_prm_3">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <statement statement-id="ma-1_stmt.a" uuid="c6442fc1-94e7-491d-88fc-a8dddfc059b0">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="4b2dd350-c180-4e69-8fde-a5468147c58e">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="ma-1_stmt.b.1"
+                    uuid="c59b30f2-cc8f-4e06-bb90-3bdb50823145">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="628215c5-b10e-486a-991b-998612fa0167">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="ma-1_stmt.b.2"
+                    uuid="5a22ddc2-0c85-4bde-b479-fcc3788c3508">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="47dbc24b-ea24-4d6a-b568-51794a6c860d">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+      </implemented-requirement>
+      <implemented-requirement control-id="mp-1" uuid="48d31337-2aa2-4a78-9547-49a57f31aa06">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <responsible-role role-id="program-director"/>
+         <set-parameter param-id="mp-1_prm_1">
+            <value>[replace with list of personnel or roles]</value>
+         </set-parameter>
+         <set-parameter param-id="mp-1_prm_2">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <set-parameter param-id="mp-1_prm_3">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <statement statement-id="mp-1_stmt.a" uuid="5238975c-8d3d-49b0-9c26-f1b7ac54d53f">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="410359ee-a0a6-4c4a-b677-92b62a9ccd46">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="mp-1_stmt.b.1"
+                    uuid="fdee7589-a25f-4104-87de-c68022a8c2c7">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="19118785-cb34-4b4d-958c-6a8582fa735e">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="mp-1_stmt.b.2"
+                    uuid="98cd843a-acdf-43c9-a0c5-388f78eb6486">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="8eece478-1449-4775-b04d-aa2d72a7a369">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+      </implemented-requirement>
+      <implemented-requirement control-id="pe-1" uuid="0eec1297-f194-4408-bec6-0aac35445780">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <responsible-role role-id="program-director"/>
+         <set-parameter param-id="pe-1_prm_1">
+            <value>[replace with list of personnel or roles]</value>
+         </set-parameter>
+         <set-parameter param-id="pe-1_prm_2">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <set-parameter param-id="pe-1_prm_3">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <statement statement-id="pe-1_stmt.a" uuid="08812507-4f94-498d-a10e-b79d9fb6b850">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="0524b376-f542-4632-a260-88a9fddb4bc3">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="pe-1_stmt.b.1"
+                    uuid="07c68c35-7a9c-4087-9b7b-ca4b885c2cf5">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="22c9668e-31d7-4771-8a66-9c2d4e79cd7b">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="pe-1_stmt.b.2"
+                    uuid="72b168fb-cc71-47af-bc1f-8ff409895501">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="6f28809c-3869-49ec-b5d9-bd96ddf0994b">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+      </implemented-requirement>
+      <implemented-requirement control-id="pl-1" uuid="fcfed554-b9fa-4b7a-b100-1ada5259fc18">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <responsible-role role-id="program-director"/>
+         <set-parameter param-id="pl-1_prm_1">
+            <value>[replace with list of personnel or roles]</value>
+         </set-parameter>
+         <set-parameter param-id="pl-1_prm_2">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <set-parameter param-id="pl-1_prm_3">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <statement statement-id="pl-1_stmt.a" uuid="f5a9d70b-c061-481f-96f7-0e8e8bf4bec0">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="f30e0e4a-cdf7-4462-8120-f8e6c3b87984">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="pl-1_stmt.b.1"
+                    uuid="80b0e0f7-ae14-4b18-a40e-314e99f21d91">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="6c8a8c2c-34a0-45f7-972b-ccc4a0dfdbbb">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="pl-1_stmt.b.2"
+                    uuid="afe36a79-1c36-44d3-aa3f-09671f665a09">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="8416ebe6-3a1f-4f6b-8a8d-8d948435cd5d">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+      </implemented-requirement>
+      <implemented-requirement control-id="ps-1" uuid="b7b5936a-d5ad-455d-8cad-84d87b171a9e">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <responsible-role role-id="program-director"/>
+         <set-parameter param-id="ps-1_prm_1">
+            <value>[replace with list of personnel or roles]</value>
+         </set-parameter>
+         <set-parameter param-id="ps-1_prm_2">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <set-parameter param-id="ps-1_prm_3">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <statement statement-id="ps-1_stmt.a" uuid="52b48a3f-574d-424e-82a5-a864912b1e37">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="95748d4c-0854-4968-a430-a24434ca384c">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="ps-1_stmt.b.1"
+                    uuid="ee4ba815-c0ea-4421-ab09-b72b735d1e8b">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="5f0618c4-c735-4d75-a4f7-c389ca257ec1">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="ps-1_stmt.b.2"
+                    uuid="33724b48-dbd5-4668-95dc-945244ad4912">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="403d1ba1-631e-4619-9513-158d8c25190b">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+      </implemented-requirement>
+      <implemented-requirement control-id="ra-1" uuid="83716935-4f22-4ab5-a678-dfa0170d530c">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <responsible-role role-id="program-director"/>
+         <set-parameter param-id="ra-1_prm_1">
+            <value>[replace with list of personnel or roles]</value>
+         </set-parameter>
+         <set-parameter param-id="ra-1_prm_2">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <set-parameter param-id="ra-1_prm_3">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <statement statement-id="ra-1_stmt.a" uuid="4b1fea5b-e0e1-4abe-b088-25bf1834a3e8">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="73d911d1-65c0-421e-a9da-077e6803001f">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="ra-1_stmt.b.1"
+                    uuid="161faa5d-efe5-46bc-9d8d-85efd847573d">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="17f33f8f-97d7-4a65-91c1-66b2fdf88334">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="ra-1_stmt.b.2"
+                    uuid="469061c5-f1a9-4d40-9d64-6181aca8fa97">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="5fd6651a-e30e-4a6b-a220-721a2e195d78">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+      </implemented-requirement>
+      <implemented-requirement control-id="sa-1" uuid="68b22488-8edb-4941-b10e-a2220235080d">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <responsible-role role-id="program-director"/>
+         <set-parameter param-id="sa-1_prm_1">
+            <value>[replace with list of personnel or roles]</value>
+         </set-parameter>
+         <set-parameter param-id="sa-1_prm_2">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <set-parameter param-id="sa-1_prm_3">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <statement statement-id="sa-1_stmt.a" uuid="de2dd71a-6fe2-40e1-a874-911422864320">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="58a182a7-0dac-4795-afc1-b913edb5078c">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="sa-1_stmt.b.1"
+                    uuid="224e43cb-7a00-4cd3-810a-0a462dcc7332">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="736b3a84-a504-4c0d-bed2-57454946643f">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="sa-1_stmt.b.2"
+                    uuid="7824b769-4fc5-4e18-91f3-dd3533b97c98">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="66e7c04c-f017-4666-bfd3-c0a558d92b58">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+      </implemented-requirement>
+      <implemented-requirement control-id="sc-1" uuid="532bc9ae-b32c-4774-95f4-9ed8a28589a7">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <responsible-role role-id="program-director"/>
+         <set-parameter param-id="sc-1_prm_1">
+            <value>[replace with list of personnel or roles]</value>
+         </set-parameter>
+         <set-parameter param-id="sc-1_prm_2">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <set-parameter param-id="sc-1_prm_3">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <statement statement-id="sc-1_stmt.a" uuid="64bbace3-b8e5-44e4-b3a5-968c9b003443">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="4d3a531b-c8b4-4348-8c86-f2402e299f85">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="sc-1_stmt.b.1"
+                    uuid="08c6ba73-f970-4dc5-87e0-10b012851cf3">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="1ac65423-17e0-4d29-b61f-be7fbd5e043c">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="sc-1_stmt.b.2"
+                    uuid="3f60cb72-cafc-493c-8b2f-de5ec1c211a6">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="0f3b017f-1f1c-4f53-9ca6-955e08e0ade2">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+      </implemented-requirement>
+      <implemented-requirement control-id="si-1" uuid="a8ecd2c4-c29b-479a-a818-f38b232ff598">
+         <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
+         <annotation name="implementation-status"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="planned">
+            <remarks>
+               <p>Describe the plan to complete the implementation.</p>
+            </remarks>
+         </annotation>
+         <annotation name="control-origination"
+                     ns="https://fedramp.gov/ns/oscal"
+                     value="sp-system"/>
+         <responsible-role role-id="program-director"/>
+         <set-parameter param-id="si-1_prm_1">
+            <value>[replace with list of personnel or roles]</value>
+         </set-parameter>
+         <set-parameter param-id="si-1_prm_2">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <set-parameter param-id="si-1_prm_3">
+            <value>[specify frequency]</value>
+         </set-parameter>
+         <statement statement-id="si-1_stmt.a" uuid="15d7bd0f-028e-41a6-b4d9-c48656710ce2">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="0c1aca52-b0d5-425e-8fa2-91e4e67dfe42">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="si-1_stmt.b.1"
+                    uuid="d4b8aa40-b13a-49c8-9856-35c44a0280be">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="262a59b9-9e1e-4f5d-aac8-60bff74404d6">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+         <statement statement-id="si-1_stmt.b.2"
+                    uuid="be27824a-0c3a-42fe-a1fc-c8407449a4db">
+            <description>
+               <p>Ignore.</p>
+            </description>
+            <!-- Service Provider Responsibility -->
+            <by-component component-uuid="60f92bcf-f353-4236-9803-2a5d417555f4"
+                          uuid="a01fcba0-45c4-4f25-8791-3ddf9c8f084f">
+               <description>
+                  <p>For the portion of the control satisfied by the service provider, describe
+                        <strong>how</strong> the control is met.</p>
+               </description>
+            </by-component>
+         </statement>
+      </implemented-requirement>
+   </control-implementation>
+   <!-- Table 15-1 Names of Provided Attachments -->
+   <back-matter><!-- Section 12, Table 12-1, Table 12-2 -->
+      <resource uuid="624f7e4e-e8c5-498b-a712-c27e6cc7e820">
+         <title>FedRAMP Applicable Laws and Regulations</title>
+         <prop name="conformity" ns="https://fedramp.gov/ns/oscal">fedramp-citations</prop>
+         <rlink href="https://www.fedramp.gov/assets/resources/templates/SSP-A12-FedRAMP-Laws-and-Regulations-Template.xlsx"/>
+      </resource>
+      <resource uuid="d328cc91-b1e7-41b0-92d7-37e5212f2785">
+         <title>FedRAMP Master Acronym and Glossary</title>
+         <prop name="conformity" ns="https://fedramp.gov/ns/oscal">fedramp-acronyms</prop>
+         <rlink href="https://www.fedramp.gov/assets/resources/documents/FedRAMP_Master_Acronym_and_Glossary.pdf"/>
+      </resource>
+      <resource uuid="a8a332df-fe09-4346-b371-e13ec4baa109">
+         <title>[SAMPLE]Name or Title of Document</title>
+         <prop name="type" ns="https://fedramp.gov/ns/oscal">law</prop>
+         <prop name="publication" ns="https://fedramp.gov/ns/oscal">Publication Date</prop>
+         <doc-id type="doi">Identification Number</doc-id>
+         <rlink href="https://domain.example/path/to/document.pdf"/>
+      </resource>
+      <resource uuid="e39feb3f-f5eb-4df4-bb1c-2c356dad85a2">
+         <title>[SAMPLE]Privacy-Related Law Citation</title>
+         <prop name="type" ns="https://fedramp.gov/ns/oscal">law</prop>
+         <prop name="type" ns="https://fedramp.gov/ns/oscal">pii</prop>
+         <prop name="publication" ns="https://fedramp.gov/ns/oscal">Publication Date</prop>
+         <doc-id type="doi">Identification Number</doc-id>
+         <rlink href="https://domain.example/path/to/document.pdf"/>
+      </resource>
+      <resource uuid="5953cce7-2124-4b8c-8532-328f17508b97">
+         <title>[SAMPLE]Regulation Citation</title>
+         <prop name="type" ns="https://fedramp.gov/ns/oscal">regulation</prop>
+         <prop name="publication" ns="https://fedramp.gov/ns/oscal">Publication Date</prop>
+         <doc-id type="doi">Identification Number</doc-id>
+         <rlink href="https://domain.example/path/to/document.pdf"/>
+      </resource>
+      <resource uuid="729afb1b-2f5a-4d7e-8ec5-ab9f7766e6b9">
+         <title>[SAMPLE]Interconnection Security Agreement Title</title>
+         <prop name="publication" ns="https://fedramp.gov/ns/oscal">Document Date</prop>
+         <prop name="version" ns="https://fedramp.gov/ns/oscal">Document Version</prop>
+      </resource>
+      <resource uuid="766ded3c-e56e-4dc0-b214-7d2ccc037411">
+         <desc>CSP Logo</desc>
+         <prop name="conformity" ns="https://fedramp.gov/ns/oscal">prepared-for-logo</prop>
+         <prop name="conformity" ns="https://fedramp.gov/ns/oscal">csp-logo</prop>
+         <!-- Use rlink and/or base64 -->
+         <rlink href="./logo.png" media-type="image/png"/>
+         <base64>00000000</base64>
+      </resource>
+      <resource uuid="64425e71-ed29-484b-8e5d-d7d9d4491021">
+         <desc>Preparer Logo</desc>
+         <prop name="conformity" ns="https://fedramp.gov/ns/oscal">prepared-by-logo</prop>
+         <!-- Use rlink and/or base64 -->
+         <rlink href="./party-1-logo.png" media-type="image/png"/>
+         <base64>00000000</base64>
+      </resource>
+      <resource uuid="81d61919-111d-47cc-bc05-2b5ebf4a30df">
+         <desc>FedRAMP Logo</desc>
+         <prop name="conformity" ns="https://fedramp.gov/ns/oscal">fedramp-logo</prop>
+         <rlink href="https://github.com/GSA/fedramp-automation/raw/master/assets/FedRAMP_LOGO.png"/>
+      </resource>
+      <resource uuid="168f603e-ee6e-4f87-957b-a75eeff78560">
+         <desc>3PAO Logo</desc>
+         <prop name="conformity" ns="https://fedramp.gov/ns/oscal">3pao-logo</prop>
+         <!-- Use rlink and/or base64 -->
+         <rlink href="./logo.png" media-type="image/png"/>
+         <base64>00000000</base64>
+      </resource>
+      <resource uuid="a589ea64-3492-4e46-a299-1bbda5f8a99a">
+         <desc>The primary authorization boundary diagram.</desc>
+         <!-- Use rlink and/or base64 -->
+         <rlink href="./diagrams/boundary.png"/>
+         <base64>00000000</base64>
+         <remarks>
+            <p>Section 9.2, Figure 9-1 Authorization Boundary Diagram (graphic)</p>
+            <p>This should be referenced in the
+               system-characteristics/authorization-boundary/diagram/link/@href flag using a value
+               of "#d2eb3c18-6754-4e3a-a933-03d289e3fad5"</p>
+         </remarks>
+      </resource>
+      <resource uuid="bf11a25a-0e5d-4233-bc8a-6c73b45be133">
+         <desc>The primary network diagram.</desc>
+         <!-- Use rlink and/or base64 -->
+         <rlink href="./diagrams/network.png"/>
+         <base64>00000000</base64>
+         <remarks>
+            <p>Section 9.4, Figure 9-2 Network Diagram (graphic)</p>
+            <p>This should be referenced in the
+               system-characteristics/network-architecture/diagram/link/@href flag using a value
+               of "#61081e81-850b-43c1-bf43-1ecbddcb9e7f"</p>
+         </remarks>
+      </resource>
+      <resource uuid="3af86e71-b2c5-493c-b2d8-f6327d36eb22">
+         <desc>The primary data flow diagram.</desc>
+         <!-- Use rlink and/or base64 -->
+         <rlink href="./diagrams/dataflow.png"/>
+         <base64>00000000</base64>
+         <remarks>
+            <p>Section 10, Figure 10-1 Data Flow Diagram (graphic)</p>
+            <p>This should be referenced in the
+               system-characteristics/data-flow/diagram/link/@href flag using a value
+               of "#ac5d7535-f3b8-45d3-bf3b-735c82c64547"</p>
+         </remarks>
+      </resource>
+      <resource uuid="e3f183e5-5c4f-402a-a966-af823d96b17c">
+         <title>Policy Title</title>
+         <desc>Policy document</desc>
+         <prop name="type" ns="https://fedramp.gov/ns/oscal">policy</prop>
+         <prop name="publication" ns="https://fedramp.gov/ns/oscal">Document Date</prop>
+         <prop name="version" ns="https://fedramp.gov/ns/oscal">Document Version</prop>
+         <!-- Use rlink and/or base64 -->
+         <rlink href="./sample_policy.pdf"/>
+         <base64>00000000</base64>
+         <remarks>
+            <p>Table 15-1 Attachments: Policy Attachment</p>
+         </remarks>
+      </resource>
+      <resource uuid="cf701a4a-af7a-4840-8c4c-d09d8243eb77">
+         <title>Policy Title</title>
+         <desc>Policy document</desc>
+         <prop name="type" ns="https://fedramp.gov/ns/oscal">policy</prop>
+         <prop name="publication" ns="https://fedramp.gov/ns/oscal">Document Date</prop>
+         <prop name="version" ns="https://fedramp.gov/ns/oscal">Document Version</prop>
+         <!-- Use rlink and/or base64 -->
+         <rlink href="./sample_policy.pdf"/>
+         <base64>00000000</base64>
+         <remarks>
+            <p>Table 15-1 Attachments: Policy Attachment</p>
+         </remarks>
+      </resource>
+      <resource uuid="5bffb05f-69bd-4bea-a249-278a9ceb334f">
+         <title>Procedure Title</title>
+         <desc>Procedure document</desc>
+         <prop name="type" ns="https://fedramp.gov/ns/oscal">procedure</prop>
+         <prop name="publication" ns="https://fedramp.gov/ns/oscal">Document Date</prop>
+         <prop name="version" ns="https://fedramp.gov/ns/oscal">Document Version</prop>
+         <!-- Use rlink and/or base64 -->
+         <rlink href="./sample_procedure.pdf"/>
+         <base64>00000000</base64>
+         <remarks>
+            <p>Table 15-1 Attachments: Procedure Attachment</p>
+         </remarks>
+      </resource>
+      <resource uuid="43df2a40-c4ab-4ff5-abc9-90a919bbbbe0">
+         <title>Procedure Title</title>
+         <desc>Procedure document</desc>
+         <prop name="type" ns="https://fedramp.gov/ns/oscal">procedure</prop>
+         <prop name="publication" ns="https://fedramp.gov/ns/oscal">Document Date</prop>
+         <prop name="version" ns="https://fedramp.gov/ns/oscal">Document Version</prop>
+         <!-- Use rlink and/or base64 -->
+         <rlink href="./sample_procedure.pdf"/>
+         <base64>00000000</base64>
+         <remarks>
+            <p>Table 15-1 Attachments: Procedure Attachment</p>
+         </remarks>
+      </resource>
+      <resource uuid="f9395d60-2cac-44f2-84c4-671d2e4e924c">
+         <title>User's Guide</title>
+         <desc>User's Guide</desc>
+         <prop name="conformity" ns="https://fedramp.gov/ns/oscal">user-guide</prop>
+         <prop name="type" ns="https://fedramp.gov/ns/oscal">guide</prop>
+         <prop name="publication" ns="https://fedramp.gov/ns/oscal">Document Date</prop>
+         <prop name="version" ns="https://fedramp.gov/ns/oscal">Document Version</prop>
+         <!-- Use rlink and/or base64 -->
+         <rlink href="./sample_guide.pdf"/>
+         <base64>00000000</base64>
+         <remarks>
+            <p>Table 15-1 Attachments: User's Guide Attachment</p>
+         </remarks>
+      </resource>
+      <resource uuid="8078f6f6-e3d6-4f11-82d4-07abeb962eb8">
+         <title>Privacy Impact Assessment</title>
+         <prop name="conformity" ns="https://fedramp.gov/ns/oscal">privacy-impact-assessment</prop>
+         <prop name="publication" ns="https://fedramp.gov/ns/oscal">Document Date</prop>
+         <prop name="version" ns="https://fedramp.gov/ns/oscal">Document Version</prop>
+         <!-- Use rlink and/or base64 -->
+         <rlink href="./pia.docx"/>
+         <base64 filename="pia.docx">00000000</base64>
+         <remarks>
+            <p>Table 15-1 Attachments: Privacy Impact Assessment</p>
+         </remarks>
+      </resource>
+      <resource uuid="2b19a035-ff80-4bc1-8ddc-de203382fdd7">
+         <title>Document Title</title>
+         <desc>Rules of Behavior</desc>
+         <prop name="conformity" ns="https://fedramp.gov/ns/oscal">rules-of-behavior</prop>
+         <prop name="type" ns="https://fedramp.gov/ns/oscal">rob</prop>
+         <prop name="publication" ns="https://fedramp.gov/ns/oscal">Document Date</prop>
+         <prop name="version" ns="https://fedramp.gov/ns/oscal">Document Version</prop>
+         <!-- Use rlink and/or base64 -->
+         <rlink href="https://sample"/>
+         <base64>00000000</base64>
+         <remarks>
+            <p>Table 15-1 Attachments: Rules of Behavior (ROB)</p>
+         </remarks>
+      </resource>
+      <resource uuid="2f479099-81ec-4402-9b33-948c022b6bf3">
+         <title>Document Title</title>
+         <desc>Contingency Plan (CP)</desc>
+         <prop name="type" ns="https://fedramp.gov/ns/oscal">plan</prop>
+         <prop name="publication" ns="https://fedramp.gov/ns/oscal">Document Date</prop>
+         <prop name="version" ns="https://fedramp.gov/ns/oscal">Document Version</prop>
+         <!-- Use rlink and/or base64 -->
+         <rlink href="https://sample"/>
+         <base64>00000000</base64>
+         <remarks>
+            <p>Table 15-1 Attachments: Contingency Plan (CP) Attachment</p>
+         </remarks>
+      </resource>
+      <resource uuid="c60635c5-6adb-4d63-85ce-e93769145e08">
+         <title>Document Title</title>
+         <desc>Configuration Management (CM) Plan</desc>
+         <prop name="type" ns="https://fedramp.gov/ns/oscal">plan</prop>
+         <prop name="publication" ns="https://fedramp.gov/ns/oscal">Document Date</prop>
+         <prop name="version" ns="https://fedramp.gov/ns/oscal">Document Version</prop>
+         <!-- Use rlink and/or base64 -->
+         <rlink href="https://sample"/>
+         <base64>00000000</base64>
+         <remarks>
+            <p>Table 15-1 Attachments: Configuration Management (CM) Plan Attachment</p>
+         </remarks>
+      </resource>
+      <resource uuid="b21fa3ae-dbce-4fd9-911c-198777707293">
+         <title>Document Title</title>
+         <desc>Incident Response (IR) Plan</desc>
+         <prop name="type" ns="https://fedramp.gov/ns/oscal">plan</prop>
+         <prop name="publication" ns="https://fedramp.gov/ns/oscal">Document Date</prop>
+         <prop name="version" ns="https://fedramp.gov/ns/oscal">Document Version</prop>
+         <!-- Use rlink and/or base64 -->
+         <rlink href="https://sample"/>
+         <base64>00000000</base64>
+         <remarks>
+            <p>Table 15-1 Attachments: Incident Response (IR) Plan Attachment</p>
+         </remarks>
+      </resource>
+      <resource uuid="cb2bb419-9e68-4acd-a1cd-db1105f85e6b">
+         <title>Separation of Duties Matrix</title>
+         <desc>Separation of Duties Matrix</desc>
+         <prop name="publication" ns="https://fedramp.gov/ns/oscal">Document Date</prop>
+         <prop name="version" ns="https://fedramp.gov/ns/oscal">Document Version</prop>
+         <!-- Use rlink and/or base64 -->
+         <rlink href="https://sample"/>
+         <base64>00000000</base64>
+         <remarks>
+            <p>Table 15-1 Attachments: Separation of Duties Matrix Attachment</p>
+         </remarks>
+      </resource>
+      <resource uuid="c7a8135e-35da-413a-bfcd-d05b5529b9f6">
+         <title>FedRAMP High Baseline</title>
+         <rlink media-type="application/xml"
+                href="https://raw.githubusercontent.com/usnistgov/OSCAL/v1.0.0-milestone3/content/fedramp.gov/xml/FedRAMP_HIGH-baseline_profile.xml"/>
+         <remarks>
+            <p>Pointer to High baseline content in OSCAL.</p>
+         </remarks>
+      </resource>
+      <resource uuid="f565ff2d-74fe-40c7-9ae6-da9a35db2b2d">
+         <title>FedRAMP Moderate Baseline</title>
+         <rlink media-type="application/xml"
+                href="https://raw.githubusercontent.com/usnistgov/OSCAL/v1.0.0-milestone3/content/fedramp.gov/xml/FedRAMP_MODERATE-baseline_profile.xml"/>
+         <remarks>
+            <p>Pointer to Moderate baseline content in OSCAL.</p>
+         </remarks>
+      </resource>
+      <resource uuid="6a89e745-b262-4d0e-be28-31262888bfef">
+         <title>FedRAMP Low Baseline</title>
+         <rlink media-type="application/xml"
+                href="https://raw.githubusercontent.com/usnistgov/OSCAL/v1.0.0-milestone3/content/fedramp.gov/xml/FedRAMP_LOW-baseline_profile.xml"/>
+         <remarks>
+            <p>Pointer to Low baseline content in OSCAL.</p>
+         </remarks>
+      </resource>
+   </back-matter>
+</system-security-plan>

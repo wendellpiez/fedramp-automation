@@ -37,6 +37,10 @@
 <!-- The imported XSLT handles catalog contents, with metadata and fallback logic. -->
    <xsl:import href="modules/oscal_general_html.xsl"/>
    
+   
+   <xsl:key name="location-by-uuid" match="location" use="@uuid"/>
+   <xsl:key name="party-by-uuid"    match="party"    use="@uuid"/>
+   
    <xsl:template match="/" expand-text="true">
       <xsl:call-template name="warn-if-tracing">
          <xsl:with-param name="warning">Trace is on.</xsl:with-param>
@@ -356,7 +360,7 @@
    </xsl:template>
    
    <xsl:template name="css-inline" expand-text="true">
-      <xsl:variable name="properties" as="map(*)">
+      <!--<xsl:variable name="properties" as="map(*)">
          <xsl:map>
             <xsl:map-entry key="'header.face'">'Montserrat', Arial, Helvetica, sans-serif</xsl:map-entry>
             <xsl:map-entry key="'body.face'">'Muli', Arial, Helvetica, sans-serif</xsl:map-entry>
@@ -370,8 +374,20 @@
             <xsl:map-entry key="'heading.color'">#757575</xsl:map-entry>
             <xsl:map-entry key="'body-color'">#454545</xsl:map-entry>
          </xsl:map>
-      </xsl:variable>
-      
+      </xsl:variable>-->
+      <xsl:variable name="properties" expand-text="true" as="map(*)" select="map {
+         'header.face':  '&quot;Montserrat&quot;, Arial, Helvetica, sans-serif',
+         'header.color': '#757575',
+         'body.face':    '&quot;Muli&quot;, Arial, Helvetica, sans-serif',
+         'body-color':   '#454545',
+         'light.blue':   '#ccecfc',
+         'white':        '#ffffff',
+         'cyan':         '#1294c2',
+         'red':          '#cc1d1d',
+         'vivid.blue':   '#1a4480',
+         'deep.blue':    '#162e51',
+         'bg.color':     '#f2f2f2'
+         }"/>
       <style type="text/css" xml:space="preserve">
 @import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
 @import url(http://fonts.googleapis.com/css?family=Muli:400,700);
@@ -399,20 +415,43 @@ h4.tablecaption {{ color: {$properties?red};
 
 div {{ padding: 0.2em; margin-top: 0.5em }}
 
+th, td {{ vertical-align: text-top }}
+
 th {{ color: {$properties?white};
       background-color: {$properties?vivid.blue} }}
-      
-div.instruction {{ border: thin solid {$properties?vivid.blue};
-  color: {$properties?vivid.blue} }}
+
+td.rh {{ font-weight: bold; font-size: 87%; background-color: {$properties?light.blue} }}
 
 p:first-child {{ margin-top: 0em }}
 p:last-child  {{ margin-bottom: 0em }}
 
-span.choice {{ font-weight: 600; color: {$properties?heading.color} }}
+td p {{ margin: 0.5em 0em 0em 0em }}
+td p:first-child {{ margin-top: 0em }}
+      
+div.instruction {{ border: thin solid {$properties?vivid.blue};
+  background-color: {$properties?light.blue}; color: {$properties?vivid.blue}; font-size: 90% }}
+
+.val {{ font-weight: bold; font-family: monospace; text-decoration: underline }}
+
+span.choice {{ font-weight: 600; color: {$properties?header.color} }}
+
+.ERROR {{ background-color: yellow; color: darkorange }}
+
       </style>
    </xsl:template>
    
-   <xsl:variable name="gt">
-      <xsl:text disable-output-escaping="true">></xsl:text>
-   </xsl:variable>
+   <xsl:template name="emit-value">
+      <xsl:param name="this" as="node()?"/>
+      <xsl:param name="echo"/>
+      <xsl:apply-templates select="$this" mode="value"/>
+      <xsl:if test="empty($this)" expand-text="true">
+         <span class="ERROR">No value found for { $echo }</span>
+         <xsl:call-template name="warn-if-tracing">
+            <xsl:with-param name="warning">NO VALUE FOUND for { $echo }</xsl:with-param>
+         </xsl:call-template>
+      </xsl:if>
+   </xsl:template>
+   
+   
+   
 </xsl:stylesheet>

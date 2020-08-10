@@ -1,0 +1,743 @@
+@namespace "http://csrc.nist.gov/ns/oscal/1.0";
+
+/* OSCAL System Security Plan (SSP) Format */
+/* 1.0.0-milestone3 */
+/* oscal-ssp */
+/* http://csrc.nist.gov/ns/oscal/1.0 */
+/* The OSCAL Control SSP format can be used to describe the information typically specified in a system security plan, such as those defined in NIST SP 800-18.The root of the OSCAL System Security Plan (SSP) format is system-security-plan. */
+
+/* assembly address : attr(type) */
+address, .address
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly annotation : attr(name)  attr(id)  attr(ns)  attr(value) */
+annotation, .annotation
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly authorization-boundary  */
+authorization-boundary, .authorization-boundary
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly authorized-privilege  */
+authorized-privilege, .authorized-privilege
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly availability-impact  */
+availability-impact, .availability-impact
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly back-matter  */
+back-matter, .back-matter
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly biblio  */
+biblio, .biblio
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly by-component : attr(component-id)  attr(uuid) */
+by-component, .by-component
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly citation  */
+citation, .citation
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly component : attr(uuid)  attr(component-type) */
+component, .component
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly confidentiality-impact  */
+confidentiality-impact, .confidentiality-impact
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly control-implementation  */
+control-implementation, .control-implementation
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly data-flow  */
+data-flow, .data-flow
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly diagram : attr(uuid) */
+diagram, .diagram
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly implemented-component : attr(component-id)  attr(use) */
+implemented-component, .implemented-component
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly implemented-requirement : attr(uuid)  attr(control-id) */
+implemented-requirement, .implemented-requirement
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly import-profile : attr(href) */
+import-profile, .import-profile
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly information-type : attr(id) */
+information-type, .information-type
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly integrity-impact  */
+integrity-impact, .integrity-impact
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly inventory-item : attr(uuid)  attr(asset-id) */
+inventory-item, .inventory-item
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly leveraged-authorization : attr(id) */
+leveraged-authorization, .leveraged-authorization
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly location : attr(uuid) */
+location, .location
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly metadata  */
+metadata, .metadata
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly network-architecture  */
+network-architecture, .network-architecture
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly party : attr(uuid)  attr(type) */
+party, .party
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly protocol : attr(uuid)  attr(name) */
+protocol, .protocol
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly resource : attr(uuid) */
+resource, .resource
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly revision  */
+revision, .revision
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly rlink : attr(href)  attr(media-type) */
+rlink, .rlink
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly role : attr(id) */
+role, .role
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly security-impact-level  */
+security-impact-level, .security-impact-level
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly set-parameter : attr(param-id) */
+set-parameter, .set-parameter
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly statement : attr(statement-id)  attr(uuid) */
+statement, .statement
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly status : attr(state) */
+status, .status
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly system-characteristics  */
+system-characteristics, .system-characteristics
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly system-implementation  */
+system-implementation, .system-implementation
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly system-information  */
+system-information, .system-information
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly system-inventory  */
+system-inventory, .system-inventory
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* assembly system-security-plan  (root): attr(uuid) */
+system-security-plan, .system-security-plan
+ { display: block;  }
+
+/* assembly user : attr(uuid) */
+user, .user
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field addr-line  */
+addr-line, .addr-line
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field adjustment-justification  */
+adjustment-justification, .adjustment-justification
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field base  */
+base, .base
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field base64 : attr(filename)  attr(media-type) */
+base64, .base64
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field caption  */
+caption, .caption
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field city  */
+city, .city
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field country  */
+country, .country
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field date-authorized  */
+date-authorized, .date-authorized
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field desc  */
+desc, .desc
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field description  */
+description, .description
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field doc-id : attr(type) */
+doc-id, .doc-id
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field email  */
+email, .email
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field external-id : attr(type) */
+external-id, .external-id
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field function-performed  */
+function-performed, .function-performed
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field hash : attr(algorithm) */
+hash, .hash
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field information-type-id : attr(system) */
+information-type-id, .information-type-id
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field last-modified  */
+last-modified, .last-modified
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field link : attr(href)  attr(rel)  attr(media-type) */
+link, .link
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field location-uuid  */
+location-uuid, .location-uuid
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field member-of-organization  */
+member-of-organization, .member-of-organization
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field oscal-version  */
+oscal-version, .oscal-version
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field party-name  */
+party-name, .party-name
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field party-uuid  */
+party-uuid, .party-uuid
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field phone : attr(type) */
+phone, .phone
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field port-range : attr(start)  attr(end)  attr(transport) */
+port-range, .port-range
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field postal-code  */
+postal-code, .postal-code
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field prop : attr(name)  attr(id)  attr(ns)  attr(class) */
+prop, .prop
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field published  */
+published, .published
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field remarks  */
+remarks, .remarks
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field role-id  */
+role-id, .role-id
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field security-objective-availability  */
+security-objective-availability, .security-objective-availability
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field security-objective-confidentiality  */
+security-objective-confidentiality, .security-objective-confidentiality
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field security-objective-integrity  */
+security-objective-integrity, .security-objective-integrity
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field security-sensitivity-level  */
+security-sensitivity-level, .security-sensitivity-level
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field selected  */
+selected, .selected
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field short-name  */
+short-name, .short-name
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field state  */
+state, .state
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field system-id : attr(identifier-type) */
+system-id, .system-id
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field system-name  */
+system-name, .system-name
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field system-name-short  */
+system-name-short, .system-name-short
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field text  */
+text, .text
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field title  */
+title, .title
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field url  */
+url, .url
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field value  */
+value, .value
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+/* field version  */
+version, .version
+ { display: block;  margin-left: 1rem; padding-left: 1rem; border-left: thin solid grey }
+
+
+address:before, .address:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Address' }
+
+
+annotation:before, .annotation:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Annotation' }
+
+
+authorization-boundary:before, .authorization-boundary:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Authorization Boundary' }
+
+
+authorized-privilege:before, .authorized-privilege:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Privilege' }
+
+
+availability-impact:before, .availability-impact:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Availability Impact Level' }
+
+
+back-matter:before, .back-matter:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Back matter' }
+
+
+biblio:before, .biblio:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Bibliographic Definition' }
+
+
+by-component:before, .by-component:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Component Control Implementation' }
+
+
+citation:before, .citation:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Citation' }
+
+
+component:before, .component:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Component' }
+
+
+confidentiality-impact:before, .confidentiality-impact:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Confidentiality Impact Level' }
+
+
+control-implementation:before, .control-implementation:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Control Implementation' }
+
+
+data-flow:before, .data-flow:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Data Flow' }
+
+
+diagram:before, .diagram:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Diagram' }
+
+
+implemented-component:before, .implemented-component:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Implemented Component' }
+
+
+implemented-requirement:before, .implemented-requirement:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Control-based Requirement' }
+
+
+import-profile:before, .import-profile:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Import Profile' }
+
+
+information-type:before, .information-type:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Information Type' }
+
+
+integrity-impact:before, .integrity-impact:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Integrity Impact Level' }
+
+
+inventory-item:before, .inventory-item:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Inventory Item' }
+
+
+leveraged-authorization:before, .leveraged-authorization:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Leveraged Authorization' }
+
+
+location:before, .location:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Location' }
+
+
+metadata:before, .metadata:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Publication metadata' }
+
+
+network-architecture:before, .network-architecture:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Network Architecture' }
+
+
+party:before, .party:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Party (organization or person)' }
+
+
+protocol:before, .protocol:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Protocol' }
+
+
+resource:before, .resource:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Resource' }
+
+
+revision:before, .revision:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Revision History Entry' }
+
+
+rlink:before, .rlink:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Resource link' }
+
+
+role:before, .role:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Role' }
+
+
+security-impact-level:before, .security-impact-level:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Security Impact Level' }
+
+
+set-parameter:before, .set-parameter:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Set Parameter Value' }
+
+
+statement:before, .statement:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Specific Statement' }
+
+
+status:before, .status:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Status' }
+
+
+system-characteristics:before, .system-characteristics:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'System Characteristics' }
+
+
+system-implementation:before, .system-implementation:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'System Implementation' }
+
+
+system-information:before, .system-information:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'System Information' }
+
+
+system-inventory:before, .system-inventory:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'System Inventory' }
+
+
+system-security-plan:before, .system-security-plan:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'System Security Plan (SSP)' }
+
+
+user:before, .user:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'System User Class' }
+
+
+addr-line:before, .addr-line:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Address line' }
+
+
+adjustment-justification:before, .adjustment-justification:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Adjustment Justification' }
+
+
+base:before, .base:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Base Level (Confidentiality, Integrity, or Availability)' }
+
+
+base64:before, .base64:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Base64' }
+
+
+caption:before, .caption:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Caption' }
+
+
+city:before, .city:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'City' }
+
+
+country:before, .country:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Country' }
+
+
+date-authorized:before, .date-authorized:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'System Authorization Date' }
+
+
+desc:before, .desc:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Description' }
+
+
+description:before, .description:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Description' }
+
+
+doc-id:before, .doc-id:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Document Identifier' }
+
+
+email:before, .email:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Email' }
+
+
+external-id:before, .external-id:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Personal Identifier' }
+
+
+function-performed:before, .function-performed:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Functions Performed' }
+
+
+hash:before, .hash:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Hash' }
+
+
+information-type-id:before, .information-type-id:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Information Type Identifier' }
+
+
+last-modified:before, .last-modified:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Last modified timestamp' }
+
+
+link:before, .link:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Link' }
+
+
+location-uuid:before, .location-uuid:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Location Reference' }
+
+
+member-of-organization:before, .member-of-organization:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Organizational Affiliation' }
+
+
+oscal-version:before, .oscal-version:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'OSCAL version' }
+
+
+party-name:before, .party-name:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Party Name' }
+
+
+party-uuid:before, .party-uuid:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Party Reference' }
+
+
+phone:before, .phone:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Telephone' }
+
+
+port-range:before, .port-range:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Port Range' }
+
+
+postal-code:before, .postal-code:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Postal Code' }
+
+
+prop:before, .prop:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex;
+   content: 'Property '
+            oxy_textfield(
+              edit, "@name",
+              columns, 12)
+            oxy_combobox(           
+              edit, "@ns",
+              columns 12,
+            editable, false,
+            canRemoveValue, true,
+            values, "https://fedramp.gov/ns/oscal",
+            labels, "FedRAMP"); }
+
+
+published:before, .published:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Publication Timestamp' }
+
+
+remarks:before, .remarks:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Remarks' }
+
+
+role-id:before, .role-id:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Role Identifier Reference' }
+
+
+security-objective-availability:before, .security-objective-availability:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Security Objective: Availability' }
+
+
+security-objective-confidentiality:before, .security-objective-confidentiality:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Security Objective: Confidentiality' }
+
+
+security-objective-integrity:before, .security-objective-integrity:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Security Objective: Integrity' }
+
+
+security-sensitivity-level:before, .security-sensitivity-level:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Security Sensitivity Level' }
+
+
+selected:before, .selected:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Selected Level (Confidentiality, Integrity, or Availability)' }
+
+
+short-name:before, .short-name:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'short-name' }
+
+
+state:before, .state:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'State' }
+
+
+system-id:before, .system-id:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'System Identification' }
+
+
+system-name:before, .system-name:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'System Name (Full)' }
+
+
+system-name-short:before, .system-name-short:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'System Name (Short)' }
+
+
+text:before, .text:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Text' }
+
+
+title:before, .title:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Title' }
+
+
+url:before, .url:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'URL' }
+
+
+value:before, .value:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Value' }
+
+
+version:before, .version:before
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Document version' }
+
+description > *:first-child, .description > *:first-child { margin-top: 0ex }
+
+remarks > *:first-child, .remarks > *:first-child { margin-top: 0ex }
+
+adjustment-justification > *:first-child, .adjustment-justification > *:first-child { margin-top: 0ex }
+
+i, .i { font-style: italic }      
+em, .em { font-style: italic }      
+b, .b { font-weight: bold }
+strong, .strong { font-weight: bold }
+u, .u { text-decoration: underline }
+
+sub, .sub, sup, .sup { font-size: .83em }
+sub, .sub { vertical-align: sub }
+sup, .sup { vertical-align: super }
+
+q { quotes: "“" "”" "‘" "’"; }
+q::before { content: open-quote; }
+q::after { content: close-quote; }
+
+code, .code { font-family: monospace; font-size: 90% }
+
+p { display: block; margin-top: 1em }
+
+ul, ol {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding-left: 1em;
+}
+
+ol { list-style-type: decimal }
+
+li { display: list-item }
+      
+tr { display: table-row }
+th, td { display: table-cell }
+
+
+
+metadata, system-characteristics, system-implementation, user, component, control-implementation, implemented-requirement, back-matter {
+    -oxy-foldable:true;
+    /*-oxy-not-foldable-child: title;*/
+}
