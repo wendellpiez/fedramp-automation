@@ -13,14 +13,13 @@
       <f:short-title       >FedRAMP SSP HTML XSLT (basic page)</f:short-title>
       <f:description       >From OSCAL SSP provided with its baselines, produces a self-contained page display.</f:description>
       <f:date-of-origin    >2020-08-05</f:date-of-origin>
-      <f:date-last-modified>2020-08-07</f:date-last-modified>
+      <f:date-last-modified>2020-08-11</f:date-last-modified>
       
       <f:parameter name="html-page-title" as="xs:string">String for HTML page title (browser header bar)</f:parameter>
       <f:parameter name="css-link"        as="xs:string?">Literal value for link to out of line CSS (superseded inline CSS)</f:parameter>
       <f:parameter name="trace"           as="xs:string" default="'no'">Emit trace messages to STDOUT at runtime ('yes','true' or 'on')</f:parameter>
       
       <f:dependency href="modules/oscal_general_html.xsl" role="import">Templates for OSCAL. Imports other modules to inherit handling for catalog contents, metadata and fallback logic.</f:dependency>
-      <f:dependency href="css/oscal-ssp_html.css" role="inject">If $css-link is not provided, this CSS is injected as literal CSS in the HTML for a standalone result file.</f:dependency>
       <f:dependency href="ssp-oscal-schema.xsd" role="validate-source">When source provided is not a valid OSCAL SSP (Milestone 3), inputs will fall through unpredictably.</f:dependency>
       
       <f:result-format>HTML 5 + CSS</f:result-format>
@@ -37,13 +36,12 @@
 <!-- The imported XSLT handles catalog contents, with metadata and fallback logic. -->
    <xsl:import href="modules/oscal_general_html.xsl"/>
    
-   
    <xsl:key name="location-by-uuid" match="location" use="@uuid"/>
    <xsl:key name="party-by-uuid"    match="party"    use="@uuid"/>
    
    <xsl:template match="/" expand-text="true">
       <xsl:call-template name="warn-if-tracing">
-         <xsl:with-param name="warning">Trace is on.</xsl:with-param>
+         <xsl:with-param name="warning">[START] Trace is on.</xsl:with-param>
       </xsl:call-template>
       <html>
          <head>
@@ -63,6 +61,9 @@
             <xsl:apply-templates select="$section-specs" mode="boilerplate"/>
          </body>
       </html>
+      <xsl:call-template name="warn-if-tracing">
+         <xsl:with-param name="warning">[END] Root template concluded.</xsl:with-param>
+      </xsl:call-template>
    </xsl:template>
    
 <!-- Control which sections to include here. -->
@@ -70,6 +71,14 @@
       <f:generate section="1"/>
       <f:generate section="2"/>
       <f:generate section="3"/>
+      <f:generate section="4"/>
+      <f:generate section="5"/>
+      <f:generate section="6"/>
+      <f:generate section="7"/>
+      <f:generate section="8"/>
+      <f:generate section="9"/>
+      <f:generate section="10"/>
+      
    </xsl:variable>
    
    <xsl:template mode="boilerplate" match="f:generate" expand-text="true">
@@ -88,20 +97,94 @@
      through 'boilerplate' mode (in the same XSLT) for expansion/adjustment. -->
    <xsl:import href="modules/fedramp-ssp-boilerplate.xsl"/>
    
-   <!--
    
-   responsible-party/@role-id
-   responsible-role/@role-id
-   inventory-item/@asset-id
-   implemented-component/@component-id
-   by-component/@component-id
-   implemented-requirement/@control-id
-   statement/@statement-id
-   set-param/@param-id
+   <xsl:template name="emit-value">
+      <xsl:param name="this" as="node()?"/>
+      <xsl:param name="echo"/>
+      <xsl:apply-templates select="$this" mode="value"/>
+      <xsl:if test="empty($this)" expand-text="true">
+         <span class="ERROR">No value found for { $echo }</span>
+         <xsl:call-template name="warn-if-tracing">
+            <xsl:with-param name="warning">NO VALUE FOUND for { $echo }</xsl:with-param>
+         </xsl:call-template>
+      </xsl:if>
+   </xsl:template>
    
-   -->
+   <xsl:variable name="fedramp-value-registry"
+      select="document('fedramp_values.xml')"/>
    
-   <!--role-id asset-id component-id control-id statement-id param-id-->
+   
+   <!-- Mode 'value' produces spans marked 'val'
+     containing the presentation value - generally element content, but
+     sometimes mapped (as with eAuth values mapping to security impact levels) -->
+   <xsl:template match="*" mode="value">
+      <span class="val">
+         <xsl:apply-templates/>
+      </span>
+   </xsl:template>
+   
+   <xsl:template mode="value" match="prop[@ns='https://fedramp.gov/ns/oscal'][@name='security-eauth-level']">
+      <xsl:call-template name="lookup-value">
+         <xsl:with-param name="who" select="."/>
+         <xsl:with-param name="where" select="$fedramp-value-registry/*/eauth-levels"/>
+      </xsl:call-template>
+   </xsl:template>
+   
+   <xsl:template mode="value" match="system-characteristics/security-sensitivity-level">
+      <xsl:call-template name="lookup-value">
+         <xsl:with-param name="who" select="."/>
+         <xsl:with-param name="where" select="$fedramp-value-registry/*/security-sensitivity-level"/>
+      </xsl:call-template>
+   </xsl:template>
+   
+   <xsl:template mode="value" match="confidentiality-impact/selected |
+      integrity-impact/selected |
+      availability-impact/selected |
+      security-impact-level/*">
+      <xsl:call-template name="lookup-value">
+         <xsl:with-param name="who" select="."/>
+         <xsl:with-param name="where" select="$fedramp-value-registry/*/security-impact-level"/>
+      </xsl:call-template>
+   </xsl:template>
+   
+   <xsl:template mode="value" match="party" expand-text="true">
+      <span class="val">      <xsl:apply-templates select="party-name"/>
+      <xsl:for-each select="prop[@ns='https://fedramp.gov/ns/oscal'][@name='title']">, { . }</xsl:for-each>
+      <xsl:for-each select="member-of-organization/key('party-by-uuid',.)/party-name">({ . })</xsl:for-each>
+      </span>
+   </xsl:template>
+   
+   <xsl:template match="party-name">
+      <xsl:apply-templates/>
+   </xsl:template>
+   
+   <xsl:template name="lookup-value" expand-text="true">
+      <xsl:param name="who"   required="true"/>
+      <xsl:param name="where" required="true"/>
+      <span class="val">
+         <xsl:value-of select="$where/value[@id=$who]/@label"/>
+      </span>
+      <xsl:if test="empty($where/value[@id=$who])">
+         <xsl:variable name="path">
+            <xsl:apply-templates select="$who" mode="path"/>
+         </xsl:variable>
+         <span class="ERROR">Lookup failed for value '{ $who }' on path { $path }</span>
+      <xsl:call-template name="warn-if-tracing">
+         <xsl:with-param name="warning">Lookup failed for value '{ $who }' on path '{ $path }'</xsl:with-param>         
+      </xsl:call-template>
+      </xsl:if>
+   </xsl:template>
+   
+   <xsl:template match="*" mode="path">
+      <xsl:for-each select="ancestor-or-self::*">
+         <xsl:text expand-text="true">/{ name() }</xsl:text>
+         <xsl:variable name="kin" select="../*[name()=name(current())] except ."/>
+         <xsl:if test="exists($kin)">
+            <xsl:text expand-text="true">[{ count(. | (preceding-sibling::* intersect $kin)) }]</xsl:text>
+            
+         </xsl:if>
+      </xsl:for-each>
+   </xsl:template>
    
    <xsl:template mode="css-value" match="*" as="xs:string*">
       <xsl:sequence select="@name!string(.), tokenize(@class,' '), local-name()"/>
@@ -114,267 +197,12 @@
          </xsl:value-of>
       </xsl:attribute>
    </xsl:template>
-
-   <xsl:template match="system-security-plan">
-      <main>
-         <xsl:apply-templates select="." mode="add-class"/>
-         <xsl:apply-templates select="metadata/title"/>
-         <xsl:apply-templates/>
-      </main>
-   </xsl:template>
-
-   <xsl:template match="import-profile">
-      <p>
-         <xsl:apply-templates mode="add-class"       select="."/>
-         <xsl:apply-templates mode="decorate-inline" select="."/>
-         <xsl:apply-templates select="@href"/>
-      </p>
-   </xsl:template>
-
-   <xsl:template match="import-profile/@href" expand-text="true">
-      <a href="{.}" class="import">{ . }</a>
-   </xsl:template>
    
-   <xsl:template match="*" mode="decorate-inline">
-      <xsl:param name="label">
-         <xsl:apply-templates select="." mode="get-label"/>
-      </xsl:param>
-      <span class="lbl">
-         <xsl:sequence select="$label"/>
-      </span>
-      <xsl:text> </xsl:text>
-   </xsl:template>
-   
-   <xsl:template match="*" mode="get-label" expand-text="true">[label not defined for { name() }]</xsl:template>
-   
-   <xsl:template match="import-profile" mode="get-label">Profile import</xsl:template>
-   
-   <xsl:template match="system-characteristics | system-implementation | control-implementation">
-      <section>
-         <xsl:apply-templates select="." mode="add-class"/>
-         <xsl:copy-of select="@id"/>
-         <details>
-            <summary>
-               <xsl:apply-templates select="." mode="section-header"/>
-            </summary>
-            <xsl:apply-templates/>
-         </details>
-      </section>
-   </xsl:template>
-
-   <xsl:template match="system-id">
-      <p>
-         <xsl:apply-templates select="." mode="add-class"/>
-         <xsl:apply-templates mode="decorate-inline" select="."/>
-         <xsl:apply-templates/>
-      </p>
-   </xsl:template>
-   
-   <xsl:template mode="get-label" match="system-id">System ID</xsl:template>
-   
-   <xsl:template match="system-name">
-      <p>
-         <xsl:apply-templates select="." mode="add-class"/>
-         <xsl:apply-templates mode="decorate-inline" select="."/>
-         <xsl:apply-templates/>
-      </p>
-   </xsl:template>
-   
-   <xsl:template mode="get-label" match="system-name">System name</xsl:template>
-   
-   <xsl:template match="description[empty(*)]">
-      <xsl:call-template name="warn-if-tracing">
-         <xsl:with-param name="warning">Empty 'description' element...</xsl:with-param>
-      </xsl:call-template>
-   </xsl:template>  
-   
-   <xsl:template match="system-information">
-      <div>
-         <xsl:apply-templates select="." mode="add-class"/>
-         <h4>System Information</h4>
-         <xsl:apply-templates/>
-      </div>
-   </xsl:template>
-
-   <xsl:template match="security-sensitivity-level">
-      <p>
-         <xsl:apply-templates select="." mode="add-class"/>
-         <xsl:apply-templates mode="decorate-inline" select="."/>
-         <xsl:apply-templates/>
-      </p>
-   </xsl:template>
-   
-   <xsl:template mode="get-label" match="security-sensitivity-level">Security sensitivity level</xsl:template>
-   
-   <!--<xsl:template match="system-information">
-      <div class="system-information">
-         <xsl:apply-templates/>
-      </div>
-   </xsl:template>-->
-   
-   <xsl:template match="information-type">
-      <div>
-         <xsl:apply-templates select="." mode="add-class"/>
-         <p>
-            <xsl:apply-templates mode="decorate-inline" select="."/>
-            <xsl:text expand-text="true">: { @name }</xsl:text>
-         </p>
-         <xsl:apply-templates/>
-      </div>
-   </xsl:template>
-   
-   <xsl:template mode="get-label" match="information-type" expand-text="true">Information type</xsl:template>
-   
-   <xsl:template match="confidentiality-impact | integrity-impact | availability-impact">
-      <div>
-         <xsl:apply-templates select="." mode="add-class"/>
-         <p class="impact-header">
-            <xsl:apply-templates mode="decorate-inline" select="."/>
-         </p>
-         <xsl:apply-templates/>
-      </div>
-   </xsl:template>
-
-   <xsl:template mode="get-label" match="confidentiality-impact">Impact level | Confidentiality</xsl:template>
-   
-   <xsl:template mode="get-label" match="integrity-impact">Impact level | Integrity</xsl:template>
-   
-   <xsl:template mode="get-label" match="availability-impact">Impact level | Integrity</xsl:template>
-   
-   <xsl:template match="security-impact-level">
-      <div>
-         <xsl:apply-templates select="." mode="add-class"/>
-         <xsl:apply-templates/>
-      </div>
-   </xsl:template>
-   
-   <xsl:template match="security-objective-confidentiality | security-objective-integrity | security-objective-availability">
-      <p>
-         <xsl:apply-templates select="." mode="add-class"/>
-         <xsl:apply-templates mode="decorate-inline" select="."/>
-         <xsl:apply-templates/>
-      </p>
-   </xsl:template>
-   
-   <xsl:template mode="get-label" match="security-objective-confidentiality">Security objective | Confidentiality</xsl:template>
-   
-   <xsl:template mode="get-label" match="security-objective-integrity">Security objective | Confidentiality</xsl:template>
-   
-   <xsl:template mode="get-label" match="security-objective-availability">Security objective | Availability</xsl:template>
-   
-   <xsl:template match="authorization-boundary">
-      <div>
-         <xsl:apply-templates select="." mode="add-class"/>
-         <h4>Authorization boundary</h4>
-         <xsl:apply-templates/>
-      </div>
-   </xsl:template>
-   
-   <xsl:template match="status">
-      <div>
-         <xsl:apply-templates select="." mode="add-class"/>
-         <p>
-            <xsl:apply-templates select="." mode="decorate-inline"/>
-            <xsl:for-each select="@state">
-               <xsl:text>: </xsl:text>
-               <xsl:value-of select="."/>
-            </xsl:for-each>
-         </p>
-         <xsl:apply-templates/>
-      </div>
-   </xsl:template>
-   
-   <xsl:template match="component">
-      <div>
-         <xsl:apply-templates select="." mode="add-class"/>
-         <details>
-            <summary>
-               <h4>Component: <xsl:value-of select="self::component/@name"/></h4>
-            </summary>
-            <xsl:apply-templates/>
-         </details>
-      </div>
-   </xsl:template>
-   
-   <xsl:template match="system-inventory">
-      <div>
-         <xsl:apply-templates select="." mode="add-class"/>
-         <details>
-            <summary>
-               <span class="h4">System inventory</span>
-            </summary>
-            <xsl:apply-templates/>
-         </details>
-      </div>
-   </xsl:template>
-
-   <xsl:template match="base | selected | date-authorized">
-      <p>
-         <xsl:apply-templates select="." mode="add-class"/>
-         <xsl:apply-templates select="." mode="decorate-inline"/>
-         <xsl:apply-templates/>
-      </p>
-   </xsl:template>
-   
-   <xsl:template mode="decorate-inline" match="base | selected" expand-text="true">
-      <span class="lbl2">{ local-name() }</span>
-   </xsl:template>
-
-   
-   <xsl:template mode="decorate-inline" match="date-authorized">
-      <span class="lbl2">date authorized:</span>
-   </xsl:template>
-   
-   <xsl:template match="user">
-      <div class="block user">
-         <xsl:apply-templates/>
-      </div>
-   </xsl:template>
-   
-   <xsl:template match="user/title">
-      <p class="line user-title lbl">
-         <xsl:apply-templates/>
-      </p>
-   </xsl:template>
-   
-   <xsl:template match="responsible-role">
-      <div class="responsibility">
-         <xsl:apply-templates/>
-      </div>
-   </xsl:template>
-   
-   <xsl:template mode="section-header" match="system-characteristics">
-      <span class="h2">System Characteristics</span>
-   </xsl:template>
-   
-   <xsl:template mode="section-header" match="system-implementation">
-      <span class="h2">System Implementation</span>
-   </xsl:template>
-   
-   <xsl:template mode="section-header" match="control-implementation">
-      <span class="h2">Control Implementation</span>
-   </xsl:template>
-
    <xsl:template name="css-link">
       <link rel="stylesheet" href="{$css-link}"/>
    </xsl:template>
    
    <xsl:template name="css-inline" expand-text="true">
-      <!--<xsl:variable name="properties" as="map(*)">
-         <xsl:map>
-            <xsl:map-entry key="'header.face'">'Montserrat', Arial, Helvetica, sans-serif</xsl:map-entry>
-            <xsl:map-entry key="'body.face'">'Muli', Arial, Helvetica, sans-serif</xsl:map-entry>
-            <xsl:map-entry key="'light.blue'">#ccecfc</xsl:map-entry>
-            <xsl:map-entry key="'white'">#ffffff</xsl:map-entry>
-            <xsl:map-entry key="'cyan'">#1294c2</xsl:map-entry>
-            <xsl:map-entry key="'red'">#cc1d1d</xsl:map-entry>
-            <xsl:map-entry key="'vivid.blue'">#1a4480</xsl:map-entry>
-            <xsl:map-entry key="'deep.blue'">#162e51</xsl:map-entry>
-            <xsl:map-entry key="'bg.color'">#f2f2f2</xsl:map-entry>
-            <xsl:map-entry key="'heading.color'">#757575</xsl:map-entry>
-            <xsl:map-entry key="'body-color'">#454545</xsl:map-entry>
-         </xsl:map>
-      </xsl:variable>-->
       <xsl:variable name="properties" expand-text="true" as="map(*)" select="map {
          'header.face':  '&quot;Montserrat&quot;, Arial, Helvetica, sans-serif',
          'header.color': '#757575',
@@ -391,22 +219,31 @@
       <style type="text/css" xml:space="preserve">
 @import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
 @import url(http://fonts.googleapis.com/css?family=Muli:400,700);
-         
-details {{ padding: 1em }}
 
 html, body {{ background-color: {$properties?white};
               color: { $properties?body-color };
               font-family: {$properties?body.face} }}
+         
+details {{ padding: 0.5em }}
 
 h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {{ color: {$properties?heading.color};
-              font-family: {$properties?header.face} }}
+.h1, .h2, .h3, .h4, .h5, .h6
+  {{ color: {$properties?heading.color};
+     font-family: {$properties?header.face} }}
+
 h1, .h1 {{ text-transform: uppercase }}
 
 section h1 {{ color: {$properties?red} }}
 
-h4.tablecaption {{ color: {$properties?red};
-  font-style: italic; font-weight: normal }}
+table.uniform {{ border-collapse: collapse }}
+
+table.uniform td,
+table.uniform th {{ border: thin solid {$properties?body.color};
+  padding: 0.2em; min-width: 15vw }}
+table.poc td {{ min-width: 30vw }}
+
+table.uniform caption {{ text-align: left; color: {$properties?red};
+  font-style: italic; font-weight: normal; padding-bottom: 0.5em }}
 
 .lbl {{ font-family: sans-serif; font-weight: bold; font-size: 80% }}
 .lbl2 {{ font-family: sans-serif; font-size: 80% }}
@@ -417,7 +254,8 @@ div {{ padding: 0.2em; margin-top: 0.5em }}
 
 th, td {{ vertical-align: text-top }}
 
-th {{ color: {$properties?white};
+th {{ font-size: 85%;
+      color: {$properties?white};
       background-color: {$properties?vivid.blue} }}
 
 td.rh {{ font-weight: bold; font-size: 87%; background-color: {$properties?light.blue} }}
@@ -428,8 +266,8 @@ p:last-child  {{ margin-bottom: 0em }}
 td p {{ margin: 0.5em 0em 0em 0em }}
 td p:first-child {{ margin-top: 0em }}
       
-div.instruction {{ border: thin solid {$properties?vivid.blue};
-  background-color: {$properties?light.blue}; color: {$properties?vivid.blue}; font-size: 90% }}
+.instruction {{ border: thin solid {$properties?vivid.blue};
+  background-color: {$properties?light.blue}; color: {$properties?vivid.blue}; font-size: 90%; margin-top: 1em }}
 
 .val {{ font-weight: bold; font-family: monospace; text-decoration: underline }}
 
@@ -439,19 +277,5 @@ span.choice {{ font-weight: 600; color: {$properties?header.color} }}
 
       </style>
    </xsl:template>
-   
-   <xsl:template name="emit-value">
-      <xsl:param name="this" as="node()?"/>
-      <xsl:param name="echo"/>
-      <xsl:apply-templates select="$this" mode="value"/>
-      <xsl:if test="empty($this)" expand-text="true">
-         <span class="ERROR">No value found for { $echo }</span>
-         <xsl:call-template name="warn-if-tracing">
-            <xsl:with-param name="warning">NO VALUE FOUND for { $echo }</xsl:with-param>
-         </xsl:call-template>
-      </xsl:if>
-   </xsl:template>
-   
-   
    
 </xsl:stylesheet>
