@@ -1,0 +1,910 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta itemprop="nominal_source_uri" content="file:/C:/Users/wap1/Documents/usnistgov/fedramp-automation/resources/specs/FedRAMP-SSP-OSCAL-workup.xml">
+      <meta itemprop="production_xslt" content="file:/C:/Users/wap1/Documents/usnistgov/fedramp-automation/resources/oscal_ssp-basic_html.xsl">
+      <meta itemprop="production_timestamp" content="2020-08-17T17:30:37.805-04:00">
+      <title>FedRAMP System Security Plan (SSP) - WORKUP demo</title>
+      <style type="text/css">
+@import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
+@import url(http://fonts.googleapis.com/css?family=Muli:400,700);
+
+html, body { background-color: #ffffff;
+              color: #454545;
+              font-family: "Muli", Arial, Helvetica, sans-serif }
+         
+details { padding: 0.5em }
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6
+  { color: #757575;
+     font-family: "Montserrat", Arial, Helvetica, sans-serif }
+
+h1, .h1 { text-transform: uppercase }
+
+section h1 { color: #cc1d1d }
+
+th, td { padding: 0.2em }
+
+table.uniform { border-collapse: collapse }
+
+table.uniform td,
+table.uniform th { border: thin solid #454545; min-width: 15vw }
+table.poc td { min-width: 30vw }
+
+table.iinv th      { background-color: #daeef3;  font-weight: bold }
+table.iinv th.all  { background-color: #b8cce4; font-weight: normal }
+table.iinv th.os   { background-color: #92cddc;  font-weight: normal }
+table.iinv th.swdb { background-color: #c4d79b; font-weight: normal }
+table.iinv th.any  { background-color: #b8cce4; font-weight: normal }
+
+table.uniform caption { text-align: left; color: #cc1d1d;
+  font-style: italic; font-weight: normal; padding-bottom: 0.5em }
+
+.lbl { font-family: sans-serif; font-weight: bold; font-size: 80% }
+.lbl2 { font-family: sans-serif; font-size: 80% }
+
+.tag { font-family: monospace; font-weight: bold }
+
+div { padding: 0.2em; margin-top: 0.5em }
+
+th, td { vertical-align: text-top }
+
+table.uniform th,
+table.poc     th { font-size: 85%;
+      color: #ffffff;
+      background-color: #1a4480 }
+
+td.rh { font-weight: bold; font-size: 87%; background-color: #ccecfc }
+
+p:first-child { margin-top: 0em }
+p:last-child  { margin-bottom: 0em }
+
+td p { margin: 0.5em 0em 0em 0em }
+td p:first-child { margin-top: 0em }
+
+tr.guidance { display: none;
+  font-size: 65%; font-weight: normal; text-align: left }
+
+tr.guided:hover + tr.guidance { display: table-row }
+
+
+
+table.iinv tr.guidance th { font-weight: normal }
+
+div.guidance:before { font-weight: bold; content: "GUIDANCE: " }
+
+td.tbd { background-color: pink }
+
+.instruction { border: thin solid #1a4480;
+  background-color: #ccecfc;
+  color: #1a4480;
+  font-size: 90%; margin-top: 1em }
+
+.val, .rem { font-family: monospace; text-decoration: underline }
+.val { font-weight: bold }
+
+span.choice { font-weight: 600; color: #757575 }
+
+.ERROR { background-color: yellow; color: darkorange }
+
+.validation-error { color: red; font-style: italic; font-size: 80% }
+
+main > span, section > span { display: block }
+</style>
+   </head>
+   <body>
+      <main>
+         <section id="attachment.13" class="integrated-inventory">
+            <h1><span class="n">Attachment 13.</span> Integrated Inventory</h1>
+            <table class="iinv">
+               <thead>
+                  <tr>
+                     <th colspan="5" class="all">All Inventories</th>
+                     <th colspan="9" class="os">OS/Infrastructure Inventory</th>
+                     <th colspan="4" class="swdb">Software and Database Inventories</th>
+                     <th colspan="5" class="any">Any Inventory</th>
+                  </tr>
+                  <tr class="guided">
+                     <th>UNIQUE ASSET IDENTIFIER</th>
+                     <th>IPv4 or IPv6 Address</th>
+                     <th>Virtual</th>
+                     <th>Public</th>
+                     <th>DNS Name or URL</th>
+                     <th>NetBIOS Name</th>
+                     <th>MAC Address</th>
+                     <th>Authenticated Scan</th>
+                     <th>Baseline Configuration Name</th>
+                     <th>OS Name and Version</th>
+                     <th>Location</th>
+                     <th>Asset Type</th>
+                     <th>Hardware Make/Model</th>
+                     <th>In Latest Scan</th>
+                     <th>Software / Database Name &amp; Version</th>
+                     <th>Software / Database Vendor</th>
+                     <th>Patch Level</th>
+                     <th>Function</th>
+                     <th>Comments</th>
+                     <th>Serial # / Asset Tag #</th>
+                     <th>VLAN / Network ID</th>
+                     <th>System Administrator / Owner</th>
+                     <th>Application Administrator / Owner</th>
+                  </tr>
+                  <tr class="guidance">
+                     <th>
+                        <div class="guidance">Unique Identifier associated with the asset. This Identifier
+                           should be used consistently across all documents, 3PAOs artifacts, and any
+                           vulnerability scanning tools. For OS/Infrastructure and Web Application Software,
+                           this is typically an IP address or URL/DNS name. For a database, it is typically
+                           an IP address, URL, or database name. A CSP's own naming scheme is also acceptable
+                           as long as it has unique identifiers.</div>
+                     </th>
+                     <th>
+                        <div class="guidance">If available, state the IPv4 or IPv6 address of the inventory
+                           item. This can be left blank if one does not exist, or if it is a dynamic field.
+                           If the IP address is used as the Unique Asset Identifier, then this field will
+                           duplicate the contents of the Unique Asset Identifier column. If a device has
+                           multiple IP addresses, then include one row in this inventory for each IP
+                           address.</div>
+                     </th>
+                     <th>
+                        <div class="guidance">Is this asset virtual? </div>
+                     </th>
+                     <th>
+                        <div class="guidance">Is this asset a public facing device? That is, is it outside
+                           the boundary? If so, it is an entry point.</div>
+                     </th>
+                     <th>
+                        <div class="guidance">If available, state the DNS name or URL of the inventory item.
+                           This can be left blank if one does not exist, or it is a dynamic field. </div>
+                     </th>
+                     <th>
+                        <div class="guidance">If available, state the NetBIOS name of the inventory item.
+                           This can be left blank if one does not exist, or it is a dynamic field. </div>
+                     </th>
+                     <th>
+                        <div class="guidance">If available, state the MAC Address of the inventory item. This
+                           can be left blank if one does not exist, or it is a dynamic field. </div>
+                     </th>
+                     <th>
+                        <div class="guidance">Is the asset is planned for an authenticated scan? </div>
+                     </th>
+                     <th>
+                        <div class="guidance">If available, provide the name of the configuration template
+                           used within the CSP configuration management.</div>
+                     </th>
+                     <th>
+                        <div class="guidance">Operating System Name and Version running on the asset.</div>
+                     </th>
+                     <th>
+                        <div class="guidance">Physical location of hardware. Could include Data Center ID,
+                           Cage#, Rack# or other meaningful location identifiers. </div>
+                     </th>
+                     <th>
+                        <div class="guidance">
+                           <p>Simple description of the asset's function (e.g., Router, Storage Array, DNS
+                              Server, etc.)</p>
+                           <p>Do not use vendor or product names which should go in Columns N (for hardware)
+                              or Columns P-Q for software or database.</p>
+                        </div>
+                     </th>
+                     <th>
+                        <div class="guidance">Name of the hardware product and model.</div>
+                     </th>
+                     <th>
+                        <div class="guidance">Should the asset appear in the network scans and can it be
+                           probed by the scans creating the current POA&amp;M?</div>
+                     </th>
+                     <th>
+                        <div class="guidance">Name of Software or Database product and version number.</div>
+                     </th>
+                     <th>
+                        <div class="guidance">
+                           <p>Name of Software or Database vendor.</p>
+                           <p>If open source (i.e., there is no “vendor”), enter “Open Source” as the vendor
+                              name.</p>
+                        </div>
+                     </th>
+                     <th>
+                        <div class="guidance">If applicable.</div>
+                     </th>
+                     <th>
+                        <div class="guidance">For Software or Database, the function provided by the Software
+                           or Database for the system. </div>
+                     </th>
+                     <th>
+                        <div class="guidance">Any additional information that could be useful to the
+                           reviewer.</div>
+                     </th>
+                     <th>
+                        <div class="guidance">Product serial number or internal asset tag #. </div>
+                     </th>
+                     <th>
+                        <div class="guidance">Virtual LAN or Network ID.</div>
+                     </th>
+                     <th>
+                        <div class="guidance">Name of the system administrator or owner.</div>
+                     </th>
+                     <th>
+                        <div class="guidance">Name of the application administrator or owner.</div>
+                     </th>
+                  </tr>
+               </thead>
+               <tr>
+                  <td>
+                     <p>unique-asset-id</p>
+                  </td>
+                  <td>
+                     <p><span class="val">10.1.1.1</span>; <span class="val">0000:0000:0000:0000</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">maybe</span> <span class="validation-error">ERROR: value 'maybe ' is not permitted here: should be (one of) yes, no</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">no</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">uniform.resource.identifier</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">netbios-name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">00:00:00:00:00:00</span></p>
+                  </td>
+                  <td class="tbd"> (authenticated scan???) 
+                     
+                     </td>
+                  <td>
+                     <p><span class="val">Baseline Config. Name</span></p>
+                  </td>
+                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p><span class="val">Physical location of Asset</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">os</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Model Number</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">yes</span></p>
+                     <div class="rem">
+                        
+                        <p>If no, explain why. If yes, omit remarks field.</p>
+                        </div>
+                  </td>
+                  <td>
+                     <p><span class="val">software-name</span>; <span class="val">V 0.0.0</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Vendor Name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Patch-Level</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Required brief, text-based description.</span></p>
+                     <div class="rem">
+                        
+                        <p>Optional, longer, formatted description.</p>
+                        </div>
+                  </td>
+                  <td>
+                     <p><span class="val">
+                           
+                           <p>COMMENTS: Additional information about this item.</p>
+                           </span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Serial #</span>; <span class="val">Asset Tag</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">VLAN Identifier</span>; <span class="val">Network Identifier</span></p>
+                  </td>
+                  <td class="tbd">(system admin/owner???)</td>
+                  <td class="tbd">(application admin/owner???)</td>
+               </tr>
+               <tr>
+                  <td>
+                     <p>unique-asset-ID</p>
+                  </td>
+                  <td>
+                     <p><span class="val">10.2.2.2</span>; <span class="val">0000:0000:0000:0000</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">no</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">no</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">uniform.resource.locator</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">netbios-name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">00:00:00:00:00:00</span></p>
+                  </td>
+                  <td class="tbd"> (authenticated scan???) 
+                     
+                     </td>
+                  <td>
+                     <p><span class="val">Baseline Configuration Name</span></p>
+                  </td>
+                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p><span class="val">Physical location of Asset</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for asset-type</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for model</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for "is scanned" status</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for software name and version</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vendor name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Patch-Level</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for function</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">
+                           
+                           <p>COMMENTS: If needed, provide additional information about this inventory item.</p>
+                           </span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                  </td>
+                  <td class="tbd">(system admin/owner???)</td>
+                  <td class="tbd">(application admin/owner???)</td>
+               </tr>
+               <tr>
+                  <td>
+                     <p>unique-asset-id</p>
+                  </td>
+                  <td>
+                     <p><span class="val">10.3.3.3</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for virtual</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for public</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for DNS name / uri</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for netbios-name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for mac-address</span></p>
+                  </td>
+                  <td class="tbd"> (authenticated scan???) 
+                     
+                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for baseline-configuration-name</span></p>
+                  </td>
+                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p><span class="ERROR">No value found for physical-location</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for asset-type</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for model</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">yes</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for software name and version</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vendor name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for patch-level</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for function</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for comments</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                  </td>
+                  <td class="tbd">(system admin/owner???)</td>
+                  <td class="tbd">(application admin/owner???)</td>
+               </tr>
+               <tr>
+                  <td>
+                     <p>unique-asset-id</p>
+                  </td>
+                  <td>
+                     <p><span class="val">10.4.4.4</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for virtual</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for public</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for DNS name / uri</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for netbios-name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for mac-address</span></p>
+                  </td>
+                  <td class="tbd"> (authenticated scan???) 
+                     
+                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for baseline-configuration-name</span></p>
+                  </td>
+                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p><span class="ERROR">No value found for physical-location</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for asset-type</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for model</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">yes</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for software name and version</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vendor name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for patch-level</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for function</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for comments</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                  </td>
+                  <td class="tbd">(system admin/owner???)</td>
+                  <td class="tbd">(application admin/owner???)</td>
+               </tr>
+               <tr>
+                  <td>
+                     <p>unique-asset-id</p>
+                  </td>
+                  <td>
+                     <p><span class="val">10.5.5.5</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for virtual</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for public</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for DNS name / uri</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for netbios-name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for mac-address</span></p>
+                  </td>
+                  <td class="tbd"> (authenticated scan???) 
+                     
+                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for baseline-configuration-name</span></p>
+                  </td>
+                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p><span class="ERROR">No value found for physical-location</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for asset-type</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for model</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">yes</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for software name and version</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vendor name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for patch-level</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for function</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for comments</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                  </td>
+                  <td class="tbd">(system admin/owner???)</td>
+                  <td class="tbd">(application admin/owner???)</td>
+               </tr>
+               <tr>
+                  <td>
+                     <p>unique-asset-id</p>
+                  </td>
+                  <td>
+                     <p><span class="val">10.6.6.6</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for virtual</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for public</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for DNS name / uri</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for netbios-name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for mac-address</span></p>
+                  </td>
+                  <td class="tbd"> (authenticated scan???) 
+                     
+                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for baseline-configuration-name</span></p>
+                  </td>
+                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p><span class="ERROR">No value found for physical-location</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for asset-type</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for model</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">no</span></p>
+                     <div class="rem">
+                        
+                        <p>Asset wasn't running at time of scan.</p>
+                        </div>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for software name and version</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vendor name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for patch-level</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for function</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for comments</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                  </td>
+                  <td class="tbd">(system admin/owner???)</td>
+                  <td class="tbd">(application admin/owner???)</td>
+               </tr>
+               <tr>
+                  <td>
+                     <p>unique-asset-id</p>
+                  </td>
+                  <td>
+                     <p><span class="val">10.7.7.7</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for virtual</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for public</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for DNS name / uri</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for netbios-name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for mac-address</span></p>
+                  </td>
+                  <td class="tbd"> (authenticated scan???) 
+                     
+                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for baseline-configuration-name</span></p>
+                  </td>
+                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p><span class="ERROR">No value found for physical-location</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for asset-type</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for model</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">yes</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for software name and version</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vendor name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for patch-level</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for function</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for comments</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                  </td>
+                  <td class="tbd">(system admin/owner???)</td>
+                  <td class="tbd">(application admin/owner???)</td>
+               </tr>
+               <tr>
+                  <td>
+                     <p>unique-asset-id</p>
+                  </td>
+                  <td>
+                     <p><span class="val">10.8.8.8</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for virtual</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for public</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for DNS name / uri</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for netbios-name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for mac-address</span></p>
+                  </td>
+                  <td class="tbd"> (authenticated scan???) 
+                     
+                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for baseline-configuration-name</span></p>
+                  </td>
+                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p><span class="ERROR">No value found for physical-location</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for asset-type</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for model</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">no</span></p>
+                     <div class="rem">
+                        
+                        <p>Asset wasn't running at time of scan.</p>
+                        </div>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for software name and version</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vendor name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for patch-level</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for function</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for comments</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                  </td>
+                  <td class="tbd">(system admin/owner???)</td>
+                  <td class="tbd">(application admin/owner???)</td>
+               </tr>
+               <tr>
+                  <td>
+                     <p>10.10.10.0</p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for ip address (v4 or v6)</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for virtual</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for public</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for DNS name / uri</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for netbios-name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for mac-address</span></p>
+                  </td>
+                  <td class="tbd"> (authenticated scan???) 
+                     
+                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for baseline-configuration-name</span></p>
+                  </td>
+                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p><span class="ERROR">No value found for physical-location</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for asset-type</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for model</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">yes</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for software name and version</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vendor name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for patch-level</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for function</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for comments</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                  </td>
+                  <td class="tbd">(system admin/owner???)</td>
+                  <td class="tbd">(application admin/owner???)</td>
+               </tr>
+               <tr>
+                  <td>
+                     <p>10.10.20.0</p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for ip address (v4 or v6)</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for virtual</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for public</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for DNS name / uri</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for netbios-name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for mac-address</span></p>
+                  </td>
+                  <td class="tbd"> (authenticated scan???) 
+                     
+                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for baseline-configuration-name</span></p>
+                  </td>
+                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p><span class="ERROR">No value found for physical-location</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for asset-type</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for model</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">yes</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for software name and version</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vendor name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for patch-level</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for function</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for comments</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                  </td>
+                  <td class="tbd">(system admin/owner???)</td>
+                  <td class="tbd">(application admin/owner???)</td>
+               </tr>
+            </table>
+         </section>
+      </main>
+   </body>
+</html>

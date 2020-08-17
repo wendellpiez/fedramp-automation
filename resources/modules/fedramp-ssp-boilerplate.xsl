@@ -45,6 +45,8 @@
    
    <xsl:template match="f:generate[@item]" mode="boilerplate-label" expand-text="true">(item { @item })</xsl:template>
    
+   <xsl:template match="f:generate" mode="boilerplate-label" expand-text="true">({ @*/name() => string-join(' ') })</xsl:template>
+   
    <xsl:variable name="ssp" select="/"/>
    
 <!-- All the boilerplate follows. HTML contents appear in outputs.
@@ -55,7 +57,7 @@
          <section id="sec.1">
             <h1 class="head"><span class="n">1.</span> Information System Name/Title</h1>
             <p>This System Security Plan provides an overview of the security requirements for 
-               <xsl:call-template name="emit-value">
+               <xsl:call-template name="emit-value-td">
                   <xsl:with-param name="this" select="$ssp/*/system-characteristics/system-name"/>
                   <xsl:with-param name="echo">system name</xsl:with-param>
                </xsl:call-template>
@@ -68,29 +70,30 @@
    <xsl:template match="f:generate[@table = '1-1']">
       <table id="table.1-1" class="uniform">
          <caption><span class="lbl">Table 1-1.</span> Information System Name and Title</caption>
-         <tr>
-            <th>Unique Identifier</th>
-            <th>Information System Name</th>
-            <th>Information System</th>
-         </tr>
-         <tr>
-            <td>
-               <xsl:call-template name="emit-value">
+         <thead>
+            <tr>
+               <th>Unique Identifier</th>
+               <th>Information System Name</th>
+               <th>Information System</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <xsl:call-template name="emit-value-td">
                   <xsl:with-param name="this"
                      select="$ssp/*/system-characteristics/system-id[@identifier-type = 'https://fedramp.gov']"/>
                   <xsl:with-param name="echo">FedRAMP identifier</xsl:with-param>
                </xsl:call-template>
-            </td>
-            <td>
-               <xsl:call-template name="emit-value">
+               <xsl:call-template name="emit-value-td">
                   <xsl:with-param name="this" select="$ssp/*/system-characteristics/system-name"/>
                   <xsl:with-param name="echo">system name (full)</xsl:with-param>
                </xsl:call-template>
-            </td>
-            <td>
-               <f:generate item="system-short-name"/>
-            </td>
-         </tr>
+
+               <td>
+                  <f:generate item="system-short-name"/>
+               </td>
+            </tr>
+         </tbody>
       </table>
    </xsl:template>
    
@@ -116,16 +119,18 @@
    <xsl:template match="f:generate[@table='2-1']">
          <table id="table.2-1" class="uniform">
             <caption><span class="lbl">Table 2-1.</span> Security Categorization</caption>
+            <tbody>
             <tr>
                <th>System Sensitivity Level:</th>
-               <td>
-                  <xsl:call-template name="emit-value">
-                     <xsl:with-param name="this" select="$ssp/*/system-characteristics/security-sensitivity-level"/>
+               
+                  <xsl:call-template name="emit-value-td">
+                     <xsl:with-param name="this"
+                        select="$ssp/*/system-characteristics/security-sensitivity-level"/>
                      <xsl:with-param name="echo">system sensitivity level</xsl:with-param>
                   </xsl:call-template>
-               </td>
                
             </tr>
+            </tbody>
          </table>
    </xsl:template>
    
@@ -215,58 +220,64 @@
    <xsl:template match="f:generate[@table='2-2']">
       <table id="table.2-2" class="uniform">
          <caption><span class="lbl">Table 2-2.</span> Sensitivity Categorization of Information Types</caption>
-         <cols>
+         <colgroup>
             <col width="35%"/>
             <col width="20%"/>
             <col width="15%"/>
             <col width="15%"/>
             <col width="15%"/>
-         </cols>
-         <tr>
-            <th>
-               <p>Information Type </p>
-               <p>(Use only information types from <a>NIST SP 800-60</a>, Volumes I and II as amended)</p>
-            </th>
-            <th>NIST 800-60 identifier for Associated Information Type</th>
-            <th>Confidentiality</th>
-            <th>Integrity</th>
-            <th>Availability</th>
-         </tr>
-         <xsl:for-each select="$ssp/*/system-characteristics/system-information/information-type">
+         </colgroup>
+         <thead>
             <tr>
-               <td>
-                  <xsl:call-template name="emit-value">
-                     <xsl:with-param name="this" select="title"/>
-                     <xsl:with-param name="echo">information type (name)</xsl:with-param>
-                  </xsl:call-template>
-               </td>
-            <td>
-               <xsl:call-template name="emit-value">
-                  <xsl:with-param name="this" select="information-type-id [@system='https://doi.org/10.6028/NIST.SP.800-60v2r1']"/>
-                  <xsl:with-param name="echo">NIST 800-600 information type identifier</xsl:with-param>
-               </xsl:call-template>
-            </td>
-            <td>
-               <xsl:call-template name="emit-value">
-                  <xsl:with-param name="this" select="confidentiality-impact/selected"/>
-                  <xsl:with-param name="echo">confidentiality impact level</xsl:with-param>
-               </xsl:call-template>
-            </td>
-            <td>
-               <xsl:call-template name="emit-value">
-                  <xsl:with-param name="this" select="integrity-impact/selected"/>
-                  <xsl:with-param name="echo">integrity impact level</xsl:with-param>
-               </xsl:call-template>
-            </td>
-            <td>
-               <xsl:call-template name="emit-value">
-                  <xsl:with-param name="this" select="availability-impact/selected"/>
-                  <xsl:with-param name="echo">availability impact level</xsl:with-param>
-               </xsl:call-template>
-            </td>
+               <th>
+                  <p>Information Type </p>
+                  <p>(Use only information types from <a>NIST SP 800-60</a>, Volumes I and II as
+                     amended)</p>
+               </th>
+               <th>NIST 800-60 identifier for Associated Information Type</th>
+               <th>Confidentiality</th>
+               <th>Integrity</th>
+               <th>Availability</th>
             </tr>
-            
-         </xsl:for-each>
+         </thead>
+         <tbody>
+            <xsl:for-each select="$ssp/*/system-characteristics/system-information/information-type">
+               <tr>
+                  
+                     <xsl:call-template name="emit-value-td">
+                        <xsl:with-param name="this" select="title"/>
+                        <xsl:with-param name="echo">information type (name)</xsl:with-param>
+                     </xsl:call-template>
+                  
+                  
+                     <xsl:call-template name="emit-value-td">
+                        <xsl:with-param name="this"
+                           select="information-type-id[@system = 'https://doi.org/10.6028/NIST.SP.800-60v2r1']"/>
+                        <xsl:with-param name="echo">NIST 800-600 information type
+                           identifier</xsl:with-param>
+                     </xsl:call-template>
+                  
+                  
+                     <xsl:call-template name="emit-value-td">
+                        <xsl:with-param name="this" select="confidentiality-impact/selected"/>
+                        <xsl:with-param name="echo">confidentiality impact level</xsl:with-param>
+                     </xsl:call-template>
+                  
+                  
+                     <xsl:call-template name="emit-value-td">
+                        <xsl:with-param name="this" select="integrity-impact/selected"/>
+                        <xsl:with-param name="echo">integrity impact level</xsl:with-param>
+                     </xsl:call-template>
+                  
+                  
+                     <xsl:call-template name="emit-value-td">
+                        <xsl:with-param name="this" select="availability-impact/selected"/>
+                        <xsl:with-param name="echo">availability impact level</xsl:with-param>
+                     </xsl:call-template>
+                  
+               </tr>
+            </xsl:for-each>
+         </tbody>
       </table>
    </xsl:template>
    
@@ -284,57 +295,63 @@
    <xsl:template mode="boilerplate" match="f:generate[@table = '2-3']">
       <table id="table.2-3" class="uniform">
          <caption><span class="lbl">Table 2-3.</span> Security Impact Level</caption>
+         <thead> 
          <tr>
             <th>Security Objective</th>
             <th>Low, Moderate or High</th>
          </tr>
+         </thead>
+         <tbody>
          <tr>
             <td>Confidentiality</td>
-            <td>
-               <xsl:call-template name="emit-value">
+            
+               <xsl:call-template name="emit-value-td">
                   <xsl:with-param name="this"
                      select="$ssp/*/system-characteristics/security-impact-level/security-objective-confidentiality"/>
                   <xsl:with-param name="echo">confidentiality objective</xsl:with-param>
                </xsl:call-template>
 
-            </td>
+            
          </tr>
          <tr>
             <td>Integrity</td>
-            <td>
-               <xsl:call-template name="emit-value">
+            
+               <xsl:call-template name="emit-value-td">
                   <xsl:with-param name="this"
                      select="$ssp/*/system-characteristics/security-impact-level/security-objective-integrity"/>
                   <xsl:with-param name="echo">integrity objective</xsl:with-param>
                </xsl:call-template>
-            </td>
+            
          </tr>
-         <tr>
-            <td>Availability</td>
-            <td>
-               <xsl:call-template name="emit-value">
-                  <xsl:with-param name="this"
-                     select="$ssp/*/system-characteristics/security-impact-level/security-objective-availability"/>
-                  <xsl:with-param name="echo">availability objective</xsl:with-param>
-               </xsl:call-template>
-            </td>
-         </tr>
+            <tr>
+               <td>Availability</td>
+               
+                  <xsl:call-template name="emit-value-td">
+                     <xsl:with-param name="this"
+                        select="$ssp/*/system-characteristics/security-impact-level/security-objective-availability"/>
+                     <xsl:with-param name="echo">availability objective</xsl:with-param>
+                  </xsl:call-template>
+               
+            </tr>
+         </tbody>
       </table>
    </xsl:template>
    
    <xsl:template mode="boilerplate" match="f:generate[@table='2-4']">
       <table id="table.2-4" class="uniform">
          <caption><span class="lbl">Table 2-4.</span> Baseline Security Configuration</caption>
-         <tr>
-            <th>Enter Information System Abbreviation Security Categorization</th>
-            <td>
-               <xsl:call-template name="emit-value">
-                  <xsl:with-param name="this"
-                     select="$ssp/*/system-characteristics/security-sensitivity-level"/>
-                  <xsl:with-param name="echo">security sensitivity level</xsl:with-param>
-               </xsl:call-template>
-            </td>
-         </tr>
+         <tbody>
+            <tr>
+               <th>Enter Information System Abbreviation Security Categorization</th>
+               
+                  <xsl:call-template name="emit-value-td">
+                     <xsl:with-param name="this"
+                        select="$ssp/*/system-characteristics/security-sensitivity-level"/>
+                     <xsl:with-param name="echo">security sensitivity level</xsl:with-param>
+                  </xsl:call-template>
+               
+            </tr>
+         </tbody>
       </table>
    </xsl:template>
    
@@ -343,7 +360,7 @@
          <h2 class="head"><span class="n">2.3.</span> Digital Identity Determination</h2>
          <p>The digital identity information may be found in <a href="#attach3">ATTACHMENT 3 – Digital Identity Worksheet</a></p>
          <p>Note: NIST SP 800-63-3, Digital Identity Guidelines, does not recognize the four Levels of Assurance model previously used by federal agencies and described in OMB M-04-04, instead requiring agencies to individually select levels corresponding to each function being performed.</p>
-         <p>The digital identity level is <xsl:call-template name="emit-value">
+         <p>The digital identity level is <xsl:call-template name="emit-value-td">
             <xsl:with-param name="this" select="$ssp/*/system-characteristics/prop[@ns='https://fedramp.gov/ns/oscal'][@name='security-eauth-level']"/>
             <xsl:with-param name="echo">security sensitivity level</xsl:with-param>
          </xsl:call-template>.</p>
@@ -382,7 +399,7 @@
             <p>Delete this and all other instructions from your final version of this document.</p>
          </div>
          <p>The Authorizing Official (AO) or Designated Approving Authority (DAA) for this information system is
-            <xsl:call-template name="emit-value">
+            <xsl:call-template name="emit-value-td">
                <xsl:with-param name="this" select="$authorizing-party[1]"/>
                <xsl:with-param name="echo">authorizing official</xsl:with-param>
             </xsl:call-template>.</p>
@@ -450,57 +467,61 @@
             <xsl:attribute name="id" select="$id"/>
          </xsl:if>
          <xsl:copy-of select="$caption"/>
+         <thead>
          <tr>
             <th colspan="2">
                <xsl:sequence select="$table-header"/>
             </th>
          </tr>
-         <tr>
-            <td class="rh">Name</td>
-            <td>
-               <xsl:apply-templates mode="value" select="party-name"/>
-               <xsl:for-each select="short-name" expand-text="true"> ({ . })</xsl:for-each>
-            </td>
-         </tr>
-         <tr>
-            <td class="rh">Title</td>
-            <td>
-               <xsl:apply-templates mode="value"
-                  select="prop[@ns = 'https://fedramp.gov/ns/oscal'][@name = 'title']"/>
-            </td>
-         </tr>
-         <tr>
-            <td class="rh">Company / Organization</td>
-            <td>
-               <xsl:apply-templates mode="value" select="$organization/party-name"/>
-            </td>
-         </tr>
-         <tr>
-            <td class="rh">Address</td>
-            <td>
-               <xsl:for-each select="address | $location/address">
-                  <p class="val">
-                     <xsl:value-of select="*" separator=" "/>
-                  </p>
-               </xsl:for-each>
-            </td>
-         </tr>
-         <tr>
-            <td class="rh">Phone Number</td>
-            <td>
-               <xsl:for-each select="phone | $location/phone">
-                  <p class="val">
-                     <xsl:apply-templates/>
-                  </p>
-               </xsl:for-each>
-            </td>
-         </tr>
-         <tr>
-            <td class="rh">Email Address</td>
-            <td>
-               <xsl:apply-templates mode="value" select="email"/>
-            </td>
-         </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td class="rh">Name</td>
+               <td>
+                  <xsl:apply-templates mode="value" select="party-name"/>
+                  <xsl:for-each select="short-name" expand-text="true"> ({ . })</xsl:for-each>
+               </td>
+            </tr>
+            <tr>
+               <td class="rh">Title</td>
+               <td>
+                  <xsl:apply-templates mode="value"
+                     select="prop[@ns = 'https://fedramp.gov/ns/oscal'][@name = 'title']"/>
+               </td>
+            </tr>
+            <tr>
+               <td class="rh">Company / Organization</td>
+               <td>
+                  <xsl:apply-templates mode="value" select="$organization/party-name"/>
+               </td>
+            </tr>
+            <tr>
+               <td class="rh">Address</td>
+               <td>
+                  <xsl:for-each select="address | $location/address">
+                     <p class="val">
+                        <xsl:value-of select="*" separator=" "/>
+                     </p>
+                  </xsl:for-each>
+               </td>
+            </tr>
+            <tr>
+               <td class="rh">Phone Number</td>
+               <td>
+                  <xsl:for-each select="phone | $location/phone">
+                     <p class="val">
+                        <xsl:apply-templates/>
+                     </p>
+                  </xsl:for-each>
+               </td>
+            </tr>
+            <tr>
+               <td class="rh">Email Address</td>
+               <td>
+                  <xsl:apply-templates mode="value" select="email"/>
+               </td>
+            </tr>
+         </tbody>
       </table>
    </xsl:template>
    
@@ -521,5 +542,312 @@
         <xsl:apply-templates mode="#current"/>
      </details>
    </xsl:template>
+    
+   <xsl:template mode="boilerplate" match="f:generate[@attachment='13']">
+      <section id="attachment.13" class="integrated-inventory">
+         <h1><span class="n">Attachment 13.</span> Integrated Inventory</h1>
+         <table class="iinv">
+            <xsl:call-template name="inventory-table-head"/>
+            <xsl:apply-templates mode="integrated-inventory" select="$ssp/*/system-implementation/system-inventory/inventory-item"/>
+         </table>
+      </section>
+   </xsl:template>
+   
+   <xsl:template name="inventory-table-head">
+      <thead>
+         <tr>
+            <th colspan="5" class="all">All Inventories</th>
+            <th colspan="9" class="os">OS/Infrastructure Inventory</th>
+            <th colspan="4" class="swdb">Software and Database Inventories</th>
+            <th colspan="5" class="any">Any Inventory</th>
+         </tr>
+         <tr class="guided">
+            <th>UNIQUE ASSET IDENTIFIER</th>
+            <th>IPv4 or IPv6 Address</th>
+            <th>Virtual</th>
+            <th>Public</th>
+            <th>DNS Name or URL</th>
+            <th>NetBIOS Name</th>
+            <th>MAC Address</th>
+            <th>Authenticated Scan</th>
+            <th>Baseline Configuration Name</th>
+            <th>OS Name and Version</th>
+            <th>Location</th>
+            <th>Asset Type</th>
+            <th>Hardware Make/Model</th>
+            <th>In Latest Scan</th>
+            <th>Software / Database Name &amp; Version</th>
+            <th>Software / Database Vendor</th>
+            <th>Patch Level</th>
+            <th>Function</th>
+            <th>Comments</th>
+            <th>Serial # / Asset Tag #</th>
+            <th>VLAN / Network ID</th>
+            <th>System Administrator / Owner</th>
+            <th>Application Administrator / Owner</th>
+         </tr>
       
+         <tr class="guidance">
+            <th>
+               <!--<p>UNIQUE ASSET IDENTIFIER</p>-->
+               <div class="guidance">Unique Identifier associated with the asset. This Identifier
+                  should be used consistently across all documents, 3PAOs artifacts, and any
+                  vulnerability scanning tools. For OS/Infrastructure and Web Application Software,
+                  this is typically an IP address or URL/DNS name. For a database, it is typically
+                  an IP address, URL, or database name. A CSP's own naming scheme is also acceptable
+                  as long as it has unique identifiers.</div>
+            </th>
+            
+            <th>
+               <!--<p>IPv4 or IPv6 Address</p>-->
+               <div class="guidance">If available, state the IPv4 or IPv6 address of the inventory
+                  item. This can be left blank if one does not exist, or if it is a dynamic field.
+                  If the IP address is used as the Unique Asset Identifier, then this field will
+                  duplicate the contents of the Unique Asset Identifier column. If a device has
+                  multiple IP addresses, then include one row in this inventory for each IP
+                  address.</div>
+            </th>
+            <th>
+               <!--<p> Virtual</p>-->
+               <div class="guidance">Is this asset virtual? </div>
+            </th>
+            <th>
+               <!--<p>Public</p>-->
+               <div class="guidance">Is this asset a public facing device? That is, is it outside
+                  the boundary? If so, it is an entry point.</div>
+            </th>
+            <th>
+               <!--<p>DNS Name or URL</p>-->
+               <div class="guidance">If available, state the DNS name or URL of the inventory item.
+                  This can be left blank if one does not exist, or it is a dynamic field. </div>
+            </th>
+            <th>
+               <!--<p>NetBIOS Name</p>-->
+               <div class="guidance">If available, state the NetBIOS name of the inventory item.
+                  This can be left blank if one does not exist, or it is a dynamic field. </div>
+            </th>
+            <th>
+               <!--<p>MAC Address</p>-->
+               <div class="guidance">If available, state the MAC Address of the inventory item. This
+                  can be left blank if one does not exist, or it is a dynamic field. </div>
+            </th>
+            <th>
+               <!--<p>Authenticated Scan</p>-->
+               <div class="guidance">Is the asset is planned for an authenticated scan? </div>
+            </th>
+            <th>
+               <!--<p>Baseline Configuration Name</p>-->
+               <div class="guidance">If available, provide the name of the configuration template
+                  used within the CSP configuration management.</div>
+            </th>
+            <th>
+               <!--<p>OS Name and Version</p>-->
+               <div class="guidance">Operating System Name and Version running on the asset.</div>
+            </th>
+            <th>
+               <!--<p>Location</p>-->
+               <div class="guidance">Physical location of hardware. Could include Data Center ID,
+                  Cage#, Rack# or other meaningful location identifiers. </div>
+            </th>
+            <th>
+               <!--<p>Asset Type</p>-->
+               <div class="guidance">
+                  <p>Simple description of the asset's function (e.g., Router, Storage Array, DNS
+                     Server, etc.)</p>
+                  <p>Do not use vendor or product names which should go in Columns N (for hardware)
+                     or Columns P-Q for software or database.</p>
+               </div>
+            </th>
+            <th>
+               <!--<p>Hardware Make/Model</p>-->
+               <div class="guidance">Name of the hardware product and model.</div>
+            </th>
+            <th>
+               <!--<p>In Latest Scan</p>-->
+               <div class="guidance">Should the asset appear in the network scans and can it be
+                  probed by the scans creating the current POA&amp;M?</div>
+            </th>
+            <th>
+               <!--<p>Software / Database Name &amp; Version</p>-->
+               <div class="guidance">Name of Software or Database product and version number.</div>
+            </th>
+            <th>
+               <!--<p>Software / Database Vendor</p>-->
+               <div class="guidance">
+                  <p>Name of Software or Database vendor.</p>
+                  <p>If open source (i.e., there is no “vendor”), enter “Open Source” as the vendor
+                     name.</p>
+               </div>
+            </th>
+            <th>
+               <!--<p>Patch Level</p>-->
+               <div class="guidance">If applicable.</div>
+            </th>
+            <th>
+               <!--<p>Function</p>-->
+               <div class="guidance">For Software or Database, the function provided by the Software
+                  or Database for the system. </div>
+            </th>
+            <th>
+               <!--<p>Comments</p>-->
+               <div class="guidance">Any additional information that could be useful to the
+                  reviewer.</div>
+            </th>
+            <th>
+               <!--<p>Serial # / Asset Tag #</p>-->
+               <div class="guidance">Product serial number or internal asset tag #. </div>
+            </th>
+            <th>
+               <!--<p>VLAN / Network ID</p>-->
+               <div class="guidance">Virtual LAN or Network ID.</div>
+            </th>
+            <th>
+               <!--<p>System Administrator/ Owner</p>-->
+               <div class="guidance">Name of the system administrator or owner.</div>
+            </th>
+            <th>
+               <!--<p>Application Administrator/ Owner</p>-->
+               <div class="guidance">Name of the application administrator or owner.</div>
+            </th>
+            
+         </tr>
+      </thead>
+   </xsl:template>
+   
+   <xsl:template mode="integrated-inventory" match="inventory-item | component">
+      <xsl:param name="this-item" select="."/>
+      <tr>
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="@asset-id"/>
+            <xsl:with-param name="echo">unique asset identifier</xsl:with-param>
+         </xsl:call-template>
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="prop[@name='ipv4-address'] | prop[@name='ipv6-address']"/>
+            <xsl:with-param name="echo">ip address (v4 or v6)</xsl:with-param>
+         </xsl:call-template>
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="prop[@name='virtual']"/>
+            <xsl:with-param name="echo">virtual</xsl:with-param>
+            <xsl:with-param name="validate" as="element()*">
+               <f:allow-only values="yes no"/>
+            </xsl:with-param>
+         </xsl:call-template>
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="prop[@name='public']"/>
+            <xsl:with-param name="echo">public</xsl:with-param>
+            <xsl:with-param name="validate" as="element()*">
+               <f:allow-only values="yes no"/>
+            </xsl:with-param>
+         </xsl:call-template>
+         <!--<xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="prop[@name='fqdn']"/>
+            <xsl:with-param name="echo">fqdn</xsl:with-param>
+         </xsl:call-template>-->
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="prop[@name='uri']"/>
+            <xsl:with-param name="echo">DNS name / uri</xsl:with-param>
+         </xsl:call-template>
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="prop[@name='netbios-name']"/>
+            <xsl:with-param name="echo">netbios-name</xsl:with-param>
+         </xsl:call-template>
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="prop[@name='mac-address']"/>
+            <xsl:with-param name="echo">mac-address</xsl:with-param>
+         </xsl:call-template>
+         <!--<xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this"
+               select="prop[@ns='https://fedramp.gov/ns/oscal'][@name='scan-type']"/>
+            <xsl:with-param name="echo">scan-type</xsl:with-param>
+            <xsl:with-param name="validate" as="element()*">
+               <f:allow-only values="infrastructure web database"/>
+            </xsl:with-param>
+         </xsl:call-template>-->
+         <!--<xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this"
+               select="prop[@ns='https://fedramp.gov/ns/oscal'][@name='validation']"/>
+            <xsl:with-param name="echo">validation</xsl:with-param>
+         </xsl:call-template>
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="annotation[@name='allows-authenticated-scan']"/>
+            <xsl:with-param name="echo">allows-authenticated-scan</xsl:with-param>
+            <xsl:with-param name="validate" as="element()*">
+               <f:allow-only values="yes no"/>
+            </xsl:with-param>
+         </xsl:call-template>
+         -->
+         
+         <td class="tbd"> (authenticated scan???) 
+            <!--<xsl:with-param name="validate" as="element()*">
+               <f:allow-only values="yes no"/>
+            </xsl:with-param>-->
+         </td>
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="annotation[@name='baseline-configuration-name']"/>
+            <xsl:with-param name="echo">baseline-configuration-name</xsl:with-param>
+            
+         </xsl:call-template>
+         
+         <td class="tbd"> (OS name and version???) </td>
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="annotation[@name='physical-location']"/>
+            <xsl:with-param name="echo">physical-location</xsl:with-param>
+         </xsl:call-template>
+         
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="prop[@name='asset-type']"/>
+            <xsl:with-param name="echo">asset-type</xsl:with-param>
+            <xsl:with-param name="validate" as="element()*">
+               <f:allow-only values="os database web-server dns-server email-server directory-server pbx firewall router switch storage-array"/>
+            </xsl:with-param>
+         </xsl:call-template>
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="prop[@name='model']"/>
+            <xsl:with-param name="echo">model</xsl:with-param>
+         </xsl:call-template>
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="annotation[@name='is-scanned']"/>
+            <xsl:with-param name="echo">"is scanned" status</xsl:with-param>
+            <xsl:with-param name="validate" as="element()*">
+               <f:allow-only values="yes no"/>
+            </xsl:with-param>
+         </xsl:call-template>
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="prop[@name='software-name'] | prop[@name='version']"/>
+            <xsl:with-param name="echo">software name and version</xsl:with-param>
+         </xsl:call-template>
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this"
+               select="prop[@ns='https://fedramp.gov/ns/oscal'][@name='vendor-name']"/>
+            <xsl:with-param name="echo">vendor name</xsl:with-param>
+         </xsl:call-template>
+         
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="prop[@name='patch-level']"/>
+            <xsl:with-param name="echo">patch-level</xsl:with-param>
+         </xsl:call-template>
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="annotation[@name='function']"/>
+            <xsl:with-param name="echo">function</xsl:with-param>
+         </xsl:call-template>
+         
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="remarks"/>
+            <xsl:with-param name="echo">comments</xsl:with-param>
+         </xsl:call-template>
+         
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="prop[@name='serial-number'] | prop[@name='asset-tag']"/>
+            <xsl:with-param name="echo">serial-number, asset tag</xsl:with-param>
+         </xsl:call-template>
+         <xsl:call-template name="emit-value-td">
+            <xsl:with-param name="this" select="prop[@name='vlan-id'], prop[@name='network-id']"/>
+            <xsl:with-param name="echo">vlan or network ID</xsl:with-param>
+         </xsl:call-template>
+         
+         <td class="tbd">(system admin/owner???)</td>
+         <td class="tbd">(application admin/owner???)</td>
+         
+      </tr>
+   </xsl:template>
 </xsl:stylesheet>

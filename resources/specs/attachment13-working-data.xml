@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <row>
+        <cell>DELETE COLUMN A AND ROWS 3-11 BEFORE SUBMISSION</cell>
+        <cell>All Inventories</cell>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell>OS/Infrastructure Inventory</cell>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell>Software and Database Inventories</cell>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell>Any Inventory</cell>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+    </row>
+    <row>
+        <cell/>
+        <cell>UNIQUE ASSET IDENTIFIER</cell>
+        <cell>IPv4 or IPv6 Address</cell>
+        <cell>Virtual</cell>
+        <cell>Public</cell>
+        <cell>DNS Name or URL</cell>
+        <cell>NetBIOS Name</cell>
+        <cell>MAC Address</cell>
+        <cell>Authenticated Scan</cell>
+        <cell>Baseline Configuration Name</cell>
+        <cell>OS Name and Version</cell>
+        <cell>Location</cell>
+        <cell>Asset Type</cell>
+        <cell>Hardware Make/Model</cell>
+        <cell>In Latest Scan</cell>
+        <cell>Software/ Database Vendor</cell>
+        <cell>Software/ Database Name &amp; Version</cell>
+        <cell>Patch Level</cell>
+        <cell>Function</cell>
+        <cell>Comments</cell>
+        <cell>Serial #/Asset Tag#</cell>
+        <cell>VLAN/ Network ID</cell>
+        <cell>System Administrator/ Owner</cell>
+        <cell>Application Administrator/ Owner</cell>
+        <cell/>
+    </row>
+    <row>
+        <cell>GUIDANCE</cell>
+        <cell>Unique Identifier associated with the asset. This Identifier should be used
+            consistently across all documents, 3PAOs artifacts, and any vulnerability scanning
+            tools. For OS/Infrastructure and Web Application Software, this is typically an IP
+            address or URL/DNS name. For a database, it is typically an IP address, URL, or database
+            name. A CSP's own naming scheme is also acceptable as long as it has unique
+            identifiers.</cell>
+        <cell>If available, state the IPv4 or IPv6 address of the inventory item. This can be left
+            blank if one does not exist, or if it is a dynamic field. If the IP address is used as
+            the Unique Asset Identifier, then this field will duplicate the contents of the Unique
+            Asset Identifier column. If a device has multiple IP addresses, then include one row in
+            this inventory for each IP address.</cell>
+        <cell>Is this asset virtual? </cell>
+        <cell>Is this asset a public facing device? That is, is it outside the boundary? If so, it
+            is an entry point.</cell>
+        <cell>If available, state the DNS name or URL of the inventory item. This can be left blank
+            if one does not exist, or it is a dynamic field. </cell>
+        <cell>If available, state the NetBIOS name of the inventory item. This can be left blank if
+            one does not exist, or it is a dynamic field. </cell>
+        <cell>If available, state the MAC Address of the inventory item. This can be left blank if
+            one does not exist, or it is a dynamic field. </cell>
+        <cell>Is the asset is planned for an authenticated scan? </cell>
+        <cell>If available, provide the name of the configuration template used within the CSP
+            configuration management.</cell>
+        <cell>Operating System Name and Version running on the asset.</cell>
+        <cell>Physical location of hardware. Could include Data Center ID, Cage#, Rack# or other
+            meaningful location identifiers. </cell>
+        <cell>Simple description of the asset's function (e.g., Router, Storage Array, DNS Server,
+            etc.)</cell>
+        <cell>Name of the hardware product and model.</cell>
+        <cell>Should the asset appear in the network scans and can it be probed by the scans
+            creating the current POA&amp;M?</cell>
+        <cell>Name of Software or Database vendor.</cell>
+        <cell>Name of Software or Database product and version number. </cell>
+        <cell>If applicable.</cell>
+        <cell>For Software or Database, the function provided by the Software or Database for the
+            system. </cell>
+        <cell>Any additional information that could be useful to the reviewer.</cell>
+        <cell>Product serial number or internal asset tag #. </cell>
+        <cell>Virtual LAN or Network ID.</cell>
+        <cell>Name of the system administrator or owner.</cell>
+        <cell>Name of the application administrator or owner.</cell>
+        <cell/>
+    </row>
+    <row>
+        <cell>Valid Values</cell>
+        <cell>Must be unique.</cell>
+        <cell/>
+        <cell>Yes or No.</cell>
+        <cell>Yes or No.</cell>
+        <cell>Valid DNS name or URL.</cell>
+        <cell>Valid NetBIOS name.</cell>
+        <cell>Valid MAC Address.</cell>
+        <cell>Yes or No.</cell>
+        <cell>.</cell>
+        <cell/>
+        <cell>Valid locations for CSP infrastructure.</cell>
+        <cell>Do not use vendor or product names which should go in Columns N (for hardware) or
+            Columns P-Q for software or database.</cell>
+        <cell/>
+        <cell>Yes or No.</cell>
+        <cell>If open source (e.g., there is no "vendor), enter "Open Source" as the vendor
+            name.</cell>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+    </row>
+    <row>
+        <cell>Mandatory or Optional?</cell>
+        <cell>Mandatory for all inventory records.</cell>
+        <cell>Optional, unless used as Identifier in vulnerability scans or security
+            assessments.</cell>
+        <cell>Mandatory for OS/Infrastructure. Software, and Database. </cell>
+        <cell>Mandatory for OS/Infrastructure. Software, and Database. </cell>
+        <cell>Optional, unless used as Identifier in vulnerability scans or security
+            assessments.</cell>
+        <cell>Optional, unless used as Identifier in vulnerability scans or security
+            assessments.</cell>
+        <cell>Optional, unless used as Identifier in vulnerability scans or security
+            assessments.</cell>
+        <cell>Mandatory for OS/Infrastructure. Leave blank for Software and Database. </cell>
+        <cell>Mandatory for OS/Infrastructure. Leave blank for Software and Database. </cell>
+        <cell>Optional for OS/Infrastructure. Leave blank for Software and Database. </cell>
+        <cell>Optional for OS/Infrastructure. Leave blank for Software and Database. </cell>
+        <cell>Mandatory for OS/Infrastructure. Leave blank for Software and Database. </cell>
+        <cell>Mandatory for OS/Infrastructure. Leave blank for Software and Database. </cell>
+        <cell>Mandatory for OS/Infrastructure. Leave blank for Software and Database. </cell>
+        <cell>Mandatory for Software and Database. Leave blank for OS/Infrastructure. </cell>
+        <cell>Mandatory for Software or Database. Leave blank for OS/Infrastructure. </cell>
+        <cell>Optional if applicable. Otherwise, leave blank.</cell>
+        <cell>Mandatory for Software or Database. Leave blank for OS/Infrastructure. </cell>
+        <cell>Optional for OS/Infrastructure, Software and Database. </cell>
+        <cell>Optional for OS/Infrastructure, Software, and Database. </cell>
+        <cell>Optional for OS/Infrastructure, Software, and Database. </cell>
+        <cell>Mandatory for HIGH impact systems. Optional for Low and Moderate impact systems. </cell>
+        <cell>Optional for OS/Infrastructure, Software, and Database. </cell>
+        <cell/>
+    </row>
+    <row>
+        <cell>OS/Infrastructure Example</cell>
+        <cell>123.45.78.90</cell>
+        <cell>123.45.78.90</cell>
+        <cell>No</cell>
+        <cell>Yes</cell>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell>Yes</cell>
+        <cell>Base Config1</cell>
+        <cell>CentOS 5.1</cell>
+        <cell/>
+        <cell>Web Server</cell>
+        <cell>Acme Server</cell>
+        <cell>No</cell>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+    </row>
+    <row>
+        <cell>OS/Infrastructure Example</cell>
+        <cell>123.45.67.98</cell>
+        <cell>123.45.67.98</cell>
+        <cell>Yes</cell>
+        <cell>Yes</cell>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell>Yes</cell>
+        <cell>Base Config2</cell>
+        <cell>Windows Server 2012</cell>
+        <cell/>
+        <cell>Web Server</cell>
+        <cell>Acme Server</cell>
+        <cell>Yes</cell>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+    </row>
+    <row>
+        <cell>OS/Infrastructure Example</cell>
+        <cell>123.45.67.95</cell>
+        <cell>123.45.67.95</cell>
+        <cell>No</cell>
+        <cell>Yes</cell>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell>Yes</cell>
+        <cell>Base Config1</cell>
+        <cell>Cisco IOS 12.1</cell>
+        <cell/>
+        <cell>Router</cell>
+        <cell>Acme Router</cell>
+        <cell>Yes</cell>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+    </row>
+    <row>
+        <cell>OS/Infrastructure Example</cell>
+        <cell>123.45.67.96</cell>
+        <cell>123.45.67.96</cell>
+        <cell>No</cell>
+        <cell>Yes</cell>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell>Yes</cell>
+        <cell>Base Config1</cell>
+        <cell>Dell OS10</cell>
+        <cell/>
+        <cell>Switch</cell>
+        <cell>Acme Switch</cell>
+        <cell>No</cell>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+    </row>
+    <row>
+        <cell>Software Example</cell>
+        <cell>123.45.78.400</cell>
+        <cell>123.45.78.400</cell>
+        <cell>No</cell>
+        <cell>No</cell>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell>Acme Software </cell>
+        <cell>Acme CloudApp v1.0</cell>
+        <cell/>
+        <cell>CRM</cell>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+    </row>
+    <row>
+        <cell>Database Example</cell>
+        <cell>123.45.78.401</cell>
+        <cell>123.45.78.401</cell>
+        <cell>No</cell>
+        <cell>No</cell>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell>Oracle</cell>
+        <cell>Oracle v11</cell>
+        <cell/>
+        <cell>Records Management</cell>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+        <cell/>
+    </row>
+
+
+
+<!-- this XQuery writes XSLT for the following set of elements
+    declare namespace xsl = "http://www.w3.org/1999/XSL/Transform";
+
+<xsl:stylesheet>
+{
+for $e in (/*/* except /*/row)
+let $path := (
+  $e/name() 
+  || (if (empty($e/@ns)) then '' else
+  '[@ns=''' || $e/@ns || ''']')
+  || '[@name=''' || $e/@name || ''']'
+)
+
+return
+
+<xsl:call-template name="emit-value-td">
+<xsl:with-param name="this"
+select="{$path}"/>
+<xsl:with-param name="echo">{$e/@name/string()}</xsl:with-param>
+</xsl:call-template>
+
+}
+</xsl:stylesheet>
+
+    -->
+    <prop name="ipv4-address">0.0.0.0</prop>
+    <prop name="ipv6-address">0000:0000:0000:0000</prop>
+    <prop name="virtual">no</prop>
+    <prop name="public">no</prop>
+    <prop name="fqdn">dns.name</prop>
+    <prop name="uri">uniform.resource.identifier</prop>
+    <prop name="netbios-name">netbios-name</prop>
+    <prop name="mac-address">00:00:00:00:00:00</prop>
+    <prop name="software-name">software-name</prop>
+    <prop name="version">V 0.0.0</prop>
+    <prop name="asset-type">os</prop>
+    <prop name="vendor-name" ns="https://fedramp.gov/ns/oscal">Vendor Name</prop>
+    <prop name="model">Model Number</prop>
+    <prop name="patch-level">Patch-Level</prop>
+    <prop name="serial-number">Serial #</prop>
+    <prop name="asset-tag">Asset Tag</prop>
+    <prop name="vlan-id">VLAN Identifier</prop>
+    <prop name="network-id">Network Identifier</prop>
+    <prop name="scan-type" ns="https://fedramp.gov/ns/oscal">infrastructure</prop>
+    <prop name="validation" ns="https://fedramp.gov/ns/oscal">component-id</prop>
+    <annotation name="allows-authenticated-scan" value="no">
+        <remarks>
+            <p>If no, explain why. If yes, omit remarks field.</p>
+        </remarks>
+    </annotation>
+    <annotation name="baseline-configuration-name" value="Baseline Config. Name"/>
+    <annotation name="physical-location" value="Physical location of Asset"/>
+    <annotation name="is-scanned" value="yes">
+        <remarks>
+            <p>If no, explain why. If yes, omit remarks field.</p>
+        </remarks>
+    </annotation>
+    <annotation name="function" value="Required brief, text-based description.">
+        <remarks>
+            <p>Optional, longer, formatted description.</p>
+        </remarks>
+    </annotation>
+
+
+
+</root>

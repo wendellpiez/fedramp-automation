@@ -352,7 +352,24 @@ address:before, .address:before
 
 
 annotation:before, .annotation:before
- { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex; content: 'Annotation' }
+ { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex;
+   content: 'Annotation '
+            oxy_combobox(           
+              edit, "@ns",
+              columns 8,
+            editable, false,
+            canRemoveValue, true,
+            values, "https://fedramp.gov/ns/oscal",
+            labels, "FedRAMP")
+            oxy_textfield(
+              edit, "@name",
+              columns, 16)
+            ' value '
+            oxy_textfield(
+              edit, "@value",
+              columns, 12)
+            ; }
+
 
 
 authorization-boundary:before, .authorization-boundary:before
@@ -614,16 +631,16 @@ postal-code:before, .postal-code:before
 prop:before, .prop:before
  { font-family: sans-serif; font-size: 0.83rem; font-weight: bold; background-color: #0D4F7B; color: white; padding: 0ex 0.4ex; margin: 0ex 0.3ex;
    content: 'Property '
-            oxy_textfield(
-              edit, "@name",
-              columns, 12)
             oxy_combobox(           
               edit, "@ns",
-              columns 12,
+              columns 8,
             editable, false,
             canRemoveValue, true,
             values, "https://fedramp.gov/ns/oscal",
-            labels, "FedRAMP"); }
+            labels, "FedRAMP")
+            oxy_textfield(
+              edit, "@name",
+              columns, 24) }
 
 
 published:before, .published:before

@@ -13,16 +13,17 @@
       <f:short-title       >FedRAMP SSP HTML XSLT (basic page)</f:short-title>
       <f:description       >From OSCAL SSP provided with its baselines, produces a self-contained page display.</f:description>
       <f:date-of-origin    >2020-08-05</f:date-of-origin>
-      <f:date-last-modified>2020-08-11</f:date-last-modified>
+      <f:date-last-modified>2020-08-17</f:date-last-modified>
       
       <f:parameter name="html-page-title" as="xs:string">String for HTML page title (browser header bar)</f:parameter>
-      <f:parameter name="css-link"        as="xs:string?">Literal value for link to out of line CSS (superseded inline CSS)</f:parameter>
+      <f:parameter name="css-link"        as="xs:string?">Literal value for link to out of line CSS (superseding inline CSS)</f:parameter>
       <f:parameter name="trace"           as="xs:string" default="'no'">Emit trace messages to STDOUT at runtime ('yes','true' or 'on')</f:parameter>
+      <f:parameter name="paginate"        as="xs:string" default="'no'">Paginate using paged.js library for PDF production ('yes','true' or 'on')</f:parameter>
       
       <f:dependency href="modules/oscal_general_html.xsl" role="import">Templates for OSCAL. Imports other modules to inherit handling for catalog contents, metadata and fallback logic.</f:dependency>
       <f:dependency href="ssp-oscal-schema.xsd" role="validate-source">When source provided is not a valid OSCAL SSP (Milestone 3), inputs will fall through unpredictably.</f:dependency>
       
-      <f:result-format>HTML 5 + CSS</f:result-format>
+      <f:result-format>HTML5 + CSS</f:result-format>
    </f:transformation>
    
    <xsl:output indent="yes" method="html" html-version="5"/>
@@ -33,11 +34,36 @@
    
    <xsl:param name="trace" as="xs:string">no</xsl:param>
    
+   <xsl:param name="paginate" as="xs:string">no</xsl:param>
+   
+   <xsl:variable name="paginating" select="$paginate=('yes','true','on')"/>
+   
 <!-- The imported XSLT handles catalog contents, with metadata and fallback logic. -->
    <xsl:import href="modules/oscal_general_html.xsl"/>
    
    <xsl:key name="location-by-uuid" match="location" use="@uuid"/>
    <xsl:key name="party-by-uuid"    match="party"    use="@uuid"/>
+
+   <!-- Control which sections to include here. -->
+   <xsl:variable name="main-contents" as="element()*">
+      <main>
+         <f:generate attachment="13">Integrated Inventory</f:generate>
+         <!--<f:generate section="1"/>
+         <f:generate section="2"/>
+         <f:generate section="3"/>
+         <f:generate section="4"/>
+         <f:generate section="5"/>
+         <f:generate section="6"/>
+         <f:generate section="7"/>
+         <f:generate section="8"/>
+         <f:generate section="9"/>
+         <f:generate section="10"/>-->
+      </main>
+   </xsl:variable>
+   
+   <xsl:variable name="front-matter" as="element()*">
+      <!-- ToC, tables of figures and tables etc. here. -->
+   </xsl:variable>
    
    <xsl:template match="/" expand-text="true">
       <xsl:call-template name="warn-if-tracing">
@@ -53,34 +79,24 @@
             
             <xsl:call-template name="css-link"   use-when="matches($css-link,'\w')"/>
             <xsl:call-template name="css-inline" use-when="not(matches($css-link,'\w'))"/>
+            <xsl:if test="$paginating">
+               <!--<link href="paged-js/interface-0.1.css" rel="stylesheet" type="text/css"/>-->
+              <script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>
+            </xsl:if>
          </head>
          <body>
 <!-- We produce the contents by processing a set of proxy elements through a filter. Each proxy
             indicates a handle for expansion using logic bound to the proxy by template
             match. -->
-            <xsl:apply-templates select="$section-specs" mode="boilerplate"/>
+            <xsl:apply-templates select="$front-matter"  mode="boilerplate"/>
+            <xsl:apply-templates select="$main-contents" mode="boilerplate"/>
          </body>
       </html>
       <xsl:call-template name="warn-if-tracing">
          <xsl:with-param name="warning">[END] Root template concluded.</xsl:with-param>
       </xsl:call-template>
    </xsl:template>
-   
-<!-- Control which sections to include here. -->
-   <xsl:variable as="element()*" name="section-specs">
-      <f:generate section="1"/>
-      <f:generate section="2"/>
-      <f:generate section="3"/>
-      <f:generate section="4"/>
-      <f:generate section="5"/>
-      <f:generate section="6"/>
-      <f:generate section="7"/>
-      <f:generate section="8"/>
-      <f:generate section="9"/>
-      <f:generate section="10"/>
-      
-   </xsl:variable>
-   
+
    <xsl:template mode="boilerplate" match="f:generate" expand-text="true">
       <!-- Any actual boilerplate is delivered by a matching template
            in the imported XSLT. If no boilerplate is written, an error-marking
@@ -98,16 +114,43 @@
    <xsl:import href="modules/fedramp-ssp-boilerplate.xsl"/>
    
    
-   <xsl:template name="emit-value">
-      <xsl:param name="this" as="node()?"/>
+   <xsl:template name="emit-value-td">
+      <xsl:param name="this" as="node()*"/>
       <xsl:param name="echo"/>
-      <xsl:apply-templates select="$this" mode="value"/>
-      <xsl:if test="empty($this)" expand-text="true">
-         <span class="ERROR">No value found for { $echo }</span>
-         <xsl:call-template name="warn-if-tracing">
-            <xsl:with-param name="warning">NO VALUE FOUND for { $echo }</xsl:with-param>
-         </xsl:call-template>
-      </xsl:if>
+      <xsl:param name="validate" as="element()*" select="()"/>
+      <td>
+         <p>
+            <xsl:call-template name="emit-value">
+               <xsl:with-param name="this" select="$this"/>
+               <xsl:with-param name="echo" select="$echo"/>
+            </xsl:call-template>
+            <xsl:for-each select="$this">
+               <xsl:apply-templates mode="check-value" select="$validate">
+                  <xsl:with-param name="who" select="."/>
+               </xsl:apply-templates>
+            </xsl:for-each>
+         </p>
+         <xsl:for-each select="$this/self::annotation/remarks[matches(string(),'\S')]">
+            <div class="rem">
+               <xsl:apply-templates/>
+            </div>
+         </xsl:for-each>
+      </td>
+   </xsl:template>
+   
+   <xsl:template name="emit-value">
+      <xsl:param name="this" as="node()*"/>
+      <xsl:param name="echo"/>
+         <xsl:for-each select="$this">
+            <xsl:if test="not(position() eq 1)">; </xsl:if>
+         <xsl:apply-templates select="." mode="value"/>
+         </xsl:for-each>
+         <xsl:if test="empty($this)" expand-text="true">
+            <span class="ERROR">No value found for { $echo }</span>
+            <xsl:call-template name="warn-if-tracing">
+               <xsl:with-param name="warning">NO VALUE FOUND for { $echo }</xsl:with-param>
+            </xsl:call-template>
+         </xsl:if>
    </xsl:template>
    
    <xsl:variable name="fedramp-value-registry"
@@ -120,6 +163,12 @@
    <xsl:template match="*" mode="value">
       <span class="val">
          <xsl:apply-templates/>
+      </span>
+   </xsl:template>
+   
+   <xsl:template match="annotation" mode="value">
+      <span class="val">
+         <xsl:value-of select="@value"/>
       </span>
    </xsl:template>
    
@@ -170,7 +219,7 @@
          </xsl:variable>
          <span class="ERROR">Lookup failed for value '{ $who }' on path { $path }</span>
       <xsl:call-template name="warn-if-tracing">
-         <xsl:with-param name="warning">Lookup failed for value '{ $who }' on path '{ $path }'</xsl:with-param>         
+         <xsl:with-param name="warning">Lookup failed for value '{ $who }' on path '{ $path }'</xsl:with-param>     
       </xsl:call-template>
       </xsl:if>
    </xsl:template>
@@ -202,45 +251,67 @@
       <link rel="stylesheet" href="{$css-link}"/>
    </xsl:template>
    
+   <xsl:template mode="check-value" match="f:allow-only">
+      <xsl:param required="yes" name="who" as="node()"/>
+      <xsl:variable name="checking" select="($who/self::annotation/@value, $who)[1]" as="xs:string"/>
+      <xsl:variable name="okay-values" select="tokenize(@values,',?\s+')"/>
+      <xsl:if test="not(string($checking) = $okay-values)" expand-text="true">
+         <xsl:text> </xsl:text>
+         <span class="validation-error">ERROR: value '{ $checking } ' is not permitted here: should be (one of) { $okay-values => string-join(', ') }</span>
+      </xsl:if>
+   </xsl:template>
+   
    <xsl:template name="css-inline" expand-text="true">
       <xsl:variable name="properties" expand-text="true" as="map(*)" select="map {
          'header.face':  '&quot;Montserrat&quot;, Arial, Helvetica, sans-serif',
          'header.color': '#757575',
          'body.face':    '&quot;Muli&quot;, Arial, Helvetica, sans-serif',
-         'body-color':   '#454545',
+         'body.color':   '#454545',
          'light.blue':   '#ccecfc',
          'white':        '#ffffff',
          'cyan':         '#1294c2',
          'red':          '#cc1d1d',
          'vivid.blue':   '#1a4480',
          'deep.blue':    '#162e51',
-         'bg.color':     '#f2f2f2'
+         'bg.color':     '#f2f2f2',
+         'att13.pale':   '#daeef3',
+         'att13.steel':  '#b8cce4',
+         'att13.aqua':   '#92cddc',
+         'att13.olive':  '#c4d79b'
          }"/>
-      <style type="text/css" xml:space="preserve">
+      <style type="text/css">
+         <xsl:text xml:space="preserve" disable-output-escaping="true">
 @import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
 @import url(http://fonts.googleapis.com/css?family=Muli:400,700);
 
 html, body {{ background-color: {$properties?white};
-              color: { $properties?body-color };
+              color: { $properties?body.color };
               font-family: {$properties?body.face} }}
          
 details {{ padding: 0.5em }}
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6
-  {{ color: {$properties?heading.color};
+  {{ color: {$properties?header.color};
      font-family: {$properties?header.face} }}
 
 h1, .h1 {{ text-transform: uppercase }}
 
 section h1 {{ color: {$properties?red} }}
 
+th, td {{ padding: 0.2em }}
+
 table.uniform {{ border-collapse: collapse }}
 
 table.uniform td,
-table.uniform th {{ border: thin solid {$properties?body.color};
-  padding: 0.2em; min-width: 15vw }}
+table.uniform th {{ border: thin solid {$properties?body.color}; min-width: 15vw }}
 table.poc td {{ min-width: 30vw }}
+
+table.iinv th      {{ background-color: {$properties?att13.pale};  font-weight: bold }}
+table.iinv th.all  {{ background-color: {$properties?att13.steel}; font-weight: normal }}
+table.iinv th.os   {{ background-color: {$properties?att13.aqua};  font-weight: normal }}
+table.iinv th.swdb {{ background-color: {$properties?att13.olive}; font-weight: normal }}
+table.iinv th.any  {{ background-color: {$properties?att13.steel}; font-weight: normal }}
 
 table.uniform caption {{ text-align: left; color: {$properties?red};
   font-style: italic; font-weight: normal; padding-bottom: 0.5em }}
@@ -254,7 +325,8 @@ div {{ padding: 0.2em; margin-top: 0.5em }}
 
 th, td {{ vertical-align: text-top }}
 
-th {{ font-size: 85%;
+table.uniform th,
+table.poc     th {{ font-size: 85%;
       color: {$properties?white};
       background-color: {$properties?vivid.blue} }}
 
@@ -265,16 +337,54 @@ p:last-child  {{ margin-bottom: 0em }}
 
 td p {{ margin: 0.5em 0em 0em 0em }}
 td p:first-child {{ margin-top: 0em }}
-      
-.instruction {{ border: thin solid {$properties?vivid.blue};
-  background-color: {$properties?light.blue}; color: {$properties?vivid.blue}; font-size: 90%; margin-top: 1em }}
 
-.val {{ font-weight: bold; font-family: monospace; text-decoration: underline }}
+tr.guidance {{ display: none;
+  font-size: 65%; font-weight: normal; text-align: left }}
+
+tr.guided:hover + tr.guidance {{ display: table-row }}
+
+<!-- tr.guided:hover + tr.guidance th {{ max-height: unset }} ; transition: height 2s ease-->
+
+table.iinv tr.guidance th {{ font-weight: normal }}
+
+div.guidance:before {{ font-weight: bold; content: "GUIDANCE: " }}
+
+td.tbd {{ background-color: pink }}
+
+.instruction {{ border: thin solid {$properties?vivid.blue};
+  background-color: {$properties?light.blue};
+  color: {$properties?vivid.blue};
+  font-size: 90%; margin-top: 1em }}
+
+.val, .rem {{ font-family: monospace; text-decoration: underline }}
+.val {{ font-weight: bold }}
 
 span.choice {{ font-weight: 600; color: {$properties?header.color} }}
 
 .ERROR {{ background-color: yellow; color: darkorange }}
 
+.validation-error {{ color: red; font-style: italic; font-size: 80% }}
+
+main > span, section > span {{ display: block }}
+</xsl:text>
+         <xsl:if test="$paginating" expand-text="true">
+   
+@media print{{
+      
+   h1, h2 {{
+     string-set: sectionTitle content(text);
+   }}
+   
+   
+   @page {{
+     margin: 1in 1in;
+     @top-right {{
+        content: ' { $html-page-title }' string(sectionTitle)
+      }}
+   }}
+
+}}
+</xsl:if>
       </style>
    </xsl:template>
    

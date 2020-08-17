@@ -18,7 +18,7 @@
     <xsl:output indent="yes"/>
     
     <xsl:mode name="add-new-uuids" on-no-match="shallow-copy"/>
-    <xsl:mode name="rewire" on-no-match="shallow-copy"/>
+    <xsl:mode name="rewire"        on-no-match="shallow-copy"/>
     
     <xsl:variable name="with-new-uuids">
         <xsl:apply-templates select="/" mode="add-new-uuids"/>
@@ -40,7 +40,7 @@
     <xsl:template match="@uuid" mode="rewire"/>
         
     <xsl:template match="@new-uuid" mode="rewire">
-        <xsl:attribute name="uuid" select="."/>
+        <xsl:attribute name="uuid" select="string(.)"/>
     </xsl:template>
 
     <xsl:template match="party-uuid | member-of-organization" mode="rewire">
@@ -49,13 +49,19 @@
         </xsl:copy>
     </xsl:template>
     
+    <xsl:template match="a[exists(key('html-link',@href))]/@href" mode="rewire">
+        <xsl:variable  name="t"    select="key('html-link',@href)"/>
+        <xsl:attribute name="href" select="'#' || $t/@new-uuid"/>
+    </xsl:template>
+    
     <xsl:template match="location-uuid" mode="rewire">
         <xsl:copy>
             <xsl:sequence select="key('location-link',.)/@new-uuid/string(.)"/>
         </xsl:copy>
     </xsl:template>
     
-    <xsl:key name="location-link" match="location" use="@uuid"/>
-    <xsl:key name="party-link"    match="party"    use="@uuid"/>
+    <xsl:key name="location-link" match="location"         use="@uuid"/>
+    <xsl:key name="party-link"    match="party"            use="@uuid"/>
+    <xsl:key name="html-link"     match="*[exists(@uuid)]" use="'#' || @uuid"/>
     
 </xsl:stylesheet>

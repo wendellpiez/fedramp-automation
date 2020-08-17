@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Modified by conversion XSLT 2020-08-10T17:02:02.82-04:00 - UUIDs refreshed -->
-<system-security-plan xmlns="http://csrc.nist.gov/ns/oscal/1.0"
-                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                      xsi:schemaLocation="https://raw.githubusercontent.com/usnistgov/OSCAL/master/xml/schema/oscal_ssp_schema.xsd"
-                      uuid="023e20e9-c49e-49d9-b068-0b66d2e63276">
+<?xml-stylesheet type="text/css" href="oscal-ssp.css"?>
+<system-security-plan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://csrc.nist.gov/ns/oscal/1.0 https://raw.githubusercontent.com/usnistgov/OSCAL/master/xml/schema/oscal_ssp_schema.xsd"
+ xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="023e20e9-c49e-49d9-b068-0b66d2e63276">
    <metadata>
-      <title>FedRAMP System Security Plan (SSP) - WORKUP</title>
+      <title>FedRAMP System Security Plan (SSP) - WORKUP demo</title>
       <published>2020-07-01T00:00:00.00-04:00</published>
       <last-modified>2020-07-01T00:00:00.00-04:00</last-modified>
       <version>0.0</version>
@@ -392,7 +392,6 @@
       </responsible-party>
       <!-- Page vi -->
       <responsible-party role-id="content-approver">
-         <party-uuid>884faf70-d0b4-4c6c-a949-b6ca63ef9ca8</party-uuid>
          <party-uuid>3ae4016f-aa6a-4f2c-98cb-17238a33d240</party-uuid>
          <remarks>
             <p>One or more</p>
@@ -459,21 +458,10 @@
          <p>Guidance for OSCAL-based FedRAMP Tailored content has not yet been developed.</p>
       </remarks>
    </metadata>
-   <!-- ====================================================
-      Link this SSP to the appropriate FedRAMP baseline using ONE of the import statements below.
-      NOTE: This points to a resource at the end of this file with links to both the XML and JSON
-            versions of the baseline. Tools must select the appropriate link 
-      FedRAMP HIGH Baseline: 
-      <import-profile href="#9f1aae37-7359-411f-86c1-768aaab85e63"/>
-      FedRAMP MODERATE Baseline:
-      <import-profile href="#890170c3-d4fa-4d25-ab96-8e4bf7cc237c"/>
-      FedRAMP LOW Baseline: 
-      <import-profile href="#2acaf846-5496-4d36-8565-9a15b48aef2c"/>
-   ==================================================== -->
-   <import-profile href="#890170c3-d4fa-4d25-ab96-8e4bf7cc237c"/>
+   <import-profile href="#f565ff2d-74fe-40c7-9ae6-da9a35db2b2d"/>
    <system-characteristics><!-- Table 1-1 Information System Name and Title -->
       <system-id identifier-type="https://fedramp.gov">F00000000</system-id>
-      <system-name>Workup Implementation System Example System</system-name>
+      <system-name>Workup Implementation System Example System Demo</system-name>
       <system-name-short>WorkUP.SYS</system-name-short>
       <!-- Section 9.1 (Old SSP Format Section 8.1) -->
       <description>
@@ -832,7 +820,7 @@
             </description>
             <prop name="ipv4-address">10.1.1.1</prop>
             <prop name="ipv6-address">0000:0000:0000:0000</prop>
-            <prop name="virtual">no</prop>
+            <prop name="virtual">maybe</prop>
             <prop name="public">no</prop>
             <prop name="fqdn">dns.name</prop>
             <prop name="uri">uniform.resource.identifier</prop>
