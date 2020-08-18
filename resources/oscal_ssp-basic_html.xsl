@@ -13,7 +13,7 @@
       <f:short-title       >FedRAMP SSP HTML XSLT (basic page)</f:short-title>
       <f:description       >From OSCAL SSP provided with its baselines, produces a self-contained page display.</f:description>
       <f:date-of-origin    >2020-08-05</f:date-of-origin>
-      <f:date-last-modified>2020-08-17</f:date-last-modified>
+      <f:date-last-modified>2020-08-18</f:date-last-modified>
       
       <f:parameter name="html-page-title" as="xs:string">String for HTML page title (browser header bar)</f:parameter>
       <f:parameter name="css-link"        as="xs:string?">Literal value for link to out of line CSS (superseding inline CSS)</f:parameter>
@@ -41,8 +41,9 @@
 <!-- The imported XSLT handles catalog contents, with metadata and fallback logic. -->
    <xsl:import href="modules/oscal_general_html.xsl"/>
    
-   <xsl:key name="location-by-uuid" match="location" use="@uuid"/>
-   <xsl:key name="party-by-uuid"    match="party"    use="@uuid"/>
+   <xsl:key name="component-by-uuid" match="component" use="@uuid"/>
+   <xsl:key name="location-by-uuid"  match="location"  use="@uuid"/>
+   <xsl:key name="party-by-uuid"     match="party"     use="@uuid"/>
 
    <!-- Control which sections to include here. -->
    <xsl:variable name="main-contents" as="element()*">
@@ -115,37 +116,38 @@
    
    
    <xsl:template name="emit-value-td">
-      <xsl:param name="this" as="node()*"/>
+      <!-- $these will be a collection of nodes for display, representing a value setting
+           set on an inventory item or on a component referenced by an inventory item. -->
+      <xsl:param name="these" as="node()*"/>
       <xsl:param name="echo"/>
       <xsl:param name="validate" as="element()*" select="()"/>
       <td>
          <p>
             <xsl:call-template name="emit-value">
-               <xsl:with-param name="this" select="$this"/>
+               <xsl:with-param name="this" select="$these"/>
                <xsl:with-param name="echo" select="$echo"/>
+               <!-- emit 'missing' warnings when the info item $this includes nothing inside a component. -->
             </xsl:call-template>
-            <xsl:for-each select="$this">
+            <xsl:for-each select="$these">
                <xsl:apply-templates mode="check-value" select="$validate">
                   <xsl:with-param name="who" select="."/>
                </xsl:apply-templates>
             </xsl:for-each>
          </p>
-         <xsl:for-each select="$this/self::annotation/remarks[matches(string(),'\S')]">
-            <div class="rem">
-               <xsl:apply-templates/>
-            </div>
-         </xsl:for-each>
+         <!-- if the value is given on an annotation, we want the remarks also -->
+         <xsl:apply-templates mode="value" select="$these/self::annotation/remarks[matches(string(),'\S')]"/>
       </td>
    </xsl:template>
    
    <xsl:template name="emit-value">
       <xsl:param name="this" as="node()*"/>
+      <xsl:param name="warn-if-missing" tunnel="true" select="true()"/>
       <xsl:param name="echo"/>
          <xsl:for-each select="$this">
             <xsl:if test="not(position() eq 1)">; </xsl:if>
          <xsl:apply-templates select="." mode="value"/>
          </xsl:for-each>
-         <xsl:if test="empty($this)" expand-text="true">
+         <xsl:if test="empty($this) and $warn-if-missing" expand-text="true">
             <span class="ERROR">No value found for { $echo }</span>
             <xsl:call-template name="warn-if-tracing">
                <xsl:with-param name="warning">NO VALUE FOUND for { $echo }</xsl:with-param>
@@ -166,10 +168,22 @@
       </span>
    </xsl:template>
    
+   <xsl:template match="@*" mode="value">
+      <span class="val">
+         <xsl:value-of select="."/>
+      </span>
+   </xsl:template>
+   
    <xsl:template match="annotation" mode="value">
       <span class="val">
          <xsl:value-of select="@value"/>
       </span>
+   </xsl:template>
+   
+   <xsl:template match="remarks" mode="value">
+      <details class="value-details"><summary>Remarks</summary>
+         <xsl:apply-templates/>
+      </details>
    </xsl:template>
    
    <xsl:template mode="value" match="prop[@ns='https://fedramp.gov/ns/oscal'][@name='security-eauth-level']">
@@ -257,7 +271,7 @@
       <xsl:variable name="okay-values" select="tokenize(@values,',?\s+')"/>
       <xsl:if test="not(string($checking) = $okay-values)" expand-text="true">
          <xsl:text> </xsl:text>
-         <span class="validation-error">ERROR: value '{ $checking } ' is not permitted here: should be (one of) { $okay-values => string-join(', ') }</span>
+         <details class="validation-error"><summary>ERROR:</summary> value '{ $checking } ' is not permitted here: should be (one of) { $okay-values => string-join(', ') }</details>
       </xsl:if>
    </xsl:template>
    
@@ -313,6 +327,12 @@ table.iinv th.os   {{ background-color: {$properties?att13.aqua};  font-weight: 
 table.iinv th.swdb {{ background-color: {$properties?att13.olive}; font-weight: normal }}
 table.iinv th.any  {{ background-color: {$properties?att13.steel}; font-weight: normal }}
 
+
+table.iinv tr.inv-comp td {{ background-color: #F5F5F5 }}
+
+table.iinv tr.inv-item:not(.inv-comp) td {{ border-top: medium solid black }}
+
+
 table.uniform caption {{ text-align: left; color: {$properties?red};
   font-style: italic; font-weight: normal; padding-bottom: 0.5em }}
 
@@ -350,6 +370,9 @@ table.iinv tr.guidance th {{ font-weight: normal }}
 div.guidance:before {{ font-weight: bold; content: "GUIDANCE: " }}
 
 td.tbd {{ background-color: pink }}
+
+.value-details {{ font-size: 80%; font-family: monospace }}
+.value-details summary {{ font-family: {$properties?body.face}}}
 
 .instruction {{ border: thin solid {$properties?vivid.blue};
   background-color: {$properties?light.blue};

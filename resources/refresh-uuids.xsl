@@ -49,9 +49,12 @@
         </xsl:copy>
     </xsl:template>
     
-    <xsl:template match="a[exists(key('html-link',@href))]/@href" mode="rewire">
+    <xsl:template match="link | a[exists(key('html-link',@href))]/@href" mode="rewire">
         <xsl:variable  name="t"    select="key('html-link',@href)"/>
-        <xsl:attribute name="href" select="'#' || $t/@new-uuid"/>
+        <xsl:copy>
+            <xsl:copy-of select="@* except @href"/>
+            <xsl:attribute name="href" select="'#' || $t/@new-uuid"/>
+        </xsl:copy>
     </xsl:template>
     
     <xsl:template match="location-uuid" mode="rewire">
@@ -60,8 +63,15 @@
         </xsl:copy>
     </xsl:template>
     
-    <xsl:key name="location-link" match="location"         use="@uuid"/>
-    <xsl:key name="party-link"    match="party"            use="@uuid"/>
-    <xsl:key name="html-link"     match="*[exists(@uuid)]" use="'#' || @uuid"/>
+    <xsl:template match="@component-uuid" mode="rewire">
+        <xsl:attribute name="component-uuid">
+            <xsl:sequence select="key('component-link',.)/@new-uuid/string(.)"/>
+        </xsl:attribute>
+    </xsl:template>
+    
+    <xsl:key name="location-link"  match="location"         use="@uuid"/>
+    <xsl:key name="party-link"     match="party"            use="@uuid"/>
+    <xsl:key name="component-link" match="component"        use="@uuid"/>
+    <xsl:key name="html-link"      match="*[exists(@uuid)]" use="'#' || @uuid"/>
     
 </xsl:stylesheet>

@@ -4,7 +4,7 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <meta itemprop="nominal_source_uri" content="file:/C:/Users/wap1/Documents/usnistgov/fedramp-automation/resources/specs/FedRAMP-SSP-OSCAL-workup.xml">
       <meta itemprop="production_xslt" content="file:/C:/Users/wap1/Documents/usnistgov/fedramp-automation/resources/oscal_ssp-basic_html.xsl">
-      <meta itemprop="production_timestamp" content="2020-08-17T17:30:37.805-04:00">
+      <meta itemprop="production_timestamp" content="2020-08-18T16:13:54.643-04:00">
       <title>FedRAMP System Security Plan (SSP) - WORKUP demo</title>
       <style type="text/css">
 @import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
@@ -38,6 +38,12 @@ table.iinv th.all  { background-color: #b8cce4; font-weight: normal }
 table.iinv th.os   { background-color: #92cddc;  font-weight: normal }
 table.iinv th.swdb { background-color: #c4d79b; font-weight: normal }
 table.iinv th.any  { background-color: #b8cce4; font-weight: normal }
+
+
+table.iinv tr.inv-comp td { background-color: #F5F5F5 }
+
+table.iinv tr.inv-item:not(.inv-comp) td { border-top: medium solid black }
+
 
 table.uniform caption { text-align: left; color: #cc1d1d;
   font-style: italic; font-weight: normal; padding-bottom: 0.5em }
@@ -76,6 +82,9 @@ table.iinv tr.guidance th { font-weight: normal }
 div.guidance:before { font-weight: bold; content: "GUIDANCE: " }
 
 td.tbd { background-color: pink }
+
+.value-details { font-size: 80%; font-family: monospace }
+.value-details summary { font-family: "Muli", Arial, Helvetica, sans-serif}
 
 .instruction { border: thin solid #1a4480;
   background-color: #ccecfc;
@@ -231,15 +240,15 @@ main > span, section > span { display: block }
                      </th>
                   </tr>
                </thead>
-               <tr>
+               <tr class="inv-item">
                   <td>
-                     <p>unique-asset-id</p>
+                     <p><span class="val">i-1</span></p>
                   </td>
                   <td>
                      <p><span class="val">10.1.1.1</span>; <span class="val">0000:0000:0000:0000</span></p>
                   </td>
                   <td>
-                     <p><span class="val">maybe</span> <span class="validation-error">ERROR: value 'maybe ' is not permitted here: should be (one of) yes, no</span></p>
+                     <p><span class="val">no</span></p>
                   </td>
                   <td>
                      <p><span class="val">no</span></p>
@@ -271,10 +280,11 @@ main > span, section > span { display: block }
                   </td>
                   <td>
                      <p><span class="val">yes</span></p>
-                     <div class="rem">
+                     <details class="value-details">
+                        <summary>Remarks</summary>
                         
                         <p>If no, explain why. If yes, omit remarks field.</p>
-                        </div>
+                        </details>
                   </td>
                   <td>
                      <p><span class="val">software-name</span>; <span class="val">V 0.0.0</span></p>
@@ -287,16 +297,20 @@ main > span, section > span { display: block }
                   </td>
                   <td>
                      <p><span class="val">Required brief, text-based description.</span></p>
-                     <div class="rem">
+                     <details class="value-details">
+                        <summary>Remarks</summary>
                         
                         <p>Optional, longer, formatted description.</p>
-                        </div>
+                        </details>
                   </td>
                   <td>
-                     <p><span class="val">
+                     <p>
+                        <details class="value-details">
+                           <summary>Remarks</summary>
                            
                            <p>COMMENTS: Additional information about this item.</p>
-                           </span></p>
+                           </details>
+                     </p>
                   </td>
                   <td>
                      <p><span class="val">Serial #</span>; <span class="val">Asset Tag</span></p>
@@ -307,9 +321,9 @@ main > span, section > span { display: block }
                   <td class="tbd">(system admin/owner???)</td>
                   <td class="tbd">(application admin/owner???)</td>
                </tr>
-               <tr>
+               <tr class="inv-item">
                   <td>
-                     <p>unique-asset-ID</p>
+                     <p><span class="val">c1</span></p>
                   </td>
                   <td>
                      <p><span class="val">10.2.2.2</span>; <span class="val">0000:0000:0000:0000</span></p>
@@ -340,565 +354,1065 @@ main > span, section > span { display: block }
                      <p><span class="val">Physical location of Asset</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for asset-type</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for model</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for "is scanned" status</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for software name and version</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vendor name</span></p>
+                     <p></p>
                   </td>
                   <td>
                      <p><span class="val">Patch-Level</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for function</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="val">
+                     <p>
+                        <details class="value-details">
+                           <summary>Remarks</summary>
                            
                            <p>COMMENTS: If needed, provide additional information about this inventory item.</p>
-                           </span></p>
+                           </details>
+                     </p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd">(system admin/owner???)</td>
                   <td class="tbd">(application admin/owner???)</td>
                </tr>
-               <tr>
+               <tr class="inv-item inv-comp">
                   <td>
-                     <p>unique-asset-id</p>
+                     <p><span class="val">c1</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">0000:0000:0000:0000</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd"> (authenticated scan???) 
+                     
+                     </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p><span class="val">os</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Model Number</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Version Number</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Vendor Name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Patch Level</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p>
+                        <details class="value-details">
+                           <summary>Remarks</summary>
+                           
+                           <p>COMMENTS: Provide other comments as needed.</p>
+                           </details>
+                     </p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd">(system admin/owner???)</td>
+                  <td class="tbd">(application admin/owner???)</td>
+               </tr>
+               <tr class="inv-item">
+                  <td>
+                     <p><span class="val">c-2</span></p>
                   </td>
                   <td>
                      <p><span class="val">10.3.3.3</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for virtual</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for public</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for DNS name / uri</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for netbios-name</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for mac-address</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd"> (authenticated scan???) 
                      
                      </td>
                   <td>
-                     <p><span class="ERROR">No value found for baseline-configuration-name</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd"> (OS name and version???) </td>
                   <td>
-                     <p><span class="ERROR">No value found for physical-location</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for asset-type</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for model</span></p>
+                     <p></p>
                   </td>
                   <td>
                      <p><span class="val">yes</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for software name and version</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vendor name</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for patch-level</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for function</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for comments</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd">(system admin/owner???)</td>
                   <td class="tbd">(application admin/owner???)</td>
                </tr>
-               <tr>
+               <tr class="inv-item inv-comp">
                   <td>
-                     <p>unique-asset-id</p>
+                     <p><span class="val">c-2</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd"> (authenticated scan???) 
+                     
+                     </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p><span class="val">database</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Model Number</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Version Number</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Vendor Name</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p>
+                        <details class="value-details">
+                           <summary>Remarks</summary>
+                           
+                           <p>COMMENTS: Provide other comments as needed.</p>
+                           </details>
+                     </p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd">(system admin/owner???)</td>
+                  <td class="tbd">(application admin/owner???)</td>
+               </tr>
+               <tr class="inv-item">
+                  <td>
+                     <p><span class="val">c-3</span></p>
                   </td>
                   <td>
                      <p><span class="val">10.4.4.4</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for virtual</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for public</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for DNS name / uri</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for netbios-name</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for mac-address</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd"> (authenticated scan???) 
                      
                      </td>
                   <td>
-                     <p><span class="ERROR">No value found for baseline-configuration-name</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd"> (OS name and version???) </td>
                   <td>
-                     <p><span class="ERROR">No value found for physical-location</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for asset-type</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for model</span></p>
+                     <p></p>
                   </td>
                   <td>
                      <p><span class="val">yes</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for software name and version</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vendor name</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for patch-level</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for function</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for comments</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd">(system admin/owner???)</td>
                   <td class="tbd">(application admin/owner???)</td>
                </tr>
-               <tr>
+               <tr class="inv-item inv-comp">
                   <td>
-                     <p>unique-asset-id</p>
+                     <p><span class="val">c-3</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd"> (authenticated scan???) 
+                     
+                     </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p><span class="val">os</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Model Number</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Version Number</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Vendor Name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Patch Level</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p>
+                        <details class="value-details">
+                           <summary>Remarks</summary>
+                           
+                           <p>COMMENTS: Provide other comments as needed.</p>
+                           </details>
+                     </p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd">(system admin/owner???)</td>
+                  <td class="tbd">(application admin/owner???)</td>
+               </tr>
+               <tr class="inv-item">
+                  <td>
+                     <p><span class="val">c-4</span></p>
                   </td>
                   <td>
                      <p><span class="val">10.5.5.5</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for virtual</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for public</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for DNS name / uri</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for netbios-name</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for mac-address</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd"> (authenticated scan???) 
                      
                      </td>
                   <td>
-                     <p><span class="ERROR">No value found for baseline-configuration-name</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd"> (OS name and version???) </td>
                   <td>
-                     <p><span class="ERROR">No value found for physical-location</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for asset-type</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for model</span></p>
+                     <p></p>
                   </td>
                   <td>
                      <p><span class="val">yes</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for software name and version</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vendor name</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for patch-level</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for function</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for comments</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd">(system admin/owner???)</td>
                   <td class="tbd">(application admin/owner???)</td>
                </tr>
-               <tr>
+               <tr class="inv-item inv-comp">
                   <td>
-                     <p>unique-asset-id</p>
+                     <p><span class="val">c-4</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd"> (authenticated scan???) 
+                     
+                     </td>
+                  <td>
+                     <p><span class="val">Baseline Config. Name</span></p>
+                  </td>
+                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p><span class="val">appliance</span> 
+                        <details class="validation-error">
+                           <summary>ERROR:</summary> value 'appliance ' is not permitted here: should be (one of) os, database, web-server,
+                           dns-server, email-server, directory-server, pbx, firewall, router, switch, storage-array</details>
+                     </p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd">(system admin/owner???)</td>
+                  <td class="tbd">(application admin/owner???)</td>
+               </tr>
+               <tr class="inv-item">
+                  <td>
+                     <p><span class="val">c-5</span></p>
                   </td>
                   <td>
                      <p><span class="val">10.6.6.6</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for virtual</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for public</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for DNS name / uri</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for netbios-name</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for mac-address</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd"> (authenticated scan???) 
                      
                      </td>
                   <td>
-                     <p><span class="ERROR">No value found for baseline-configuration-name</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd"> (OS name and version???) </td>
                   <td>
-                     <p><span class="ERROR">No value found for physical-location</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for asset-type</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for model</span></p>
+                     <p></p>
                   </td>
                   <td>
                      <p><span class="val">no</span></p>
-                     <div class="rem">
+                     <details class="value-details">
+                        <summary>Remarks</summary>
                         
                         <p>Asset wasn't running at time of scan.</p>
-                        </div>
+                        </details>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for software name and version</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vendor name</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for patch-level</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for function</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for comments</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd">(system admin/owner???)</td>
                   <td class="tbd">(application admin/owner???)</td>
                </tr>
-               <tr>
+               <tr class="inv-item inv-comp">
                   <td>
-                     <p>unique-asset-id</p>
+                     <p><span class="val">c-5</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd"> (authenticated scan???) 
+                     
+                     </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p><span class="val">os</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Model Number</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Version Number</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Vendor Name</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Patch Level</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p>
+                        <details class="value-details">
+                           <summary>Remarks</summary>
+                           
+                           <p>COMMENTS: Provide other comments as needed.</p>
+                           </details>
+                     </p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd">(system admin/owner???)</td>
+                  <td class="tbd">(application admin/owner???)</td>
+               </tr>
+               <tr class="inv-item">
+                  <td>
+                     <p><span class="val">c-6</span></p>
                   </td>
                   <td>
                      <p><span class="val">10.7.7.7</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for virtual</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for public</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for DNS name / uri</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for netbios-name</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for mac-address</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd"> (authenticated scan???) 
                      
                      </td>
                   <td>
-                     <p><span class="ERROR">No value found for baseline-configuration-name</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd"> (OS name and version???) </td>
                   <td>
-                     <p><span class="ERROR">No value found for physical-location</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for asset-type</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for model</span></p>
+                     <p></p>
                   </td>
                   <td>
                      <p><span class="val">yes</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for software name and version</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vendor name</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for patch-level</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for function</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for comments</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd">(system admin/owner???)</td>
                   <td class="tbd">(application admin/owner???)</td>
                </tr>
-               <tr>
+               <tr class="inv-item inv-comp">
                   <td>
-                     <p>unique-asset-id</p>
+                     <p><span class="val">c-6</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd"> (authenticated scan???) 
+                     
+                     </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p><span class="val">database</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Model Number</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Version Number</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">Vendor Name</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p>
+                        <details class="value-details">
+                           <summary>Remarks</summary>
+                           
+                           <p>COMMENTS: Provide other comments as needed.</p>
+                           </details>
+                     </p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd">(system admin/owner???)</td>
+                  <td class="tbd">(application admin/owner???)</td>
+               </tr>
+               <tr class="inv-item">
+                  <td>
+                     <p><span class="val">c-7</span></p>
                   </td>
                   <td>
                      <p><span class="val">10.8.8.8</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for virtual</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for public</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for DNS name / uri</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for netbios-name</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for mac-address</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd"> (authenticated scan???) 
                      
                      </td>
                   <td>
-                     <p><span class="ERROR">No value found for baseline-configuration-name</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd"> (OS name and version???) </td>
                   <td>
-                     <p><span class="ERROR">No value found for physical-location</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for asset-type</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for model</span></p>
+                     <p></p>
                   </td>
                   <td>
                      <p><span class="val">no</span></p>
-                     <div class="rem">
+                     <details class="value-details">
+                        <summary>Remarks</summary>
                         
                         <p>Asset wasn't running at time of scan.</p>
-                        </div>
+                        </details>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for software name and version</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vendor name</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for patch-level</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for function</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for comments</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd">(system admin/owner???)</td>
                   <td class="tbd">(application admin/owner???)</td>
                </tr>
-               <tr>
+               <tr class="inv-item inv-comp">
                   <td>
-                     <p>10.10.10.0</p>
+                     <p><span class="val">c-7</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for ip address (v4 or v6)</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for virtual</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for public</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for DNS name / uri</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for netbios-name</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for mac-address</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd"> (authenticated scan???) 
                      
                      </td>
                   <td>
-                     <p><span class="ERROR">No value found for baseline-configuration-name</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd"> (OS name and version???) </td>
                   <td>
-                     <p><span class="ERROR">No value found for physical-location</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for asset-type</span></p>
+                     <p><span class="val">os</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for model</span></p>
+                     <p><span class="val">Model Number</span></p>
                   </td>
                   <td>
-                     <p><span class="val">yes</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for software name and version</span></p>
+                     <p><span class="val">Version Number</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vendor name</span></p>
+                     <p><span class="val">Vendor Name</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for patch-level</span></p>
+                     <p><span class="val">Patch Level</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for function</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for comments</span></p>
+                     <p>
+                        <details class="value-details">
+                           <summary>Remarks</summary>
+                           
+                           <p>COMMENTS: Provide other comments as needed.</p>
+                           </details>
+                     </p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd">(system admin/owner???)</td>
                   <td class="tbd">(application admin/owner???)</td>
                </tr>
-               <tr>
+               <tr class="inv-item">
                   <td>
-                     <p>10.10.20.0</p>
+                     <p><span class="val">i-2</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for ip address (v4 or v6)</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for virtual</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for public</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for DNS name / uri</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for netbios-name</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for mac-address</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd"> (authenticated scan???) 
                      
                      </td>
                   <td>
-                     <p><span class="ERROR">No value found for baseline-configuration-name</span></p>
+                     <p></p>
                   </td>
                   <td class="tbd"> (OS name and version???) </td>
                   <td>
-                     <p><span class="ERROR">No value found for physical-location</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for asset-type</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for model</span></p>
+                     <p></p>
                   </td>
                   <td>
                      <p><span class="val">yes</span></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for software name and version</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vendor name</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for patch-level</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for function</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for comments</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for serial-number, asset tag</span></p>
+                     <p></p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for vlan or network ID</span></p>
+                     <p></p>
+                  </td>
+                  <td class="tbd">(system admin/owner???)</td>
+                  <td class="tbd">(application admin/owner???)</td>
+               </tr>
+               <tr class="inv-item">
+                  <td>
+                     <p><span class="val">i-3</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd"> (authenticated scan???) 
+                     
+                     </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p><span class="val">yes</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
                   </td>
                   <td class="tbd">(system admin/owner???)</td>
                   <td class="tbd">(application admin/owner???)</td>
