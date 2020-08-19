@@ -4,7 +4,7 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <meta itemprop="nominal_source_uri" content="file:/C:/Users/wap1/Documents/usnistgov/fedramp-automation/resources/specs/FedRAMP-SSP-OSCAL-workup.xml">
       <meta itemprop="production_xslt" content="file:/C:/Users/wap1/Documents/usnistgov/fedramp-automation/resources/oscal_ssp-basic_html.xsl">
-      <meta itemprop="production_timestamp" content="2020-08-18T16:13:54.643-04:00">
+      <meta itemprop="production_timestamp" content="2020-08-19T09:18:10.646-04:00">
       <title>FedRAMP System Security Plan (SSP) - WORKUP demo</title>
       <style type="text/css">
 @import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
@@ -15,6 +15,7 @@ html, body { background-color: #ffffff;
               font-family: "Muli", Arial, Helvetica, sans-serif }
          
 details { padding: 0.5em }
+summary:focus { outline: none } // overriding a default
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6
@@ -85,6 +86,9 @@ td.tbd { background-color: pink }
 
 .value-details { font-size: 80%; font-family: monospace }
 .value-details summary { font-family: "Muli", Arial, Helvetica, sans-serif}
+
+td details[open] { position: absolute; z-index: 1; min-width: 20em; max-width: 40em;
+  padding: 0.2em; background-color: lemonchiffon; border: thin solid gold }
 
 .instruction { border: thin solid #1a4480;
   background-color: #ccecfc;

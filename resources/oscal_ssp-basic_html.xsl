@@ -303,6 +303,7 @@ html, body {{ background-color: {$properties?white};
               font-family: {$properties?body.face} }}
          
 details {{ padding: 0.5em }}
+summary:focus {{ outline: none }} // overriding a default
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6
@@ -373,6 +374,9 @@ td.tbd {{ background-color: pink }}
 
 .value-details {{ font-size: 80%; font-family: monospace }}
 .value-details summary {{ font-family: {$properties?body.face}}}
+
+td details[open] {{ position: absolute; z-index: 1; min-width: 20em; max-width: 40em;
+  padding: 0.2em; background-color: lemonchiffon; border: thin solid gold }}
 
 .instruction {{ border: thin solid {$properties?vivid.blue};
   background-color: {$properties?light.blue};
