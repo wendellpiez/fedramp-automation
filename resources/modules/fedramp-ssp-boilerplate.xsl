@@ -722,7 +722,7 @@
 <!-- $item-and-component will be this component and the item calling
       (including) it, or only the item when the context is not a component. -->
       <xsl:variable name="integrated-item" select=". | $this-item"/>
-      <tr class="{ if ($item-component) then 'inv-item inv-comp' else 'inv-item' }">
+      <tr class="inventory { if ($item-component) then 'component' else 'line-item' }">
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="$this-item/@asset-id"/>
             <xsl:with-param name="echo">unique asset identifier</xsl:with-param>

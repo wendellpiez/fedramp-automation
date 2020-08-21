@@ -18,7 +18,7 @@
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>FedRAMP SSP workup - BASIC DISPLAY (refresh only)</String>
+                                        <String>FedRAMP SSP workup - BASIC DISPLAY (refresh and open)</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -34,16 +34,16 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>resources/modules/fedramp-ssp-boilerplate.xsl</String>
+                                    <String>templates/ssp/xml/FedRAMP-SSP-OSCAL-Template.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>FedRAMP SSP workup - BASIC DISPLAY (refresh only)</String>
+                                        <String>Refresh UUIDs</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
                                     <list>
-                                        <String>XML</String>
+                                        <String>XSL</String>
                                     </list>
                                 </field>
                                 <field name="scenarioStorageLocations">
@@ -74,16 +74,16 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>templates/ssp/xml/FedRAMP-SSP-OSCAL-Template.xml</String>
+                                    <String>resources/modules/fedramp-ssp-boilerplate.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>Refresh UUIDs</String>
+                                        <String>FedRAMP SSP workup - BASIC DISPLAY (refresh only)</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
                                     <list>
-                                        <String>XSL</String>
+                                        <String>XML</String>
                                     </list>
                                 </field>
                                 <field name="scenarioStorageLocations">

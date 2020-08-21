@@ -13,13 +13,14 @@
       <f:short-title       >FedRAMP SSP HTML XSLT (basic page)</f:short-title>
       <f:description       >From OSCAL SSP provided with its baselines, produces a self-contained page display.</f:description>
       <f:date-of-origin    >2020-08-05</f:date-of-origin>
-      <f:date-last-modified>2020-08-18</f:date-last-modified>
+      <f:date-last-modified>2020-08-21</f:date-last-modified>
       
       <f:parameter name="html-page-title" as="xs:string">String for HTML page title (browser header bar)</f:parameter>
       <f:parameter name="css-link"        as="xs:string?">Literal value for link to out of line CSS (superseding inline CSS)</f:parameter>
       <f:parameter name="trace"           as="xs:string" default="'no'">Emit trace messages to STDOUT at runtime ('yes','true' or 'on')</f:parameter>
       <f:parameter name="paginate"        as="xs:string" default="'no'">Paginate using paged.js library for PDF production ('yes','true' or 'on')</f:parameter>
       
+      <f:dependency href="fedramp_values.xml" role="value-lookups">Tables of values for dynamic inclusion and/or validation.</f:dependency>
       <f:dependency href="modules/oscal_general_html.xsl" role="import">Templates for OSCAL. Imports other modules to inherit handling for catalog contents, metadata and fallback logic.</f:dependency>
       <f:dependency href="ssp-oscal-schema.xsd" role="validate-source">When source provided is not a valid OSCAL SSP (Milestone 3), inputs will fall through unpredictably.</f:dependency>
       
@@ -38,6 +39,8 @@
    
    <xsl:variable name="paginating" select="$paginate=('yes','true','on')"/>
    
+   <xsl:variable name="fedramp-value-registry" select="document('fedramp_values2.xml')"/>
+   
 <!-- The imported XSLT handles catalog contents, with metadata and fallback logic. -->
    <xsl:import href="modules/oscal_general_html.xsl"/>
    
@@ -49,7 +52,7 @@
    <xsl:variable name="main-contents" as="element()*">
       <main>
          <f:generate attachment="13">Integrated Inventory</f:generate>
-         <!--<f:generate section="1"/>
+         <f:generate section="1"/>
          <f:generate section="2"/>
          <f:generate section="3"/>
          <f:generate section="4"/>
@@ -58,7 +61,7 @@
          <f:generate section="7"/>
          <f:generate section="8"/>
          <f:generate section="9"/>
-         <f:generate section="10"/>-->
+         <f:generate section="10"/>
       </main>
    </xsl:variable>
    
@@ -155,10 +158,6 @@
          </xsl:if>
    </xsl:template>
    
-   <xsl:variable name="fedramp-value-registry"
-      select="document('fedramp_values.xml')"/>
-   
-   
    <!-- Mode 'value' produces spans marked 'val'
      containing the presentation value - generally element content, but
      sometimes mapped (as with eAuth values mapping to security impact levels) -->
@@ -189,14 +188,14 @@
    <xsl:template mode="value" match="prop[@ns='https://fedramp.gov/ns/oscal'][@name='security-eauth-level']">
       <xsl:call-template name="lookup-value">
          <xsl:with-param name="who" select="."/>
-         <xsl:with-param name="where" select="$fedramp-value-registry/*/eauth-levels"/>
+         <xsl:with-param name="where" select="$fedramp-value-registry/*/f:value-set[@name='eauth-level']"/>
       </xsl:call-template>
    </xsl:template>
    
    <xsl:template mode="value" match="system-characteristics/security-sensitivity-level">
       <xsl:call-template name="lookup-value">
          <xsl:with-param name="who" select="."/>
-         <xsl:with-param name="where" select="$fedramp-value-registry/*/security-sensitivity-level"/>
+         <xsl:with-param name="where" select="$fedramp-value-registry/*/f:value-set[@name='security-sensitivity-level']"/>
       </xsl:call-template>
    </xsl:template>
    
@@ -206,7 +205,7 @@
       security-impact-level/*">
       <xsl:call-template name="lookup-value">
          <xsl:with-param name="who" select="."/>
-         <xsl:with-param name="where" select="$fedramp-value-registry/*/security-impact-level"/>
+         <xsl:with-param name="where" select="$fedramp-value-registry/*/f:value-set[@name='security-impact-level']"/>
       </xsl:call-template>
    </xsl:template>
    
@@ -225,9 +224,9 @@
       <xsl:param name="who"   required="true"/>
       <xsl:param name="where" required="true"/>
       <span class="val">
-         <xsl:value-of select="$where/value[@id=$who]/@label"/>
+         <xsl:value-of select="$where/f:allowed-values/f:enum[@value=$who]"/>
       </span>
-      <xsl:if test="empty($where/value[@id=$who])">
+      <xsl:if test="empty($where//f:allowed-values/f:enum[@value=$who])">
          <xsl:variable name="path">
             <xsl:apply-templates select="$who" mode="path"/>
          </xsl:variable>
@@ -303,7 +302,7 @@ html, body {{ background-color: {$properties?white};
               font-family: {$properties?body.face} }}
          
 details {{ padding: 0.5em }}
-summary:focus {{ outline: none }} // overriding a default
+summary:focus {{ outline: none }} /* overriding a default */
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6
@@ -316,11 +315,13 @@ section h1 {{ color: {$properties?red} }}
 
 th, td {{ padding: 0.2em }}
 
-table.uniform {{ border-collapse: collapse }}
+table {{ border-collapse: collapse }}
 
 table.uniform td,
 table.uniform th {{ border: thin solid {$properties?body.color}; min-width: 15vw }}
 table.poc td {{ min-width: 30vw }}
+
+table.iinv th, table.iinv td {{ border: thin solid black }}
 
 table.iinv th      {{ background-color: {$properties?att13.pale};  font-weight: bold }}
 table.iinv th.all  {{ background-color: {$properties?att13.steel}; font-weight: normal }}
@@ -329,9 +330,9 @@ table.iinv th.swdb {{ background-color: {$properties?att13.olive}; font-weight: 
 table.iinv th.any  {{ background-color: {$properties?att13.steel}; font-weight: normal }}
 
 
-table.iinv tr.inv-comp td {{ background-color: #F5F5F5 }}
+table.iinv tr.component td {{ background-color: #F5F5F5 }}
 
-table.iinv tr.inv-item:not(.inv-comp) td {{ border-top: medium solid black }}
+table.iinv tr.line-item td {{ border-top: medium solid black }}
 
 
 table.uniform caption {{ text-align: left; color: {$properties?red};
