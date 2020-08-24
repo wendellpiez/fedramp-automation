@@ -4,7 +4,7 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <meta itemprop="nominal_source_uri" content="file:/C:/Users/wap1/Documents/usnistgov/fedramp-automation/resources/specs/FedRAMP-SSP-OSCAL-workup.xml">
       <meta itemprop="production_xslt" content="file:/C:/Users/wap1/Documents/usnistgov/fedramp-automation/resources/oscal_ssp-basic_html.xsl">
-      <meta itemprop="production_timestamp" content="2020-08-24T11:29:53.107-04:00">
+      <meta itemprop="production_timestamp" content="2020-08-24T17:04:37.674-04:00">
       <title>FedRAMP System Security Plan (SSP) - WORKUP demo</title>
       <style type="text/css">
 @import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
@@ -36,11 +36,12 @@ table.poc td { min-width: 30vw }
 
 table.iinv th, table.iinv td { border: thin solid black }
 
-table.iinv th      { background-color: #daeef3;  font-weight: bold }
-table.iinv th.all  { background-color: #b8cce4; font-weight: normal }
-table.iinv th.os   { background-color: #92cddc;  font-weight: normal }
-table.iinv th.swdb { background-color: #c4d79b; font-weight: normal }
-table.iinv th.any  { background-color: #b8cce4; font-weight: normal }
+table.iinv th       { background-color: #daeef3;  font-weight: bold }
+table.iinv th.all   { background-color: #b8cce4; font-weight: normal }
+table.iinv th.os    { background-color: #92cddc;  font-weight: normal }
+table.iinv th.swdb  { background-color: #c4d79b; font-weight: normal }
+table.iinv th.any   { background-color: #b8cce4; font-weight: normal }
+table.iinv th.added { background-color: black; color: white; font-weight: normal }
 
 
 table.iinv tr.component td { background-color: #F5F5F5 }
@@ -519,6 +520,7 @@ main > span, section > span { display: block }
                      <th colspan="9" class="os">OS/Infrastructure Inventory</th>
                      <th colspan="4" class="swdb">Software and Database Inventories</th>
                      <th colspan="5" class="any">Any Inventory</th>
+                     <th colspan="2" class="added">Additional</th>
                   </tr>
                   <tr class="guided">
                      <th>UNIQUE ASSET IDENTIFIER</th>
@@ -544,6 +546,8 @@ main > span, section > span { display: block }
                      <th>VLAN / Network ID</th>
                      <th>System Administrator / Owner</th>
                      <th>Application Administrator / Owner</th>
+                     <th>Scan Type</th>
+                     <th>FIPS 140-2 Validation</th>
                   </tr>
                   <tr class="guidance">
                      <th>
@@ -667,13 +671,20 @@ main > span, section > span { display: block }
                   <td>
                      <p><span class="val">00:00:00:00:00:00</span></p>
                   </td>
-                  <td class="tbd"> (authenticated scan???) 
-                     
-                     </td>
+                  <td>
+                     <p><span class="val">no</span></p>
+                     <details class="value-details">
+                        <summary>Remarks</summary>
+                        
+                        <p>If no, explain why. If yes, omit remarks field.</p>
+                        </details>
+                  </td>
                   <td>
                      <p><span class="val">Baseline Config. Name</span></p>
                   </td>
-                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p><span class="val">software-name, version V 0.0.0</span></p>
+                  </td>
                   <td>
                      <p><span class="val">Physical location of Asset</span></p>
                   </td>
@@ -723,8 +734,18 @@ main > span, section > span { display: block }
                   <td>
                      <p><span class="val">VLAN Identifier</span>; <span class="val">Network Identifier</span></p>
                   </td>
-                  <td class="tbd">(system admin/owner???)</td>
-                  <td class="tbd">(application admin/owner???)</td>
+                  <td>
+                     <p><span class="ERROR">No value found for system admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for application admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">infrastructure</span>; <span class="val">database</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">component-id</span></p>
+                  </td>
                </tr>
                <tr class="inventory line-item">
                   <td>
@@ -748,13 +769,15 @@ main > span, section > span { display: block }
                   <td>
                      <p><span class="val">00:00:00:00:00:00</span></p>
                   </td>
-                  <td class="tbd"> (authenticated scan???) 
-                     
-                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                  </td>
                   <td>
                      <p><span class="val">Baseline Configuration Name</span></p>
                   </td>
-                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
                   <td>
                      <p><span class="val">Physical location of Asset</span></p>
                   </td>
@@ -794,17 +817,24 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd">(system admin/owner???)</td>
-                  <td class="tbd">(application admin/owner???)</td>
+                  <td>
+                     <p><span class="ERROR">No value found for system admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for application admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
                </tr>
                <tr class="inventory component">
                   <td>
                      <p><span class="val">c1</span></p>
                   </td>
                   <td>
-                     <p><span class="val">0000:0000:0000:0000</span></p>
-                  </td>
-                  <td>
                      <p></p>
                   </td>
                   <td>
@@ -819,13 +849,18 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (authenticated scan???) 
-                     
-                     </td>
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for OS name and version</span></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
@@ -865,8 +900,18 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd">(system admin/owner???)</td>
-                  <td class="tbd">(application admin/owner???)</td>
+                  <td>
+                     <p><span class="ERROR">No value found for system admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for application admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">infrastructure</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">fips-module-1</span></p>
+                  </td>
                </tr>
                <tr class="inventory line-item">
                   <td>
@@ -890,13 +935,15 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (authenticated scan???) 
-                     
-                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
@@ -930,8 +977,18 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd">(system admin/owner???)</td>
-                  <td class="tbd">(application admin/owner???)</td>
+                  <td>
+                     <p><span class="ERROR">No value found for system admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for application admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
                </tr>
                <tr class="inventory component">
                   <td>
@@ -955,13 +1012,15 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (authenticated scan???) 
-                     
-                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
@@ -1001,8 +1060,18 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd">(system admin/owner???)</td>
-                  <td class="tbd">(application admin/owner???)</td>
+                  <td>
+                     <p><span class="ERROR">No value found for system admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for application admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">infrastructure</span>; <span class="val">database</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
                </tr>
                <tr class="inventory line-item">
                   <td>
@@ -1026,13 +1095,15 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (authenticated scan???) 
-                     
-                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
@@ -1066,8 +1137,18 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd">(system admin/owner???)</td>
-                  <td class="tbd">(application admin/owner???)</td>
+                  <td>
+                     <p><span class="ERROR">No value found for system admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for application admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
                </tr>
                <tr class="inventory component">
                   <td>
@@ -1091,13 +1172,15 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (authenticated scan???) 
-                     
-                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p><span class="ERROR">No value found for OS name and version</span></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
@@ -1137,8 +1220,18 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd">(system admin/owner???)</td>
-                  <td class="tbd">(application admin/owner???)</td>
+                  <td>
+                     <p><span class="ERROR">No value found for system admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for application admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">infrastructure</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">fips-module-1</span></p>
+                  </td>
                </tr>
                <tr class="inventory line-item">
                   <td>
@@ -1162,13 +1255,15 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (authenticated scan???) 
-                     
-                     </td>
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
@@ -1202,8 +1297,18 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd">(system admin/owner???)</td>
-                  <td class="tbd">(application admin/owner???)</td>
+                  <td>
+                     <p><span class="ERROR">No value found for system admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for application admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
                </tr>
                <tr class="inventory component">
                   <td>
@@ -1227,13 +1332,20 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (authenticated scan???) 
-                     
-                     </td>
+                  <td>
+                     <p><span class="val">no</span></p>
+                     <details class="value-details">
+                        <summary>Remarks</summary>
+                        
+                        <p>Vendor appliance. No admin-level access.</p>
+                        </details>
+                  </td>
                   <td>
                      <p><span class="val">Baseline Config. Name</span></p>
                   </td>
-                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
@@ -1271,8 +1383,18 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd">(system admin/owner???)</td>
-                  <td class="tbd">(application admin/owner???)</td>
+                  <td>
+                     <p><span class="ERROR">No value found for system admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for application admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">web</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
                </tr>
                <tr class="inventory line-item">
                   <td>
@@ -1296,13 +1418,15 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (authenticated scan???) 
-                     
-                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
@@ -1341,8 +1465,18 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd">(system admin/owner???)</td>
-                  <td class="tbd">(application admin/owner???)</td>
+                  <td>
+                     <p><span class="ERROR">No value found for system admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for application admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
                </tr>
                <tr class="inventory component">
                   <td>
@@ -1366,13 +1500,15 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (authenticated scan???) 
-                     
-                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p><span class="ERROR">No value found for OS name and version</span></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
@@ -1412,8 +1548,18 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd">(system admin/owner???)</td>
-                  <td class="tbd">(application admin/owner???)</td>
+                  <td>
+                     <p><span class="ERROR">No value found for system admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for application admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">infrastructure</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">fips-module-1</span></p>
+                  </td>
                </tr>
                <tr class="inventory line-item">
                   <td>
@@ -1437,13 +1583,15 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (authenticated scan???) 
-                     
-                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
@@ -1477,8 +1625,18 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd">(system admin/owner???)</td>
-                  <td class="tbd">(application admin/owner???)</td>
+                  <td>
+                     <p><span class="ERROR">No value found for system admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for application admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
                </tr>
                <tr class="inventory component">
                   <td>
@@ -1502,13 +1660,15 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (authenticated scan???) 
-                     
-                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
@@ -1548,8 +1708,18 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd">(system admin/owner???)</td>
-                  <td class="tbd">(application admin/owner???)</td>
+                  <td>
+                     <p><span class="ERROR">No value found for system admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for application admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">infrastructure</span>; <span class="val">database</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
                </tr>
                <tr class="inventory line-item">
                   <td>
@@ -1573,13 +1743,15 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (authenticated scan???) 
-                     
-                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
@@ -1618,8 +1790,18 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd">(system admin/owner???)</td>
-                  <td class="tbd">(application admin/owner???)</td>
+                  <td>
+                     <p><span class="ERROR">No value found for system admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for application admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
                </tr>
                <tr class="inventory component">
                   <td>
@@ -1643,13 +1825,15 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (authenticated scan???) 
-                     
-                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p><span class="ERROR">No value found for OS name and version</span></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
@@ -1689,8 +1873,18 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd">(system admin/owner???)</td>
-                  <td class="tbd">(application admin/owner???)</td>
+                  <td>
+                     <p><span class="ERROR">No value found for system admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for application admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">infrastructure</span></p>
+                  </td>
+                  <td>
+                     <p><span class="val">fips-module-1</span></p>
+                  </td>
                </tr>
                <tr class="inventory line-item">
                   <td>
@@ -1714,13 +1908,15 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (authenticated scan???) 
-                     
-                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
@@ -1754,8 +1950,18 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd">(system admin/owner???)</td>
-                  <td class="tbd">(application admin/owner???)</td>
+                  <td>
+                     <p><span class="ERROR">No value found for system admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for application admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
                </tr>
                <tr class="inventory line-item">
                   <td>
@@ -1779,13 +1985,15 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (authenticated scan???) 
-                     
-                     </td>
+                  <td>
+                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd"> (OS name and version???) </td>
+                  <td>
+                     <p></p>
+                  </td>
                   <td>
                      <p></p>
                   </td>
@@ -1819,8 +2027,18 @@ main > span, section > span { display: block }
                   <td>
                      <p></p>
                   </td>
-                  <td class="tbd">(system admin/owner???)</td>
-                  <td class="tbd">(application admin/owner???)</td>
+                  <td>
+                     <p><span class="ERROR">No value found for system admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">No value found for application admin/owner</span></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
+                  <td>
+                     <p></p>
+                  </td>
                </tr>
             </table>
          </section>

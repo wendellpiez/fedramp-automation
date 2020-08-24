@@ -39,7 +39,7 @@
    
    <xsl:variable name="paginating" select="$paginate=('yes','true','on')"/>
    
-   <xsl:variable name="fedramp-value-registry" select="document('fedramp_values2.xml')"/>
+   <xsl:variable name="fedramp-value-registry" select="document('fedramp_values.xml')"/>
    
 <!-- The imported XSLT handles catalog contents, with metadata and fallback logic. -->
    <xsl:import href="modules/oscal_general_html.xsl"/>
@@ -145,13 +145,15 @@
    
    <xsl:template name="emit-value">
       <xsl:param name="this" as="node()*"/>
-      <xsl:param name="warn-if-missing" tunnel="true" select="true()"/>
+      <!-- setting $warn-if-missing requires at least one node in $accepting -->
+      <xsl:param name="warn-if-missing" tunnel="true" select="false()"/>
+      <xsl:param name="accepting"       tunnel="true" select="$this"/>
       <xsl:param name="echo"/>
          <xsl:for-each select="$this">
             <xsl:if test="not(position() eq 1)">; </xsl:if>
          <xsl:apply-templates select="." mode="value"/>
          </xsl:for-each>
-         <xsl:if test="empty($this) and $warn-if-missing" expand-text="true">
+         <xsl:if test="empty($accepting) and $warn-if-missing" expand-text="true">
             <span class="ERROR">No value found for { $echo }</span>
             <xsl:call-template name="warn-if-tracing">
                <xsl:with-param name="warning">NO VALUE FOUND for { $echo }</xsl:with-param>
@@ -271,8 +273,7 @@
       <xsl:variable name="okay-values" select="tokenize(@values,',?\s+')"/>
       <xsl:if test="not(string($checking) = $okay-values)" expand-text="true">
          <xsl:text> </xsl:text>
-         <details class="validation-error"><summary>ERROR:</summary> value '{ $checking } ' is not permitted here: should be (one of) { $okay-values => string-join(', ') }</details>
-      </xsl:if>
+         <details class="validation-error"><summary>ERROR:</summary> value '{ $checking } ' is not permitted here: should be (one of) { $okay-values => string-join(', ') }</details>      </xsl:if>
    </xsl:template>
    
    <xsl:template name="css-inline" expand-text="true">
@@ -324,11 +325,12 @@ table.poc td {{ min-width: 30vw }}
 
 table.iinv th, table.iinv td {{ border: thin solid black }}
 
-table.iinv th      {{ background-color: {$properties?att13.pale};  font-weight: bold }}
-table.iinv th.all  {{ background-color: {$properties?att13.steel}; font-weight: normal }}
-table.iinv th.os   {{ background-color: {$properties?att13.aqua};  font-weight: normal }}
-table.iinv th.swdb {{ background-color: {$properties?att13.olive}; font-weight: normal }}
-table.iinv th.any  {{ background-color: {$properties?att13.steel}; font-weight: normal }}
+table.iinv th       {{ background-color: {$properties?att13.pale};  font-weight: bold }}
+table.iinv th.all   {{ background-color: {$properties?att13.steel}; font-weight: normal }}
+table.iinv th.os    {{ background-color: {$properties?att13.aqua};  font-weight: normal }}
+table.iinv th.swdb  {{ background-color: {$properties?att13.olive}; font-weight: normal }}
+table.iinv th.any   {{ background-color: {$properties?att13.steel}; font-weight: normal }}
+table.iinv th.added {{ background-color: black; color: white; font-weight: normal }}
 
 
 table.iinv tr.component td {{ background-color: #F5F5F5 }}

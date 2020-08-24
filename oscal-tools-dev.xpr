@@ -14,7 +14,7 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>resources/specs/FedRAMP-SSP-OSCAL-workup.xml</String>
+                                    <String>resources/oscal_ssp-basic_html.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -34,11 +34,11 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>resources/oscal_ssp-basic_html.xsl</String>
+                                    <String>resources/specs/FedRAMP-SSP-OSCAL-workup.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>FedRAMP SSP workup - BASIC DISPLAY (refresh only)</String>
+                                        <String>FedRAMP SSP workup - BASIC DISPLAY (refresh and open)</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
