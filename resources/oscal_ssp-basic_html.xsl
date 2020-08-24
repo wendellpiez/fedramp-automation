@@ -51,7 +51,6 @@
    <!-- Control which sections to include here. -->
    <xsl:variable name="main-contents" as="element()*">
       <main>
-         <f:generate attachment="13">Integrated Inventory</f:generate>
          <f:generate section="1"/>
          <f:generate section="2"/>
          <f:generate section="3"/>
@@ -62,6 +61,8 @@
          <f:generate section="8"/>
          <f:generate section="9"/>
          <f:generate section="10"/>
+         <f:generate attachment="13">Integrated Inventory</f:generate>
+         
       </main>
    </xsl:variable>
    
