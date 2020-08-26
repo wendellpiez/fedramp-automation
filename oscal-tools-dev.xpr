@@ -522,30 +522,6 @@
                                             <field name="paramDescription">
                                                 <paramDescriptor>
                                                     <field name="localName">
-                                                        <String>tables</String>
-                                                    </field>
-                                                    <field name="prefix">
-                                                        <null/>
-                                                    </field>
-                                                    <field name="namespace">
-                                                        <null/>
-                                                    </field>
-                                                </paramDescriptor>
-                                            </field>
-                                            <field name="value">
-                                                <String>single</String>
-                                            </field>
-                                            <field name="hasXPathValue">
-                                                <Boolean>false</Boolean>
-                                            </field>
-                                            <field name="isStatic">
-                                                <Boolean>false</Boolean>
-                                            </field>
-                                        </transformationParameter>
-                                        <transformationParameter>
-                                            <field name="paramDescription">
-                                                <paramDescriptor>
-                                                    <field name="localName">
                                                         <String>trace</String>
                                                     </field>
                                                     <field name="prefix">

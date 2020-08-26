@@ -37,7 +37,7 @@
   <xsl:param name="html-page-title" as="xs:string" select="''"/>
 
   <!-- 'both' for both tables; 'open' for the table of open items;
-       'closed' for the table of closed items; 'single' for a single table
+       'closed' for the table of closed items; 'combined' for a single table
        for all items. -->
   
   <xsl:param name="tables" as="xs:string">both</xsl:param>
@@ -114,7 +114,7 @@
 
   <xsl:template name="include-tables">
     <xsl:choose>
-      <xsl:when test="$tables = 'single'">
+      <xsl:when test="$tables = 'combined'">
         <xsl:call-template name="make-poam-table">
           <xsl:with-param name="head">All items</xsl:with-param>
           <xsl:with-param name="items" select="$poam/*/poam-items/poam-item"/>
@@ -402,7 +402,7 @@ table.uniform caption {{ text-align: left; color: {$properties?red};
 
 
 table.poam th,
-table.poam td {{ border: thin solid black }}
+table.poam td {{ border: thin solid black; text-align: left; vertical-align: bottom }}
 
 table.poam.combined tr.closed td {{ background-color: {$properties?light.blue} }}
 
