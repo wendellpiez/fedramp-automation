@@ -27,7 +27,7 @@
     <xsl:template match="/">
         <xsl:comment expand-text="true"> Modified by conversion XSLT { current-dateTime() } - UUIDs refreshed </xsl:comment>
         
-        <!--<xsl:sequence select="$with-new-uuids"/>-->
+        <!--<xsl:apply-templates select="/" mode="add-new-uuids"/>-->
         <xsl:apply-templates mode="rewire" select="$with-new-uuids"/>
     </xsl:template>
     
@@ -49,8 +49,9 @@
         </xsl:copy>
     </xsl:template>
     
-    <xsl:template match="link | a[exists(key('html-link',@href))]/@href" mode="rewire">
-        <xsl:variable  name="t"    select="key('html-link',@href)"/>
+    <xsl:template match="*[exists(key('html-uuid-link',@href))]" mode="rewire">
+        <xsl:message expand-text="true">Matched { name(..) }/@href </xsl:message>
+        <xsl:variable  name="t"    select="key('html-uuid-link',@href)"/>
         <xsl:copy>
             <xsl:copy-of select="@* except @href"/>
             <xsl:attribute name="href" select="'#' || $t/@new-uuid"/>
@@ -72,6 +73,6 @@
     <xsl:key name="location-link"  match="location"         use="@uuid"/>
     <xsl:key name="party-link"     match="party"            use="@uuid"/>
     <xsl:key name="component-link" match="component"        use="@uuid"/>
-    <xsl:key name="html-link"      match="*[exists(@uuid)]" use="'#' || @uuid"/>
+    <xsl:key name="html-uuid-link" match="*[exists(@uuid)]" use="'#' || @uuid"/>
     
 </xsl:stylesheet>

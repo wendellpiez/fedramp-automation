@@ -67,7 +67,7 @@
          </section>
    </xsl:template>
    
-   <xsl:template match="f:generate[@table = '1-1']">
+   <xsl:template mode="boilerplate" match="f:generate[@table = '1-1']">
       <table id="table.1-1" class="uniform">
          <caption><span class="lbl">Table 1-1.</span> Information System Name and Title</caption>
          <thead>
@@ -97,7 +97,7 @@
       </table>
    </xsl:template>
    
-   <xsl:template match="f:generate[@item='system-short-name']">
+   <xsl:template mode="boilerplate" match="f:generate[@item='system-short-name']">
       <xsl:call-template name="emit-value">
          <xsl:with-param name="this" select="$ssp/*/system-characteristics/system-name-short"/>
          <xsl:with-param name="echo">system name (abbreviated)</xsl:with-param>
@@ -116,7 +116,7 @@
       </section>
    </xsl:template>
    
-   <xsl:template match="f:generate[@table='2-1']">
+   <xsl:template mode="boilerplate" match="f:generate[@table='2-1']">
          <table id="table.2-1" class="uniform">
             <caption><span class="lbl">Table 2-1.</span> Security Categorization</caption>
             <tbody>
@@ -217,7 +217,7 @@
       </section>
    </xsl:template>
    
-   <xsl:template match="f:generate[@table='2-2']">
+   <xsl:template mode="boilerplate" match="f:generate[@table='2-2']">
       <table id="table.2-2" class="uniform">
          <caption><span class="lbl">Table 2-2.</span> Sensitivity Categorization of Information Types</caption>
          <colgroup>
@@ -867,10 +867,12 @@
             <xsl:with-param name="echo">vlan or network ID</xsl:with-param>
          </xsl:call-template>
          
-         <xsl:variable name="system-owner" as="element()*" expand-text="true">
+         <!--<xsl:variable name="asset-owner" as="element()*" expand-text="true">
             <xsl:apply-templates mode="inline-contact" select="responsible-party[@role-id='asset-owner']/key('party-by-uuid',party-uuid)"/>
          </xsl:variable>
-         
+         <xsl:variable name="asset-admin" as="element()*" expand-text="true">
+            <xsl:apply-templates mode="inline-contact" select="responsible-party[@role-id='asset-administrator']/key('party-by-uuid',party-uuid)"/>
+         </xsl:variable>
          
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="()"/>
@@ -878,17 +880,16 @@
             <xsl:with-param name="warn-if-missing" tunnel="yes"  select="true()"/>
          </xsl:call-template>
          
-         <xsl:variable name="system-admin" as="element()*" expand-text="true">
-            <xsl:apply-templates mode="inline-contact" select="responsible-party[@role-id='asset-administrator']/key('party-by-uuid',party-uuid)"/>
-         </xsl:variable>
-         
+                  
          
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="()"/>
             <xsl:with-param name="echo">application admin/owner</xsl:with-param>
             <xsl:with-param name="warn-if-missing" tunnel="yes"  select="true()"/>
-         </xsl:call-template>
+         </xsl:call-template>-->
          
+         <td class="tbd">[ MAPPING tbd ]</td>
+         <td class="tbd">[ MAPPING tbd ]</td>
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='scan-type']"/>
             <xsl:with-param name="echo">scan type</xsl:with-param>
@@ -903,5 +904,6 @@
       <xsl:apply-templates select="$components" mode="#current">
          <xsl:with-param name="this-item" select="."/>
       </xsl:apply-templates>
+      
    </xsl:template>
 </xsl:stylesheet>
