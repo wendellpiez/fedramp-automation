@@ -36,6 +36,7 @@
             
             <xsl:call-template name="css-link"   use-when="matches($css-link,'\w')"/>
             <xsl:call-template name="css-inline" use-when="not(matches($css-link,'\w'))"/>
+            <xsl:call-template name="js-inline"/>
             <xsl:if test="$paginating">
                <!--<link href="paged-js/interface-0.1.css" rel="stylesheet" type="text/css"/>-->
                <script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>
@@ -75,7 +76,7 @@
       <td>
          <p>
             <xsl:call-template name="emit-value">
-               <xsl:with-param name="this" select="$these"/>
+               <xsl:with-param name="these" select="$these"/>
                <xsl:with-param name="echo" select="$echo"/>
                <!-- emit 'missing' warnings when the info item $this includes nothing inside a component. -->
             </xsl:call-template>
@@ -84,6 +85,8 @@
                   <xsl:with-param name="who" select="."/>
                </xsl:apply-templates>
             </xsl:for-each>
+            <!-- emitting nbsp to ensure contents -->
+            <xsl:text>&#xA0;</xsl:text>
          </p>
          <!-- if the value is given on an annotation, we want the remarks also -->
          <xsl:apply-templates mode="value" select="$these/self::annotation/remarks[matches(string(),'\S')]"/>
@@ -91,17 +94,17 @@
    </xsl:template>
    
    <xsl:template name="emit-value">
-      <xsl:param name="this" as="node()*"/>
+      <xsl:param name="these" as="node()*"/>
       <!-- setting $warn-if-missing requires at least one node in $accepting -->
       <xsl:param name="warn-if-missing" tunnel="true" select="false()"/>
-      <xsl:param name="accepting"       tunnel="true" select="$this"/>
+      <xsl:param name="accepting"       tunnel="true" select="$these"/>
       <xsl:param name="echo"/>
-      <xsl:for-each select="$this">
+      <xsl:for-each select="$these">
          <xsl:if test="not(position() eq 1)">; </xsl:if>
          <xsl:apply-templates select="." mode="value"/>
       </xsl:for-each>
       <xsl:if test="empty($accepting) and $warn-if-missing" expand-text="true">
-         <span class="ERROR">No value found for { $echo }</span>
+         <span class="ERROR">Missing<!--: { $echo }--></span>
          <xsl:call-template name="warn-if-tracing">
             <xsl:with-param name="warning">NO VALUE FOUND for { $echo }</xsl:with-param>
          </xsl:call-template>
@@ -137,10 +140,13 @@
    
    <xsl:template match="last-modified" mode="value">
       <span class="val">
-         <xsl:value-of select="substring-before(.,'T') => xs:date() => format-date('[D] [MNn] [Y]')"/>
+         <xsl:variable name="date-value" select="substring-before(.,'T')"/>
+         <xsl:value-of select="$date-value[. castable as xs:date] => xs:date() => format-date('[D] [MNn] [Y]')"/>
+         <xsl:if test="not($date-value castable as xs:date)">
+            <xsl:value-of select="."/>
+         </xsl:if>
       </span>
    </xsl:template>
-   
    
    <xsl:template mode="value" match="prop[@ns='https://fedramp.gov/ns/oscal'][@name='security-eauth-level']">
       <xsl:call-template name="lookup-value">
@@ -180,9 +186,7 @@
    <xsl:template name="lookup-value" expand-text="true">
       <xsl:param name="who"   required="true"/>
       <xsl:param name="where" required="true"/>
-      <span class="val">
-         <xsl:value-of select="$where/f:allowed-values/f:enum[@value=$who]"/>
-      </span>
+      <span class="val">{ $where/f:allowed-values/f:enum[@value=$who] }</span>
       <xsl:if test="empty($where//f:allowed-values/f:enum[@value=$who])">
          <xsl:variable name="path">
             <xsl:apply-templates select="$who" mode="path"/>
@@ -221,13 +225,32 @@
       <link rel="stylesheet" href="{$css-link}"/>
    </xsl:template>
    
+   <xsl:template name="js-inline">
+      <script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript">
+         function flashClass(whose,flag) {
+         var flashers = document.getElementsByClassName(whose);
+         /* for (i=0; i <xsl:text disable-output-escaping="yes">&lt;</xsl:text> flashers.length; i++) { flashers[i].classList.toggle(flag) } */
+         for (flasher in flashers) { flasher =<xsl:text disable-output-escaping="yes">></xsl:text> flasher.classList.toggle(flag) }
+         }
+      </script>
+      <!--<script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript">
+         function flashClass(whose,flag) {
+           var flashers = [ document.getElementsByClassName(whose) ];
+           return flashers.map( function(flasher) { flasher.classList.toggle(flag) } )
+         }
+      </script>-->
+   </xsl:template>
+   
+   
+<!-- 'check-value' mode provides validation with errors or warnings emitted into results. -->
    <xsl:template mode="check-value" match="f:allow-only">
       <xsl:param required="yes" name="who" as="node()"/>
       <xsl:variable name="checking" select="($who/self::annotation/@value, $who)[1]" as="xs:string"/>
-      <xsl:variable name="okay-values" select="tokenize(@values,',?\s+')"/>
+      <xsl:variable name="okay-values" select="tokenize(@values,',?\s+'), $fedramp-value-registry/*/f:value-set[@name=current()/@lookup]/f:allowed-values/f:enum/@value/string()"/>
       <xsl:if test="not(string($checking) = $okay-values)" expand-text="true">
          <xsl:text> </xsl:text>
          <details class="validation-error"><summary>ERROR:</summary> value '{ $checking } ' is not permitted here: should be (one of) { $okay-values => string-join(', ') }</details>      </xsl:if>
    </xsl:template>
+   
    
 </xsl:stylesheet>

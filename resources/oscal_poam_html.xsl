@@ -221,7 +221,7 @@
             arbitrary naming scheme</p>
           <p>This Field should include the complete identifier (no short hand), along with the port
             and protocol when provided by the scanner.</p>
-          <p>Each Asset should be separated by a new line (Alt+Enter)</p>
+          <!--<p>Each Asset should be separated by a new line (Alt+Enter)</p>-->
         </td>
         <td>
           <p>Person Responsible for implementing this task</p>
@@ -242,13 +242,12 @@
         </td>
         <td>
           <p>Permanent Column</p>
-          <p>List of proposed Milestones, separated with a blank line (Alt+Enter)</p>
+          <p>List of proposed Milestones<!--, separated with a blank line (Alt+Enter)--></p>
           <p>Any alterations should be made in "Milestone Changes" </p>
           <p>Milestone Number should be unique to each milestone</p>
         </td>
         <td>
           <p>Any alterations, status updates, or additions to the milestones.</p>
-          <p></p>
           <p>(Milestone Number) [Type of update] [milestone date] : How and why the date changed,
             or the milestone was altered</p>
           <p>Create a new Milestone Number for new Milestones</p>

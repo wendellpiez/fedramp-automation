@@ -58,7 +58,7 @@
             <h1 class="head"><span class="n">1.</span> Information System Name/Title</h1>
             <p>This System Security Plan provides an overview of the security requirements for 
                <xsl:call-template name="emit-value">
-                  <xsl:with-param name="this" select="$ssp/*/system-characteristics/system-name"/>
+                  <xsl:with-param name="these" select="$ssp/*/system-characteristics/system-name"/>
                   <xsl:with-param name="echo">system name</xsl:with-param>
                </xsl:call-template>
              and describes the controls in place or planned for implementation to provide a level of security appropriate for the information to be transmitted, processed or stored by the system.  Information security is vital to our critical infrastructure and its effective performance and protection is a key component of our national security program. Proper management of information technology systems is essential to ensure the confidentiality, integrity and availability of the data transmitted, processed or stored by the <f:generate item="system-short-name"/> system.</p>
@@ -99,7 +99,7 @@
    
    <xsl:template mode="boilerplate" match="f:generate[@item='system-short-name']">
       <xsl:call-template name="emit-value">
-         <xsl:with-param name="this" select="$ssp/*/system-characteristics/system-name-short"/>
+         <xsl:with-param name="these" select="$ssp/*/system-characteristics/system-name-short"/>
          <xsl:with-param name="echo">system name (abbreviated)</xsl:with-param>
       </xsl:call-template>
    </xsl:template>
@@ -399,7 +399,7 @@
             <p>Delete this and all other instructions from your final version of this document.</p>
          </div>
          <p>The Authorizing Official (AO) or Designated Approving Authority (DAA) for this information system is
-            <xsl:call-template name="emit-value-td">
+            <xsl:call-template name="emit-value">
                <xsl:with-param name="these" select="$authorizing-party[1]"/>
                <xsl:with-param name="echo">authorizing official</xsl:with-param>
             </xsl:call-template>.</p>
@@ -559,7 +559,7 @@
             <th colspan="5" class="all">All Inventories</th>
             <th colspan="9" class="os">OS/Infrastructure Inventory</th>
             <th colspan="4" class="swdb">Software and Database Inventories</th>
-            <th colspan="5" class="any">Any Inventory</th>
+            <th colspan="4" class="any">Any Inventory</th>
             <th colspan="2" class="added">Additional</th>
          </tr>
          <tr class="guided">
@@ -584,8 +584,8 @@
             <th>Comments</th>
             <th>Serial # / Asset Tag #</th>
             <th>VLAN / Network ID</th>
-            <th>System Administrator / Owner</th>
-            <th>Application Administrator / Owner</th>
+            <th><!--System -->Administrator / Owner</th>
+            <!--<th>Application Administrator / Owner</th>-->
             <th>Scan Type</th>
             <th>FIPS 140-2 Validation</th>
          </tr>
@@ -706,7 +706,7 @@
             </th>
             <th>
                <!--<p>System Administrator/ Owner</p>-->
-               <div class="guidance">Name of the system administrator or owner.</div>
+               <div class="guidance">Name of the system or application administrator or owner.</div>
             </th>
             <th>
                <!--<p>Application Administrator/ Owner</p>-->
@@ -725,12 +725,28 @@
               (including) it, or only the item when the context is not a component. -->
       <xsl:variable name="integrated-item" select=". | $this-item"/>
       <xsl:variable name="components" select="key('component-by-uuid',implemented-component/@component-uuid)"/>
+      <xsl:variable name="this-asset-id" select="$this-item/@asset-id"/>
       
-      <tr class="inventory { if (exists(self::component)) then 'component' else 'line-item' }">
-         <xsl:call-template name="emit-value-td">
-            <xsl:with-param name="these" select="$this-item/@asset-id"/>
-            <xsl:with-param name="echo">unique asset identifier</xsl:with-param>
-         </xsl:call-template>
+      <!--<xsl:variable name="id-note" expand-text="true">
+         <xsl:choose>
+            <xsl:when test=""></xsl:when>
+         </xsl:choose>
+      </xsl:variable>-->
+      <tr class="inventory { if (exists(self::component)) then ('component ' ||  $this-asset-id || '-component hiding') else 'line-item' }">
+         <td onclick="javascript:flashClass('{ $this-asset-id || '-component' }','hiding')">
+            <p>
+               <xsl:call-template name="emit-value">
+                  <xsl:with-param name="these" select="$this-asset-id"/>
+                  <xsl:with-param name="echo">unique asset identifier</xsl:with-param>
+               </xsl:call-template>
+               <xsl:text> (</xsl:text>
+               <xsl:value-of select="replace(local-name(), '^inventory-', '')"/>
+               <xsl:text>)</xsl:text>
+            </p>
+            <xsl:for-each-group select="$components" group-by="true()" expand-text="true">
+               <p class="component-notice">{ count(current-group()) }&#xA0;{ if (count(current-group()) eq 1) then 'component' else 'components'}</p>
+            </xsl:for-each-group>
+         </td>
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='ipv4-address'] | prop[@name='ipv6-address']"/>
             <xsl:with-param name="echo">ip address (v4 or v6)</xsl:with-param>
@@ -739,14 +755,14 @@
             <xsl:with-param name="these" select="prop[@name='virtual']"/>
             <xsl:with-param name="echo">virtual</xsl:with-param>
             <xsl:with-param name="validate" as="element()*">
-               <f:allow-only values="yes no"/>
+               <f:allow-only lookup="virtual"/>
             </xsl:with-param>
          </xsl:call-template>
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='public']"/>
             <xsl:with-param name="echo">public</xsl:with-param>
             <xsl:with-param name="validate" as="element()*">
-               <f:allow-only values="yes no"/>
+               <f:allow-only lookup="public"/>
             </xsl:with-param>
          </xsl:call-template>
          <!--<xsl:call-template name="emit-value-td">
@@ -773,7 +789,7 @@
             <xsl:with-param name="accepting"       tunnel="yes" select="($integrated-item | $components)/annotation[@name='allows-authenticated-scan']"/>
             
             <xsl:with-param name="validate" as="element()*">
-               <f:allow-only values="yes no"/>
+               <f:allow-only lookup="allows-authenticated-scan"/>
             </xsl:with-param>
          </xsl:call-template>
          <!--<xsl:call-template name="emit-value-td">
@@ -820,7 +836,7 @@
             <xsl:with-param name="these" select="prop[@name='asset-type']"/>
             <xsl:with-param name="echo">asset-type</xsl:with-param>
             <xsl:with-param name="validate" as="element()*">
-               <f:allow-only values="os database web-server dns-server email-server directory-server pbx firewall router switch storage-array"/>
+               <f:allow-only lookup="asset-type"/>
             </xsl:with-param>
          </xsl:call-template>
          <xsl:call-template name="emit-value-td">
@@ -831,7 +847,8 @@
             <xsl:with-param name="these" select="annotation[@name='is-scanned']"/>
             <xsl:with-param name="echo">"is scanned" status</xsl:with-param>
             <xsl:with-param name="validate" as="element()*">
-               <f:allow-only values="yes no"/>
+               <f:allow-only lookup="is-scanned"/>
+               <!--<f:allow-only lookup="is-scanned"/>-->
             </xsl:with-param>
          </xsl:call-template>
          <xsl:call-template name="emit-value-td">
@@ -867,29 +884,13 @@
             <xsl:with-param name="echo">vlan or network ID</xsl:with-param>
          </xsl:call-template>
          
-         <!--<xsl:variable name="asset-owner" as="element()*" expand-text="true">
-            <xsl:apply-templates mode="inline-contact" select="responsible-party[@role-id='asset-owner']/key('party-by-uuid',party-uuid)"/>
-         </xsl:variable>
-         <xsl:variable name="asset-admin" as="element()*" expand-text="true">
-            <xsl:apply-templates mode="inline-contact" select="responsible-party[@role-id='asset-administrator']/key('party-by-uuid',party-uuid)"/>
-         </xsl:variable>
-         
          <xsl:call-template name="emit-value-td">
-            <xsl:with-param name="these" select="()"/>
-            <xsl:with-param name="echo">system admin/owner</xsl:with-param>
+            <xsl:with-param name="these" select="responsible-party[@role-id='asset-owner']/key('party-by-uuid',party-uuid)/party-name,
+               responsible-party[@role-id='asset-administrator']/key('party-by-uuid',party-uuid)/party-name"/>
+            <xsl:with-param name="echo">admin/owner</xsl:with-param>
             <xsl:with-param name="warn-if-missing" tunnel="yes"  select="true()"/>
          </xsl:call-template>
          
-                  
-         
-         <xsl:call-template name="emit-value-td">
-            <xsl:with-param name="these" select="()"/>
-            <xsl:with-param name="echo">application admin/owner</xsl:with-param>
-            <xsl:with-param name="warn-if-missing" tunnel="yes"  select="true()"/>
-         </xsl:call-template>-->
-         
-         <td class="tbd">[ MAPPING tbd ]</td>
-         <td class="tbd">[ MAPPING tbd ]</td>
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='scan-type']"/>
             <xsl:with-param name="echo">scan type</xsl:with-param>

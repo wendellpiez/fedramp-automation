@@ -9,11 +9,11 @@
                 exclude-result-prefixes="#all">
 
    <f:transformation validation="strict current">
-      <f:title             >FedRAMP System Security Plan page display (HTML5) transformation</f:title>
-      <f:short-title       >FedRAMP SSP HTML XSLT (basic page)</f:short-title>
-      <f:description       >From OSCAL SSP provided with its baselines, produces a self-contained page display.</f:description>
+      <f:title             >FedRAMP System Security Plan 'template' page display (HTML5) transformation</f:title>
+      <f:short-title       >FedRAMP SSP HTML XSLT ('template' view)</f:short-title>
+      <f:description       >From OSCAL SSP provided with its baselines, produces a self-contained page display with look/feel emulating the published FedRAMP SSP template.</f:description>
       <f:date-of-origin    >2020-08-05</f:date-of-origin>
-      <f:date-last-modified>2020-08-25</f:date-last-modified>
+      <f:date-last-modified>2020-09-01</f:date-last-modified>
       
       <f:parameter name="html-page-title" as="xs:string">String for HTML page title (browser header bar)</f:parameter>
       <f:parameter name="css-link"        as="xs:string?">Literal value for link to out of line CSS (superseding inline CSS)</f:parameter>
@@ -57,7 +57,7 @@
    <!-- Control which sections to include here. -->
    <xsl:variable name="main-contents" as="element()*">
       <main>
-         <!--<f:generate section="1"/>
+         <f:generate section="1"/>
          <f:generate section="2"/>
          <f:generate section="3"/>
          <f:generate section="4"/>
@@ -66,7 +66,7 @@
          <f:generate section="7"/>
          <f:generate section="8"/>
          <f:generate section="9"/>
-         <f:generate section="10"/>-->
+         <f:generate section="10"/>
          <f:generate attachment="13">Integrated Inventory</f:generate>
          
       </main>
@@ -130,12 +130,6 @@ table.iinv th.swdb  {{ background-color: {$properties?att13.olive}; font-weight:
 table.iinv th.any   {{ background-color: {$properties?att13.steel}; font-weight: normal }}
 table.iinv th.added {{ background-color: black; color: white; font-weight: normal }}
 
-
-table.iinv tr.component td {{ background-color: #F5F5F5 }}
-
-table.iinv tr.line-item td {{ border-top: thick double black }}
-
-
 table.uniform caption {{ text-align: left; color: {$properties?red};
   font-style: italic; font-weight: normal; padding-bottom: 0.5em }}
 
@@ -166,6 +160,22 @@ tr.guidance {{ display: none;
 
 tr.guided:hover + tr.guidance {{ display: table-row }}
 
+
+table.iinv tr.line-item td {{ border-top: thick double black }}
+
+tr.inventory.component {{ background-color: {$properties?light.blue} }}
+
+tr.inventory.component.hiding {{ display: none }}
+
+/* pops up component lines when their line-item lines are hovered
+tr.inventory.component {{ display: none }}
+tr.inventory.line-item:focus-within {{ display: table-row; background-color: {$properties?light.blue} }}
+tr.inventory.line-item:focus-within ~ tr.inventory.component {{ display: table-row; background-color: {$properties?light.blue} }}
+tr.inventory.line-item:focus-within ~ tr.inventory.line-item ~ tr.inventory.component {{ display: none }}
+ */
+
+tr.line-item td:hover p.component-notice {{ text-decoration: underline }}
+
 <!-- tr.guided:hover + tr.guidance th {{ max-height: unset }} ; transition: height 2s ease-->
 
 table.iinv tr.guidance th {{ font-weight: normal }}
@@ -186,7 +196,7 @@ td details[open] {{ position: absolute; z-index: 1; min-width: 20em; max-width: 
   color: {$properties?vivid.blue};
   font-size: 90%; margin-top: 1em }}
 
-.val, .rem {{ font-family: monospace; text-decoration: underline }}
+.val, .rem {{ font-family: monospace; text-decoration: underline; font-size: 120% }}
 .val {{ font-weight: bold }}
 
 span.choice {{ font-weight: 600; color: {$properties?header.color} }}

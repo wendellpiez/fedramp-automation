@@ -4,7 +4,7 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <meta itemprop="nominal_source_uri" content="file:/C:/Users/wap1/Documents/usnistgov/fedramp-automation/resources/specs/FedRAMP-SSP-OSCAL-workup.xml">
       <meta itemprop="production_xslt" content="file:/C:/Users/wap1/Documents/usnistgov/fedramp-automation/resources/modules/oscal_general_html.xsl">
-      <meta itemprop="production_timestamp" content="2020-08-25T13:06:09.082-04:00">
+      <meta itemprop="production_timestamp" content="2020-09-01T11:27:41.11-04:00">
       <title>FedRAMP System Security Plan (SSP) - WORKUP demo</title>
       <style type="text/css">
 @import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
@@ -43,12 +43,6 @@ table.iinv th.swdb  { background-color: #c4d79b; font-weight: normal }
 table.iinv th.any   { background-color: #b8cce4; font-weight: normal }
 table.iinv th.added { background-color: black; color: white; font-weight: normal }
 
-
-table.iinv tr.component td { background-color: #F5F5F5 }
-
-table.iinv tr.line-item td { border-top: thick double black }
-
-
 table.uniform caption { text-align: left; color: #cc1d1d;
   font-style: italic; font-weight: normal; padding-bottom: 0.5em }
 
@@ -80,6 +74,22 @@ tr.guidance { display: none;
 tr.guided:hover + tr.guidance { display: table-row }
 
 
+table.iinv tr.line-item td { border-top: thick double black }
+
+tr.inventory.component { background-color: #ccecfc }
+
+tr.inventory.component.hiding { display: none }
+
+/* pops up component lines when their line-item lines are hovered
+tr.inventory.component { display: none }
+tr.inventory.line-item:focus-within { display: table-row; background-color: #ccecfc }
+tr.inventory.line-item:focus-within ~ tr.inventory.component { display: table-row; background-color: #ccecfc }
+tr.inventory.line-item:focus-within ~ tr.inventory.line-item ~ tr.inventory.component { display: none }
+ */
+
+tr.line-item td:hover p.component-notice { text-decoration: underline }
+
+
 
 table.iinv tr.guidance th { font-weight: normal }
 
@@ -99,7 +109,7 @@ td details[open] { position: absolute; z-index: 1; min-width: 20em; max-width: 4
   color: #1a4480;
   font-size: 90%; margin-top: 1em }
 
-.val, .rem { font-family: monospace; text-decoration: underline }
+.val, .rem { font-family: monospace; text-decoration: underline; font-size: 120% }
 .val { font-weight: bold }
 
 span.choice { font-weight: 600; color: #757575 }
@@ -109,11 +119,412 @@ span.choice { font-weight: 600; color: #757575 }
 .validation-error { color: red; font-style: italic; font-size: 80% }
 
 main > span, section > span { display: block }
-</style>
-   </head>
+</style><script type="text/javascript">
+         function flashClass(whose,flag) {
+         var flashers = document.getElementsByClassName(whose);
+         /* for (i=0; i < flashers.length; i++) { flashers[i].classList.toggle(flag) } */
+         for (flasher in flashers) { flasher => flasher.classList.toggle(flag) }
+         }
+      </script></head>
    <body>
       <main>
-         <section id="attachment.13" class="integrated-inventory">
+         <section id="sec.1">
+            <h1 class="head"><span class="n">1.</span> Information System Name/Title</h1>
+            <p>This System Security Plan provides an overview of the security requirements for 
+               <span class="val">Workup Implementation System Example System Demo</span>
+               and describes the controls in place or planned for implementation to provide a level
+               of security appropriate for the information to be transmitted, processed or stored
+               by the system.  Information security is vital to our critical infrastructure and its
+               effective performance and protection is a key component of our national security program.
+               Proper management of information technology systems is essential to ensure the confidentiality,
+               integrity and availability of the data transmitted, processed or stored by the <span class="val">WorkUP.SYS</span> system.</p>
+            <p>The security safeguards implemented for the <span class="val">WorkUP.SYS</span> system meet the policy and control requirements set forth in this System Security
+               Plan. All systems are subject to monitoring consistent with applicable laws, regulations,
+               agency policies, procedures and practices.</p>
+            <table id="table.1-1" class="uniform">
+               <caption><span class="lbl">Table 1-1.</span> Information System Name and Title</caption>
+               <thead>
+                  <tr>
+                     <th>Unique Identifier</th>
+                     <th>Information System Name</th>
+                     <th>Information System</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td>
+                        <p><span class="val">F00000000</span>&nbsp;</p>
+                     </td>
+                     <td>
+                        <p><span class="val">Workup Implementation System Example System Demo</span>&nbsp;</p>
+                     </td>
+                     <td><span class="val">WorkUP.SYS</span></td>
+                  </tr>
+               </tbody>
+            </table>
+         </section>
+         <section id="sec.2">
+            <h1 class="head"><span class="n">2.</span> Information System Categorization</h1>
+            <p>The overall information system sensitivity categorization is recorded in <a href="#table.2-1">Table 2-1 Security Categorization</a> that follows.  Directions for attaching the FIPS 199 document may be found in the
+               following section: <a href="#attach10">ATTACHMENT 10 - FIPS 199</a>. 
+               </p>
+            <table id="table.2-1" class="uniform">
+               <caption><span class="lbl">Table 2-1.</span> Security Categorization</caption>
+               <tbody>
+                  <tr>
+                     <th>System Sensitivity Level:</th>
+                     <td>
+                        <p><span class="val">Low</span>&nbsp;</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+            <section id="sec.2.1">
+               <h2 class="head"><span class="n">2.1</span> Information Types</h2>
+               <p>This section describes how the information types used by the information system are
+                  categorized for confidentiality, integrity and availability sensitivity levels.</p>
+               <p>The following tables identify the information types that are input, stored, processed
+                  and/or output from the <span class="val">WorkUP.SYS</span> system. The selection of
+                  the information types is based on guidance provided by <a>Office of Management and
+                     Budget (OMB) Federal Enterprise Architecture Program Management Office Business
+                     Reference Model 2.0</a> and <a>FIPS Pub 199, Standards for Security Categorization of
+                     Federal Information and Information Systems</a> which is based on <a>NIST Special
+                     Publication (SP) 800-60, Guide for Mapping Types of Information and Information
+                     Systems to Security Categories</a>. </p>
+               <p>The tables also identify the security impact levels for confidentiality, integrity
+                  and
+                  availability for each of the information types expressed as low, moderate, or high.
+                  The
+                  security impact levels are based on the potential impact definitions for each of the
+                  security objectives (i.e., confidentiality, integrity and availability) discussed
+                  in
+                  <a>NIST SP 800-60</a> and <a>FIPS Pub 199</a>.</p>
+               <p>The potential impact is low if —</p>
+               <ul>
+                  <li>
+                     <p>The loss of confidentiality, integrity, or availability could be expected to have
+                        a limited adverse effect on organizational operations, organizational assets, or
+                        individuals.</p>
+                  </li>
+                  <li>
+                     <p>A limited adverse effect means that, for example, the loss of confidentiality,
+                        integrity, or availability might: (i) cause a degradation in mission capability to
+                        an extent and duration that the organization is able to perform its primary
+                        functions, but the effectiveness of the functions is noticeably reduced; (ii)
+                        result in minor damage to organizational assets; (iii) result in minor financial
+                        loss; or (iv) result in minor harm to individuals.</p>
+                  </li>
+               </ul>
+               <p>The potential impact is moderate if —</p>
+               <ul>
+                  <li>
+                     <p>The loss of confidentiality, integrity, or availability could be expected to have
+                        a serious adverse effect on organizational operations, organizational assets, or
+                        individuals.</p>
+                  </li>
+                  <li>
+                     <p>A serious adverse effect means that, for example, the loss of confidentiality,
+                        integrity, or availability might: (i) cause a significant degradation in mission
+                        capability to an extent and duration that the organization is able to perform its
+                        primary functions, but the effectiveness of the functions is significantly
+                        reduced; (ii) result in significant damage to organizational assets; (iii) result
+                        in significant financial loss; or (iv) result in significant harm to individuals
+                        that does not involve loss of life or serious life threatening injuries.</p>
+                  </li>
+               </ul>
+               <p>The potential impact is high if —</p>
+               <ul>
+                  <li>
+                     <p>The loss of confidentiality, integrity, or availability could be expected to have
+                        a severe or catastrophic adverse effect on organizational operations,
+                        organizational assets, or individuals.</p>
+                  </li>
+                  <li>
+                     <p>A severe or catastrophic adverse effect means that, for example, the loss of
+                        confidentiality, integrity, or availability might: (i) cause a severe degradation
+                        in or loss of mission capability to an extent and duration that the organization
+                        is not able to perform one or more of its primary functions; (ii) result in major
+                        damage to organizational assets; (iii) result in major financial loss; or (iv)
+                        result in severe or catastrophic harm to individuals involving loss of life or
+                        serious life threatening injuries.</p>
+                  </li>
+               </ul>
+               <details class="instruction" open="true">
+                  <summary>Instruction</summary>
+                  <p>Record your information types in the tables that follow. Record the sensitivity level
+                     for Confidentiality, Integrity and Availability as High, Moderate, or Low. Add more
+                     rows as needed to add more information types. Use <a>NIST SP 800-60 Guide for Mapping
+                        Types of Information and Systems to Security Categories, Volumes I &amp; II,
+                        Revision 1</a> for guidance. </p>
+                  <p>Delete this instruction from your final version of this document.</p>
+               </details>
+               <table id="table.2-2" class="uniform">
+                  <caption><span class="lbl">Table 2-2.</span> Sensitivity Categorization of Information Types</caption>
+                  <colgroup>
+                     <col width="35%">
+                     <col width="20%">
+                     <col width="15%">
+                     <col width="15%">
+                     <col width="15%">
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th>
+                           <p>Information Type </p>
+                           <p>(Use only information types from <a>NIST SP 800-60</a>, Volumes I and II as
+                              amended)</p>
+                        </th>
+                        <th>NIST 800-60 identifier for Associated Information Type</th>
+                        <th>Confidentiality</th>
+                        <th>Integrity</th>
+                        <th>Availability</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td>
+                           <p><span class="val">Information Type Name</span>&nbsp;</p>
+                        </td>
+                        <td>
+                           <p><span class="val">C.2.4.1</span>&nbsp;</p>
+                        </td>
+                        <td>
+                           <p><span class="val">Moderate</span>&nbsp;</p>
+                        </td>
+                        <td>
+                           <p><span class="val">Moderate</span>&nbsp;</p>
+                        </td>
+                        <td>
+                           <p><span class="val">Moderate</span>&nbsp;</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </section>
+            <section id="sec.2.2">
+               <h2 class="head"><span class="n">2.2</span> Security Objectives Categorization (FIPS 199)</h2>
+               <p>Based on the information provided in <a href="#table.2-2">Table 2-2 Sensitivity Categorization of Information Types</a>, for the <span class="val">WorkUP.SYS</span> system, default to the high-water mark for the Information Types as identified in
+                  <a href="#table.2-3">Table 2-3 Security Impact Level</a> below.</p>
+               <table id="table.2-3" class="uniform">
+                  <caption><span class="lbl">Table 2-3.</span> Security Impact Level</caption>
+                  <thead>
+                     <tr>
+                        <th>Security Objective</th>
+                        <th>Low, Moderate or High</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td>Confidentiality</td>
+                        <td>
+                           <p><span class="val">Moderate</span>&nbsp;</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>Integrity</td>
+                        <td>
+                           <p><span class="val">Moderate</span>&nbsp;</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>Availability</td>
+                        <td>
+                           <p><span class="val">Moderate</span>&nbsp;</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+               <p>Through review and analysis, it has been determined that the baseline security categorization
+                  for the <span class="val">WorkUP.SYS</span> system is listed in the <a href="#table.2-4">Table 24 Baseline Security Configuration</a> that follows.</p>
+               <table id="table.2-4" class="uniform">
+                  <caption><span class="lbl">Table 2-4.</span> Baseline Security Configuration</caption>
+                  <tbody>
+                     <tr>
+                        <th>Enter Information System Abbreviation Security Categorization</th>
+                        <td>
+                           <p><span class="val">Low</span>&nbsp;</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+               <p>Using this categorization, in conjunction with the risk assessment and any unique
+                  security requirements, we have established the security controls for this system,
+                  as detailed in this SSP.</p>
+            </section>
+            <section id="sec.2.3">
+               <h2 class="head"><span class="n">2.3.</span> Digital Identity Determination</h2>
+               <p>The digital identity information may be found in <a href="#attach3">ATTACHMENT 3 – Digital Identity Worksheet</a></p>
+               <p>Note: NIST SP 800-63-3, Digital Identity Guidelines, does not recognize the four Levels
+                  of Assurance model previously used by federal agencies and described in OMB M-04-04,
+                  instead requiring agencies to individually select levels corresponding to each function
+                  being performed.</p>
+               <p>The digital identity level is 
+                  <td>
+                     <p><span class="val">Moderate</span>&nbsp;</p>
+                  </td>.</p>
+               <p>Additional digital identity information can be found in <a>Section 15 Attachments Digital Identity Level Selection</a>.</p>
+            </section>
+         </section>
+         <section id="sec.3">
+            <h1 class="head"><span class="n">3</span> System Owner</h1>
+            <p>The following individual is identified as the system owner or functional proponent/advocate
+               for this system.</p>
+            <table class="uniform poc" id="table.2-4">
+               <caption><span class="lbl">Table 3-1.</span> Information System Owner</caption>
+               <thead>
+                  <tr>
+                     <th colspan="2">Information System Owner Information</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td class="rh">Name</td>
+                     <td><span class="val">[SAMPLE]Person Name 1</span></td>
+                  </tr>
+                  <tr>
+                     <td class="rh">Title</td>
+                     <td><span class="val">Individual's Title</span></td>
+                  </tr>
+                  <tr>
+                     <td class="rh">Company / Organization</td>
+                     <td><span class="val">Cloud Service Provider (CSP) Name</span></td>
+                  </tr>
+                  <tr>
+                     <td class="rh">Address</td>
+                     <td>
+                        <p class="val">Suite 0000 1234 Some Street Haven ME 00000</p>
+                        <p class="val">Mailstop A-1</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td class="rh">Phone Number</td>
+                     <td>
+                        <p class="val">202-000-0001</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td class="rh">Email Address</td>
+                     <td><span class="val">name@org.domain</span></td>
+                  </tr>
+               </tbody>
+            </table>
+         </section>
+         <section id="sec.4">
+            <h1 class="head"><span class="n">4</span> Authorizing Official</h1>
+            <details class="instruction" open="true">
+               <summary>Instruction</summary>
+               <p>The Authorizing Official is determined by the path that the CSP is using to obtain
+                  an authorization.</p>
+               <ul>
+                  <li>JAB P-ATO: FedRAMP, JAB, as comprised of member representatives from the General Services
+                     Administration (GSA), Department of Defense (DoD) and Department of Homeland Security
+                     (DHS)</li>
+                  <li>Agency Authority to Operate (ATO): Agency Authorizing Official name, title and contact
+                     information</li>
+               </ul>
+               <p>Delete this and all other instructions from your final version of this document.</p>
+            </details>
+            <p>The Authorizing Official (AO) or Designated Approving Authority (DAA) for this information
+               system is
+               <span class="val">Federal Risk and Authorization Management Program: Joint Authorization Board</span>.</p>
+         </section>
+         <section id="sec.5">
+            <h1 class="head"><span class="n">5</span> Other Designated Contacts</h1>
+            <details class="instruction" open="true">
+               <summary>Instruction</summary>
+               <p>AOs should use the following section to identify points of contact that understand
+                  the technical implementations of the identified cloud system.  AOs should edit, add,
+                  or modify the contacts in this section as they see fit.</p>
+               <p>Delete this and all other instructions from your final version of this document.</p>
+            </details>
+            <p>The following individual(s) identified below possess in-depth knowledge of this system
+               and/or its functions and operation.</p>
+            <div id="table.5-1">
+               <table class="uniform poc" id="table.5-1">
+                  <caption><span class="lbl">Table 5-1.</span> Information System Management Point of Contact</caption>
+                  <thead>
+                     <tr>
+                        <th colspan="2">Information System Management Point of Contact</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td class="rh">Name</td>
+                        <td><span class="val">[SAMPLE]Person Name 3</span></td>
+                     </tr>
+                     <tr>
+                        <td class="rh">Title</td>
+                        <td><span class="val">Individual's Title</span></td>
+                     </tr>
+                     <tr>
+                        <td class="rh">Company / Organization</td>
+                        <td><span class="val">Cloud Service Provider (CSP) Name</span></td>
+                     </tr>
+                     <tr>
+                        <td class="rh">Address</td>
+                        <td>
+                           <p class="val">Address Line City ST 00000 US</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="rh">Phone Number</td>
+                        <td>
+                           <p class="val">202-000-0003</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="rh">Email Address</td>
+                        <td><span class="val">name@org.domain</span></td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <table class="uniform poc" id="table.5-2">
+               <caption><span class="lbl">Table 5-2.</span> Information System Technical Point
+                  of Contact</caption>
+               <thead>
+                  <tr>
+                     <th colspan="2">Information System Technical Point of
+                        Contact</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td class="rh">Name</td>
+                     <td><span class="val">[SAMPLE]Person Name 4</span></td>
+                  </tr>
+                  <tr>
+                     <td class="rh">Title</td>
+                     <td><span class="val">Individual's Title</span></td>
+                  </tr>
+                  <tr>
+                     <td class="rh">Company / Organization</td>
+                     <td><span class="val">Cloud Service Provider (CSP) Name</span></td>
+                  </tr>
+                  <tr>
+                     <td class="rh">Address</td>
+                     <td>
+                        <p class="val">Address Line City ST 00000 US</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td class="rh">Phone Number</td>
+                     <td>
+                        <p class="val">202-000-0004</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td class="rh">Email Address</td>
+                     <td><span class="val">name@org.domain</span></td>
+                  </tr>
+               </tbody>
+            </table>
+            <details class="instruction" open="true">
+               <summary>Instruction</summary>
+               <p>Add more tables as needed.</p>
+               <p>Delete this and all other instructions from your final version of this document.</p>
+            </details>
+         </section><span class="ERROR">GENERATION LOGIC TBD (section 6)</span><span class="ERROR">GENERATION LOGIC TBD (section 7)</span><span class="ERROR">GENERATION LOGIC TBD (section 8)</span><span class="ERROR">GENERATION LOGIC TBD (section 9)</span><span class="ERROR">GENERATION LOGIC TBD (section 10)</span><section id="attachment.13" class="integrated-inventory">
             <h1><span class="n">Attachment 13.</span> Integrated Inventory</h1>
             <table class="iinv">
                <thead>
@@ -121,7 +532,7 @@ main > span, section > span { display: block }
                      <th colspan="5" class="all">All Inventories</th>
                      <th colspan="9" class="os">OS/Infrastructure Inventory</th>
                      <th colspan="4" class="swdb">Software and Database Inventories</th>
-                     <th colspan="5" class="any">Any Inventory</th>
+                     <th colspan="4" class="any">Any Inventory</th>
                      <th colspan="2" class="added">Additional</th>
                   </tr>
                   <tr class="guided">
@@ -146,8 +557,7 @@ main > span, section > span { display: block }
                      <th>Comments</th>
                      <th>Serial # / Asset Tag #</th>
                      <th>VLAN / Network ID</th>
-                     <th>System Administrator / Owner</th>
-                     <th>Application Administrator / Owner</th>
+                     <th>Administrator / Owner</th>
                      <th>Scan Type</th>
                      <th>FIPS 140-2 Validation</th>
                   </tr>
@@ -244,7 +654,7 @@ main > span, section > span { display: block }
                         <div class="guidance">Virtual LAN or Network ID.</div>
                      </th>
                      <th>
-                        <div class="guidance">Name of the system administrator or owner.</div>
+                        <div class="guidance">Name of the system or application administrator or owner.</div>
                      </th>
                      <th>
                         <div class="guidance">Name of the application administrator or owner.</div>
@@ -252,29 +662,29 @@ main > span, section > span { display: block }
                   </tr>
                </thead>
                <tr class="inventory line-item">
-                  <td>
-                     <p><span class="val">i-1</span></p>
+                  <td onclick="javascript:flashClass('i-1-component','hiding')">
+                     <p><span class="val">i-1</span> (item)</p>
                   </td>
                   <td>
-                     <p><span class="val">10.1.1.1</span>; <span class="val">0000:0000:0000:0000</span></p>
+                     <p><span class="val">10.1.1.1</span>; <span class="val">0000:0000:0000:0000</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">no</span></p>
+                     <p><span class="val">no</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">no</span></p>
+                     <p><span class="val">no</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">uniform.resource.identifier</span></p>
+                     <p><span class="val">uniform.resource.identifier</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">netbios-name</span></p>
+                     <p><span class="val">netbios-name</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">00:00:00:00:00:00</span></p>
+                     <p><span class="val">00:00:00:00:00:00</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">no</span></p>
+                     <p><span class="val">no</span>&nbsp;</p>
                      <details class="value-details">
                         <summary>Remarks</summary>
                         
@@ -282,22 +692,22 @@ main > span, section > span { display: block }
                         </details>
                   </td>
                   <td>
-                     <p><span class="val">Baseline Config. Name</span></p>
+                     <p><span class="val">Baseline Config. Name</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">software-name, version V 0.0.0</span></p>
+                     <p><span class="val">software-name, version V 0.0.0</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Physical location of Asset</span></p>
+                     <p><span class="val">Physical location of Asset</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">os</span></p>
+                     <p><span class="val">os</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Model Number</span></p>
+                     <p><span class="val">Model Number</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">yes</span></p>
+                     <p><span class="val">yes</span>&nbsp;</p>
                      <details class="value-details">
                         <summary>Remarks</summary>
                         
@@ -305,16 +715,16 @@ main > span, section > span { display: block }
                         </details>
                   </td>
                   <td>
-                     <p><span class="val">software-name</span>; <span class="val">V 0.0.0</span></p>
+                     <p><span class="val">software-name</span>; <span class="val">V 0.0.0</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Vendor Name</span></p>
+                     <p><span class="val">Vendor Name</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Patch-Level</span></p>
+                     <p><span class="val">Patch-Level</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Required brief, text-based description.</span></p>
+                     <p><span class="val">Required brief, text-based description.</span>&nbsp;</p>
                      <details class="value-details">
                         <summary>Remarks</summary>
                         
@@ -327,78 +737,79 @@ main > span, section > span { display: block }
                            <summary>Remarks</summary>
                            
                            <p>COMMENTS: Additional information about this item.</p>
-                           </details>
-                     </p>
+                           </details>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Serial #</span>; <span class="val">Asset Tag</span></p>
+                     <p><span class="val">Serial #</span>; <span class="val">Asset Tag</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">VLAN Identifier</span>; <span class="val">Network Identifier</span></p>
-                  </td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td>
-                     <p><span class="val">infrastructure</span>; <span class="val">database</span></p>
+                     <p><span class="val">VLAN Identifier</span>; <span class="val">Network Identifier</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">component-id</span></p>
+                     <p><span class="val">[SAMPLE]Person Name 7</span>; <span class="val">[SAMPLE] IT Department</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p><span class="val">infrastructure</span>; <span class="val">database</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p><span class="val">component-id</span>&nbsp;</p>
                   </td>
                </tr>
                <tr class="inventory line-item">
-                  <td>
-                     <p><span class="val">c1</span></p>
+                  <td onclick="javascript:flashClass('c1-component','hiding')">
+                     <p><span class="val">c1</span> (item)</p>
+                     <p class="component-notice">1&nbsp;component</p>
                   </td>
                   <td>
-                     <p><span class="val">10.2.2.2</span>; <span class="val">0000:0000:0000:0000</span></p>
+                     <p><span class="val">10.2.2.2</span>; <span class="val">0000:0000:0000:0000</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">no</span></p>
+                     <p><span class="val">no</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">no</span></p>
+                     <p><span class="val">no</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">uniform.resource.locator</span></p>
+                     <p><span class="val">uniform.resource.locator</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">netbios-name</span></p>
+                     <p><span class="val">netbios-name</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">00:00:00:00:00:00</span></p>
+                     <p><span class="val">00:00:00:00:00:00</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Baseline Configuration Name</span></p>
+                     <p><span class="val">Baseline Configuration Name</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Physical location of Asset</span></p>
+                     <p><span class="val">Physical location of Asset</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Patch-Level</span></p>
+                     <p><span class="val">Patch-Level</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
                      <p>
@@ -406,78 +817,78 @@ main > span, section > span { display: block }
                            <summary>Remarks</summary>
                            
                            <p>COMMENTS: If needed, provide additional information about this inventory item.</p>
-                           </details>
-                     </p>
+                           </details>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
-                  </td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p><span class="val">[SAMPLE]Person Name 1</span>; <span class="val">[SAMPLE] IT Department</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
                   </td>
                </tr>
-               <tr class="inventory component">
-                  <td>
-                     <p><span class="val">c1</span></p>
+               <tr class="inventory component c1-component hiding">
+                  <td onclick="javascript:flashClass('c1-component','hiding')">
+                     <p><span class="val">c1</span> (component)</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for OS name and version</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">os</span></p>
+                     <p><span class="val">os</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Model Number</span></p>
+                     <p><span class="val">Model Number</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Version Number</span></p>
+                     <p><span class="val">Version Number</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Vendor Name</span></p>
+                     <p><span class="val">Vendor Name</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Patch Level</span></p>
+                     <p><span class="val">Patch Level</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
                      <p>
@@ -485,151 +896,153 @@ main > span, section > span { display: block }
                            <summary>Remarks</summary>
                            
                            <p>COMMENTS: Provide other comments as needed.</p>
-                           </details>
-                     </p>
+                           </details>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
-                  </td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td>
-                     <p><span class="val">infrastructure</span></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">fips-module-1</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p><span class="val">infrastructure</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p><span class="val">fips-module-1</span>&nbsp;</p>
                   </td>
                </tr>
                <tr class="inventory line-item">
-                  <td>
-                     <p><span class="val">c-2</span></p>
+                  <td onclick="javascript:flashClass('c-2-component','hiding')">
+                     <p><span class="val">c-2</span> (item)</p>
+                     <p class="component-notice">1&nbsp;component</p>
                   </td>
                   <td>
-                     <p><span class="val">10.3.3.3</span></p>
+                     <p><span class="val">10.3.3.3</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">yes</span></p>
+                     <p><span class="val">yes</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
-                  </td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
                   </td>
                </tr>
-               <tr class="inventory component">
-                  <td>
-                     <p><span class="val">c-2</span></p>
+               <tr class="inventory component c-2-component hiding">
+                  <td onclick="javascript:flashClass('c-2-component','hiding')">
+                     <p><span class="val">c-2</span> (component)</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">database</span></p>
+                     <p><span class="val">database</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Model Number</span></p>
+                     <p><span class="val">Model Number</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Version Number</span></p>
+                     <p><span class="val">Version Number</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Vendor Name</span></p>
+                     <p><span class="val">Vendor Name</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
                      <p>
@@ -637,151 +1050,153 @@ main > span, section > span { display: block }
                            <summary>Remarks</summary>
                            
                            <p>COMMENTS: Provide other comments as needed.</p>
-                           </details>
-                     </p>
+                           </details>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
-                  </td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td>
-                     <p><span class="val">infrastructure</span>; <span class="val">database</span></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p><span class="val">infrastructure</span>; <span class="val">database</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
                   </td>
                </tr>
                <tr class="inventory line-item">
-                  <td>
-                     <p><span class="val">c-3</span></p>
+                  <td onclick="javascript:flashClass('c-3-component','hiding')">
+                     <p><span class="val">c-3</span> (item)</p>
+                     <p class="component-notice">1&nbsp;component</p>
                   </td>
                   <td>
-                     <p><span class="val">10.4.4.4</span></p>
+                     <p><span class="val">10.4.4.4</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">yes</span></p>
+                     <p><span class="val">yes</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
-                  </td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
                   </td>
                </tr>
-               <tr class="inventory component">
-                  <td>
-                     <p><span class="val">c-3</span></p>
+               <tr class="inventory component c-3-component hiding">
+                  <td onclick="javascript:flashClass('c-3-component','hiding')">
+                     <p><span class="val">c-3</span> (component)</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for OS name and version</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">os</span></p>
+                     <p><span class="val">os</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Model Number</span></p>
+                     <p><span class="val">Model Number</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Version Number</span></p>
+                     <p><span class="val">Version Number</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Vendor Name</span></p>
+                     <p><span class="val">Vendor Name</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Patch Level</span></p>
+                     <p><span class="val">Patch Level</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
                      <p>
@@ -789,121 +1204,123 @@ main > span, section > span { display: block }
                            <summary>Remarks</summary>
                            
                            <p>COMMENTS: Provide other comments as needed.</p>
-                           </details>
-                     </p>
+                           </details>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
-                  </td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td>
-                     <p><span class="val">infrastructure</span></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">fips-module-1</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p><span class="val">infrastructure</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p><span class="val">fips-module-1</span>&nbsp;</p>
                   </td>
                </tr>
                <tr class="inventory line-item">
-                  <td>
-                     <p><span class="val">c-4</span></p>
+                  <td onclick="javascript:flashClass('c-4-component','hiding')">
+                     <p><span class="val">c-4</span> (item)</p>
+                     <p class="component-notice">1&nbsp;component</p>
                   </td>
                   <td>
-                     <p><span class="val">10.5.5.5</span></p>
+                     <p><span class="val">10.5.5.5</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">yes</span></p>
+                     <p><span class="val">yes</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
-                  </td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
                   </td>
                </tr>
-               <tr class="inventory component">
-                  <td>
-                     <p><span class="val">c-4</span></p>
+               <tr class="inventory component c-4-component hiding">
+                  <td onclick="javascript:flashClass('c-4-component','hiding')">
+                     <p><span class="val">c-4</span> (component)</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">no</span></p>
+                     <p><span class="val">no</span>&nbsp;</p>
                      <details class="value-details">
                         <summary>Remarks</summary>
                         
@@ -911,99 +1328,100 @@ main > span, section > span { display: block }
                         </details>
                   </td>
                   <td>
-                     <p><span class="val">Baseline Config. Name</span></p>
+                     <p><span class="val">Baseline Config. Name</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
                      <p><span class="val">appliance</span> 
                         <details class="validation-error">
                            <summary>ERROR:</summary> value 'appliance ' is not permitted here: should be (one of) os, database, web-server,
-                           dns-server, email-server, directory-server, pbx, firewall, router, switch, storage-array</details>
-                     </p>
+                           dns-server, email-server, directory-server, pbx, firewall, router, switch, storage-array</details>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
-                  </td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td>
-                     <p><span class="val">web</span></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p><span class="val">web</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
                   </td>
                </tr>
                <tr class="inventory line-item">
-                  <td>
-                     <p><span class="val">c-5</span></p>
+                  <td onclick="javascript:flashClass('c-5-component','hiding')">
+                     <p><span class="val">c-5</span> (item)</p>
+                     <p class="component-notice">1&nbsp;component</p>
                   </td>
                   <td>
-                     <p><span class="val">10.6.6.6</span></p>
+                     <p><span class="val">10.6.6.6</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">no</span></p>
+                     <p><span class="val">no</span>&nbsp;</p>
                      <details class="value-details">
                         <summary>Remarks</summary>
                         
@@ -1011,89 +1429,90 @@ main > span, section > span { display: block }
                         </details>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
-                  </td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
                   </td>
                </tr>
-               <tr class="inventory component">
-                  <td>
-                     <p><span class="val">c-5</span></p>
+               <tr class="inventory component c-5-component hiding">
+                  <td onclick="javascript:flashClass('c-5-component','hiding')">
+                     <p><span class="val">c-5</span> (component)</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for OS name and version</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">os</span></p>
+                     <p><span class="val">os</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Model Number</span></p>
+                     <p><span class="val">Model Number</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Version Number</span></p>
+                     <p><span class="val">Version Number</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Vendor Name</span></p>
+                     <p><span class="val">Vendor Name</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Patch Level</span></p>
+                     <p><span class="val">Patch Level</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
                      <p>
@@ -1101,151 +1520,153 @@ main > span, section > span { display: block }
                            <summary>Remarks</summary>
                            
                            <p>COMMENTS: Provide other comments as needed.</p>
-                           </details>
-                     </p>
+                           </details>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
-                  </td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td>
-                     <p><span class="val">infrastructure</span></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">fips-module-1</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p><span class="val">infrastructure</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p><span class="val">fips-module-1</span>&nbsp;</p>
                   </td>
                </tr>
                <tr class="inventory line-item">
-                  <td>
-                     <p><span class="val">c-6</span></p>
+                  <td onclick="javascript:flashClass('c-6-component','hiding')">
+                     <p><span class="val">c-6</span> (item)</p>
+                     <p class="component-notice">1&nbsp;component</p>
                   </td>
                   <td>
-                     <p><span class="val">10.7.7.7</span></p>
+                     <p><span class="val">10.7.7.7</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">yes</span></p>
+                     <p><span class="val">yes</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
-                  </td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
                   </td>
                </tr>
-               <tr class="inventory component">
-                  <td>
-                     <p><span class="val">c-6</span></p>
+               <tr class="inventory component c-6-component hiding">
+                  <td onclick="javascript:flashClass('c-6-component','hiding')">
+                     <p><span class="val">c-6</span> (component)</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">database</span></p>
+                     <p><span class="val">database</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Model Number</span></p>
+                     <p><span class="val">Model Number</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Version Number</span></p>
+                     <p><span class="val">Version Number</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Vendor Name</span></p>
+                     <p><span class="val">Vendor Name</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
                      <p>
@@ -1253,66 +1674,67 @@ main > span, section > span { display: block }
                            <summary>Remarks</summary>
                            
                            <p>COMMENTS: Provide other comments as needed.</p>
-                           </details>
-                     </p>
+                           </details>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
-                  </td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td>
-                     <p><span class="val">infrastructure</span>; <span class="val">database</span></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p><span class="val">infrastructure</span>; <span class="val">database</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
                   </td>
                </tr>
                <tr class="inventory line-item">
-                  <td>
-                     <p><span class="val">c-7</span></p>
+                  <td onclick="javascript:flashClass('c-7-component','hiding')">
+                     <p><span class="val">c-7</span> (item)</p>
+                     <p class="component-notice">1&nbsp;component</p>
                   </td>
                   <td>
-                     <p><span class="val">10.8.8.8</span></p>
+                     <p><span class="val">10.8.8.8</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">no</span></p>
+                     <p><span class="val">no</span>&nbsp;</p>
                      <details class="value-details">
                         <summary>Remarks</summary>
                         
@@ -1320,89 +1742,90 @@ main > span, section > span { display: block }
                         </details>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
-                  </td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
                   </td>
                </tr>
-               <tr class="inventory component">
-                  <td>
-                     <p><span class="val">c-7</span></p>
+               <tr class="inventory component c-7-component hiding">
+                  <td onclick="javascript:flashClass('c-7-component','hiding')">
+                     <p><span class="val">c-7</span> (component)</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for OS name and version</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">os</span></p>
+                     <p><span class="val">os</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Model Number</span></p>
+                     <p><span class="val">Model Number</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Version Number</span></p>
+                     <p><span class="val">Version Number</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Vendor Name</span></p>
+                     <p><span class="val">Vendor Name</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Patch Level</span></p>
+                     <p><span class="val">Patch Level</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
                      <p>
@@ -1410,168 +1833,170 @@ main > span, section > span { display: block }
                            <summary>Remarks</summary>
                            
                            <p>COMMENTS: Provide other comments as needed.</p>
-                           </details>
-                     </p>
+                           </details>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
-                  </td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td>
-                     <p><span class="val">infrastructure</span></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">fips-module-1</span></p>
-                  </td>
-               </tr>
-               <tr class="inventory line-item">
-                  <td>
-                     <p><span class="val">i-2</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p><span class="val">infrastructure</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
-                  </td>
-                  <td>
-                     <p></p>
-                  </td>
-                  <td>
-                     <p></p>
-                  </td>
-                  <td>
-                     <p></p>
-                  </td>
-                  <td>
-                     <p></p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
-                  </td>
-                  <td>
-                     <p></p>
-                  </td>
-                  <td>
-                     <p></p>
-                  </td>
-                  <td>
-                     <p></p>
-                  </td>
-                  <td>
-                     <p></p>
-                  </td>
-                  <td>
-                     <p></p>
-                  </td>
-                  <td>
-                     <p><span class="val">yes</span></p>
-                  </td>
-                  <td>
-                     <p></p>
-                  </td>
-                  <td>
-                     <p></p>
-                  </td>
-                  <td>
-                     <p></p>
-                  </td>
-                  <td>
-                     <p></p>
-                  </td>
-                  <td>
-                     <p></p>
-                  </td>
-                  <td>
-                     <p></p>
-                  </td>
-                  <td>
-                     <p></p>
-                  </td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td>
-                     <p></p>
-                  </td>
-                  <td>
-                     <p></p>
+                     <p><span class="val">fips-module-1</span>&nbsp;</p>
                   </td>
                </tr>
                <tr class="inventory line-item">
-                  <td>
-                     <p><span class="val">i-3</span></p>
+                  <td onclick="javascript:flashClass('i-2-component','hiding')">
+                     <p><span class="val">i-2</span> (item)</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="ERROR">No value found for allows-authenticated-scan</span></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">yes</span></p>
+                     <p><span class="val">yes</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
-                  </td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td class="tbd">[ MAPPING tbd ]</td>
-                  <td>
-                     <p></p>
+                     <p>&nbsp;</p>
                   </td>
                   <td>
-                     <p></p>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+               </tr>
+               <tr class="inventory line-item">
+                  <td onclick="javascript:flashClass('i-3-component','hiding')">
+                     <p><span class="val">i-3</span> (item)</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p><span class="val">yes</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p><span class="ERROR">Missing</span>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
+                  </td>
+                  <td>
+                     <p>&nbsp;</p>
                   </td>
                </tr>
             </table>
