@@ -302,25 +302,41 @@
   <xsl:template name="make-poam-table-body">
     <xsl:param name="items" as="element(poam-item)*"/>
     <tbody>
-      <xsl:apply-templates select="$items" mode="poam-table-row"/>
+      <xsl:apply-templates select="$items/risk" mode="poam-table-row"/>
     </tbody>
   </xsl:template>
+
   
-  <xsl:template mode="poam-table-row" match="poam-item">
+  <xsl:template mode="poam-table-row" match="poam-item/risk">
     <xsl:param name="combined" select="false()" tunnel="true"/>
-    <tr class="poam-item { if (risk/risk-status/normalize-space() = 'closed') then 'closed' else 'open'}">
+    <xsl:variable name="parent-if-first" select="if (empty(preceding-sibling::risk)) then .. else () "/>
+    <tr class="risk-item { if (risk-status/normalize-space() = 'closed') then 'closed' else 'open'}">
       <xsl:call-template name="emit-value-td">
-        <xsl:with-param name="these" select="prop[@name='POAM-ID'][@ns='https://fedramp.gov/ns/oscal']"/>
+        <xsl:with-param name="these" select="$parent-if-first/prop[@name='POAM-ID'][@ns='https://fedramp.gov/ns/oscal']"/>
         <xsl:with-param name="echo">POAM item ID</xsl:with-param>
-      </xsl:call-template><xsl:if test="$combined">
+      </xsl:call-template>
+      <xsl:if test="$combined">
         <xsl:call-template name="emit-value-td">
-          <xsl:with-param name="these" select="risk/risk-status"/>
+          <xsl:with-param name="these" select="risk-status"/>
           <xsl:with-param name="echo">item (risk) status</xsl:with-param>
         </xsl:call-template>
       </xsl:if>
-      <td>controls</td>
-      <td>weakness name</td>
-      <td>weakness description</td>
+      <xsl:call-template name="emit-value-td">
+        <xsl:with-param name="these"
+          select="$parent-if-first/prop[@ns='https://fedramp.gov/ns/oscal'][@name='impacted=control-id']"/>
+        <xsl:with-param name="echo">controls</xsl:with-param>
+      </xsl:call-template>
+      <xsl:call-template name="emit-value-td">
+        <xsl:with-param name="these"
+          select="title"/>
+        <xsl:with-param name="echo">weakness name</xsl:with-param>
+      </xsl:call-template>
+      <xsl:call-template name="emit-value-td">
+        <xsl:with-param name="these"
+          select="description"/>
+        <xsl:with-param name="echo">weakness description</xsl:with-param>
+      </xsl:call-template>
+
       <td>weakness detector source</td>
       <td>weakness source identifier</td>
       <td>asset identifier</td>
