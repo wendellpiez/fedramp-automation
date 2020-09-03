@@ -27,8 +27,8 @@
     <xsl:template match="/">
         <xsl:comment expand-text="true"> Modified by conversion XSLT { current-dateTime() } - UUIDs refreshed </xsl:comment>
         
-        <!--<xsl:apply-templates select="/" mode="add-new-uuids"/>-->
-        <xsl:apply-templates mode="rewire" select="$with-new-uuids"/>
+        <xsl:apply-templates select="/" mode="add-new-uuids"/>
+        <!--<xsl:apply-templates mode="rewire" select="$with-new-uuids"/>-->
     </xsl:template>
     
     <!-- Fresh uuid -->
@@ -70,9 +70,22 @@
         </xsl:attribute>
     </xsl:template>
     
+    <xsl:template match="risk-metric/@system" mode="rewire">
+        <xsl:variable name="target" select="key('component-link',.)"/>
+        <xsl:attribute name="system" select="$target/@new-uuid"/>
+    </xsl:template>
+    
+    <xsl:template match="@uuid-ref" mode="rewire">
+        <xsl:message>matched { name()} { @uuid }</xsl:message>
+        <xsl:variable name="target" select="key('anything-by-uuid',.)"/>
+        <xsl:attribute name="uuid-ref" select="$target/@new-uuid"/>
+    </xsl:template>
+    
+    
     <xsl:key name="location-link"  match="location"         use="@uuid"/>
     <xsl:key name="party-link"     match="party"            use="@uuid"/>
     <xsl:key name="component-link" match="component"        use="@uuid"/>
     <xsl:key name="html-uuid-link" match="*[exists(@uuid)]" use="'#' || @uuid"/>
+    <xsl:key name="anything-by-uuid" match="*[exists(@uuid)]"   use="@uuid"/>
     
 </xsl:stylesheet>

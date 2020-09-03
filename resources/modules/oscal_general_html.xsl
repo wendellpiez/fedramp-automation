@@ -104,7 +104,7 @@
          <xsl:apply-templates select="." mode="value"/>
       </xsl:for-each>
       <xsl:if test="empty($accepting) and $warn-if-missing" expand-text="true">
-         <span class="ERROR">Missing<!--: { $echo }--></span>
+         <span class="ERROR">Missing{ $echo[$trace] ! (': ' || .) }</span>
          <xsl:call-template name="warn-if-tracing">
             <xsl:with-param name="warning">NO VALUE FOUND for { $echo }</xsl:with-param>
          </xsl:call-template>

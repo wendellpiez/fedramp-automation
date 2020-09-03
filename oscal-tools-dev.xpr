@@ -14,6 +14,26 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
+                                    <String>resources/specs/FedRAMP-POAM-OSCAL-workup.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>Refresh UUIDs</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioStorageLocations">
+                                    <list>
+                                        <Byte>2</Byte>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
                                     <String>resources/oscal_poam_html.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -54,16 +74,16 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>resources/specs/FedRAMP-POAM-OSCAL-workup.xml</String>
+                                    <String>templates/poam/xml/FedRAMP-POAM-OSCAL-Template.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>FedRAMP POA&amp;M workup - BASIC DISPLAY (refresh only)</String>
+                                        <String>Refresh UUIDs</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
                                     <list>
-                                        <String>XML</String>
+                                        <String>XSL</String>
                                     </list>
                                 </field>
                                 <field name="scenarioStorageLocations">
@@ -111,29 +131,6 @@
                                 </field>
                                 <field name="scenarioStorageLocations">
                                     <list>
-                                        <Byte>2</Byte>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>resources/specs/FedRAMP-SSP-OSCAL-workup.xml</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>FedRAMP SSP workup - BASIC DISPLAY (refresh and open)</String>
-                                        <String>FedRAMP POA&amp;M workup - BASIC DISPLAY (refresh and open)</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XML</String>
-                                        <String>XML</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioStorageLocations">
-                                    <list>
-                                        <Byte>2</Byte>
                                         <Byte>2</Byte>
                                     </list>
                                 </field>

@@ -61,10 +61,14 @@
 
   <xsl:variable name="poam" select="/" as="document-node()"/>
   
+  <xsl:variable name="ssp-path" select="resolve-uri(/*/import-ssp/key('linked-resource', @href)/rlink[@media-type = 'application/xml'],document-uri())"/>
+  
+<!-- Falls back to the POAM source if no SSP is retrieved -->
   <xsl:variable name="ssp"
-    select="/*/import-ssp/key('linked-resource', @href)/rlink[@media-type = 'application/xml']
-      ! document(@href, $poam)"/>
+    select="if (doc-available($ssp-path)) then doc($ssp-path) else $poam"/>
 
+  <xsl:variable as="xs:string" name="uuid-regex">^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$</xsl:variable>
+  
   <xsl:key name="linked-resource" match="resource" use="'#' || @uuid"/>
   <xsl:key name="component-by-uuid" match="component" use="@uuid"/>
   <xsl:key name="location-by-uuid" match="location" use="@uuid"/>
@@ -112,6 +116,11 @@
     </table>
   </xsl:template>
 
+  <xsl:function name="f:report-item-count" as="xs:string?">
+    <xsl:param name="items" as="element(poam-item)*"/>
+    <xsl:text expand-text="true">{ count($items) } { if (count($items) ne 1) then 'items' else 'item' }</xsl:text>
+  </xsl:function>
+  
   <xsl:template name="include-tables">
     <xsl:choose>
       <xsl:when test="$tables = 'combined'">
@@ -123,18 +132,22 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="not($tables='closed')">
+          <!-- An item is open if it has a risk with status not 'closed' -->
+          <xsl:variable name="open-items" select="$poam/*/poam-items/poam-item[risk/risk-status/normalize-space()!='closed']"/>
           <xsl:call-template name="make-poam-table">
-            <xsl:with-param name="head">Open items</xsl:with-param>
+            <xsl:with-param name="head" expand-text="true">Open items ({ f:report-item-count($open-items) })</xsl:with-param>
             <xsl:with-param name="items"
-              select="$poam/*/poam-items/poam-item[not(risk/risk-status/normalize-space()='closed')]"
+              select="$open-items"
             />
           </xsl:call-template>
         </xsl:if>
         <xsl:if test="not($tables = 'open')">
+          <!-- An item is closed if it has no risk with status not marked 'closed' -->
+          <xsl:variable name="closed-items" select="$poam/*/poam-items/poam-item[not(risk/risk-status/normalize-space() != 'closed')]"/>
           <xsl:call-template name="make-poam-table">
-            <xsl:with-param name="head">Closed items</xsl:with-param>
+            <xsl:with-param name="head" expand-text="true">Closed items ({ f:report-item-count($closed-items) })</xsl:with-param>
             <xsl:with-param name="items"
-              select="$poam/*/poam-items/poam-item[risk/risk-status/normalize-space() = 'closed']"/>
+              select="$closed-items"/>
           </xsl:call-template>
         </xsl:if>
       </xsl:otherwise>
@@ -148,12 +161,14 @@
     <h2>
       <xsl:sequence select="$head"/>
     </h2>
-    <table class="poam{ ' combined'[$combined] }">
-      <xsl:call-template name="make-poam-table-head"/>
-      <xsl:call-template name="make-poam-table-body">
-        <xsl:with-param name="items" select="$items"/>
-      </xsl:call-template>
-    </table>
+    <xsl:if test="exists($items)">
+      <table class="poam{ ' combined'[$combined] }">
+        <xsl:call-template name="make-poam-table-head"/>
+        <xsl:call-template name="make-poam-table-body">
+          <xsl:with-param name="items" select="$items"/>
+        </xsl:call-template>
+      </table>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template name="make-poam-table-head">
@@ -237,11 +252,11 @@
           <p>(aka Discovery Date)</p>
         </td>
         <td>
-          <p>Permanent Column</p>
+          <!--<p>Permanent Column</p>-->
           <p>Date of intended completion</p>
         </td>
         <td>
-          <p>Permanent Column</p>
+          <!--<p>Permanent Column</p>-->
           <p>List of proposed Milestones<!--, separated with a blank line (Alt+Enter)--></p>
           <p>Any alterations should be made in "Milestone Changes" </p>
           <p>Milestone Number should be unique to each milestone</p>
@@ -298,7 +313,6 @@
     </thead>
   </xsl:template>
 
-
   <xsl:template name="make-poam-table-body">
     <xsl:param name="items" as="element(poam-item)*"/>
     <tbody>
@@ -306,10 +320,9 @@
     </tbody>
   </xsl:template>
 
-  
   <xsl:template mode="poam-table-row" match="poam-item/risk">
     <xsl:param name="combined" select="false()" tunnel="true"/>
-    <xsl:variable name="parent-if-first" select="if (empty(preceding-sibling::risk)) then .. else () "/>
+    <xsl:variable name="parent-if-first" select=".[empty(preceding-sibling::risk)]/parent::*"/>
     <tr class="risk-item { if (risk-status/normalize-space() = 'closed') then 'closed' else 'open'}">
       <xsl:call-template name="emit-value-td">
         <xsl:with-param name="these" select="$parent-if-first/prop[@name='POAM-ID'][@ns='https://fedramp.gov/ns/oscal']"/>
@@ -325,6 +338,7 @@
         <xsl:with-param name="these"
           select="$parent-if-first/prop[@ns='https://fedramp.gov/ns/oscal'][@name='impacted=control-id']"/>
         <xsl:with-param name="echo">controls</xsl:with-param>
+        <xsl:with-param name="warn-if-missing" tunnel="true" select="empty(preceding-sibling::risk)"/>
       </xsl:call-template>
       <xsl:call-template name="emit-value-td">
         <xsl:with-param name="these"
@@ -337,8 +351,26 @@
         <xsl:with-param name="echo">weakness description</xsl:with-param>
       </xsl:call-template>
 
-      <td>weakness detector source</td>
-      <td>weakness source identifier</td>
+      
+      
+      <!--<xsl:variable name="vulnerability-reporting-component" select="risk-metric[@name='vulnerability-id'][matches(@system,$uuid-regex)]/key('component-by-uuid',@system,$ssp)"/>-->
+      
+      <xsl:variable name="detector" select="$parent-if-first/observation/origin/
+        (key('component-by-uuid',@uuid-ref) | key('component-by-uuid',@uuid-ref,$ssp))"/>
+      
+      <xsl:call-template name="emit-value-td">
+        <xsl:with-param name="these"
+          select="$detector/title"/>
+        <xsl:with-param name="echo">weakness detector source</xsl:with-param>
+        <xsl:with-param name="warn-if-missing" tunnel="true" select="exists($parent-if-first)"/>
+      </xsl:call-template>
+      
+      
+      <xsl:call-template name="emit-value-td">
+        <xsl:with-param name="these"
+          select="risk-metric[@name='vulnerability-id']"/>
+        <xsl:with-param name="echo">weakness source identifier</xsl:with-param>
+      </xsl:call-template>
       <td>asset identifier</td>
       <td>point of contact</td>
       <td>resources required</td>
