@@ -59,6 +59,7 @@
   
   <xsl:mode name="boilerplate" on-no-match="shallow-copy"/>
 
+  
   <xsl:variable name="poam" select="/" as="document-node()"/>
   
   <xsl:variable name="ssp-path" select="resolve-uri(/*/import-ssp/key('linked-resource', @href)/rlink[@media-type = 'application/xml'],document-uri())"/>
@@ -69,10 +70,12 @@
 
   <xsl:variable as="xs:string" name="uuid-regex">^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$</xsl:variable>
   
-  <xsl:key name="linked-resource" match="resource" use="'#' || @uuid"/>
-  <xsl:key name="component-by-uuid" match="component" use="@uuid"/>
-  <xsl:key name="location-by-uuid" match="location" use="@uuid"/>
-  <xsl:key name="party-by-uuid" match="party" use="@uuid"/>
+  <xsl:key name="linked-resource"        match="resource"       use="'#' || @uuid"/>
+  
+  <xsl:key name="inventory-item-by-uuid" match="inventory-item" use="@uuid"/>
+  <xsl:key name="component-by-uuid"      match="component"      use="@uuid"/>
+  <xsl:key name="location-by-uuid"       match="location"       use="@uuid"/>
+  <xsl:key name="party-by-uuid"          match="party"          use="@uuid"/>
 
   <!-- Control which sections to include here. -->
   <xsl:variable name="main-contents" as="element()*">
@@ -94,22 +97,22 @@
       <tr>
         <xsl:call-template name="emit-value-td">
           <xsl:with-param name="these" select="()"/>
-          <xsl:with-param name="echo">CSP</xsl:with-param>
+          <xsl:with-param name="echo" tunnel="true">CSP</xsl:with-param>
           <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
         </xsl:call-template>
         <xsl:call-template name="emit-value-td">
           <xsl:with-param name="these" select="$ssp/*/system-characteristics/system-name-short"/>
-          <xsl:with-param name="echo">System name</xsl:with-param>
+          <xsl:with-param name="echo" tunnel="true">System name</xsl:with-param>
           <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
         </xsl:call-template>
         <xsl:call-template name="emit-value-td">
           <xsl:with-param name="these" select="()"/>
-          <xsl:with-param name="echo">Impact level</xsl:with-param>
+          <xsl:with-param name="echo" tunnel="true">Impact level</xsl:with-param>
           <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
         </xsl:call-template>
         <xsl:call-template name="emit-value-td">
           <xsl:with-param name="these" select="$poam/*/metadata/last-modified"/>
-          <xsl:with-param name="echo">POA&amp;M date</xsl:with-param>
+          <xsl:with-param name="echo" tunnel="true">POA&amp;M date</xsl:with-param>
           <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
         </xsl:call-template>
       </tr>
@@ -325,43 +328,39 @@
     <xsl:variable name="parent-if-first" select=".[empty(preceding-sibling::risk)]/parent::*"/>
     <tr class="risk-item { if (risk-status/normalize-space() = 'closed') then 'closed' else 'open'}">
       <xsl:call-template name="emit-value-td">
-        <xsl:with-param name="these" select="$parent-if-first/prop[@name='POAM-ID'][@ns='https://fedramp.gov/ns/oscal']"/>
-        <xsl:with-param name="echo">POAM item ID</xsl:with-param>
+        <xsl:with-param name="these" select="$parent-if-first/prop[@name='POAM-ID'][@ns=$fedramp-ns]"/>
+        <xsl:with-param name="echo" tunnel="true">POAM item ID</xsl:with-param>
       </xsl:call-template>
       <xsl:if test="$combined">
         <xsl:call-template name="emit-value-td">
           <xsl:with-param name="these" select="risk-status"/>
-          <xsl:with-param name="echo">item (risk) status</xsl:with-param>
+          <xsl:with-param name="echo" tunnel="true">item (risk) status</xsl:with-param>
         </xsl:call-template>
       </xsl:if>
       <xsl:call-template name="emit-value-td">
         <xsl:with-param name="these"
-          select="$parent-if-first/prop[@ns='https://fedramp.gov/ns/oscal'][@name='impacted=control-id']"/>
-        <xsl:with-param name="echo">controls</xsl:with-param>
-        <xsl:with-param name="warn-if-missing" tunnel="true" select="empty(preceding-sibling::risk)"/>
+          select="$parent-if-first/prop[@ns=$fedramp-ns][@name='impacted=control-id']"/>
+        <xsl:with-param name="echo" tunnel="true">controls</xsl:with-param>
+        <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
       </xsl:call-template>
       <xsl:call-template name="emit-value-td">
         <xsl:with-param name="these"
           select="title"/>
-        <xsl:with-param name="echo">weakness name</xsl:with-param>
+        <xsl:with-param name="echo" tunnel="true">weakness name</xsl:with-param>
       </xsl:call-template>
       <xsl:call-template name="emit-value-td">
         <xsl:with-param name="these"
           select="description"/>
-        <xsl:with-param name="echo">weakness description</xsl:with-param>
+        <xsl:with-param name="echo" tunnel="true">weakness description</xsl:with-param>
       </xsl:call-template>
 
-      
-      
-      <!--<xsl:variable name="vulnerability-reporting-component" select="risk-metric[@name='vulnerability-id'][matches(@system,$uuid-regex)]/key('component-by-uuid',@system,$ssp)"/>-->
-      
       <xsl:variable name="detector" select="$parent-if-first/observation/origin/
         (key('component-by-uuid',@uuid-ref) | key('component-by-uuid',@uuid-ref,$ssp))"/>
       
       <xsl:call-template name="emit-value-td">
         <xsl:with-param name="these"
           select="$detector/title"/>
-        <xsl:with-param name="echo">weakness detector source</xsl:with-param>
+        <xsl:with-param name="echo" tunnel="true">weakness detector source</xsl:with-param>
         <xsl:with-param name="warn-if-missing" tunnel="true" select="exists($parent-if-first)"/>
       </xsl:call-template>
       
@@ -369,29 +368,125 @@
       <xsl:call-template name="emit-value-td">
         <xsl:with-param name="these"
           select="risk-metric[@name='vulnerability-id']"/>
-        <xsl:with-param name="echo">weakness source identifier</xsl:with-param>
+        <xsl:with-param name="echo" tunnel="true">weakness source identifier</xsl:with-param>
       </xsl:call-template>
-      <td>asset identifier</td>
-      <td>point of contact</td>
-      <td>resources required</td>
-      <td>overall remediation plan</td>
-      <td>original detection date</td>
-      <td>scheduled completion date</td>
-      <td>planned milestones</td>
-      <td>milestone changes</td>
-      <td>status date</td>
-      <td>vendor dependency</td>
-      <td>last vendor check-in date</td>
-      <td>vendor dependent product name</td>
-      <td>original risk rating</td>
-      <td>adjusted risk rating</td>
-      <td>risk adjustment</td>
-      <td>false positive</td>
-      <td>operational requirement</td>
-      <td>deviation rationale</td>
-      <td>supporting documents</td>
-      <td>comments</td>
-      <td>auto-approve</td>
+      
+      <!-- inventory-item or component targets of subject-reference by 'uuid-ref'
+           these hold all kinds of stuff. -->
+      
+      <xsl:variable name="inventory-components" select="$parent-if-first/observation/subject-reference[@type='inventory-item']/key('inventory-item-by-uuid',@uuid-ref),
+        $parent-if-first/observation/subject-reference[@type='component']/key('component-by-uuid',@uuid-ref),
+        $parent-if-first/observation/subject-reference[@type='inventory-item']/key('inventory-item-by-uuid',@uuid-ref,$ssp),
+        $parent-if-first/observation/subject-reference[@type='component']/key('component-by-uuid',@uuid-ref,$ssp)"/>
+      
+      <xsl:call-template name="emit-value-td">
+        <xsl:with-param name="these"
+          select="$inventory-components/title"/>
+        <xsl:with-param name="echo" tunnel="true">asset identifier</xsl:with-param>
+        <xsl:with-param name="warn-if-missing" tunnel="true" select="exists($parent-if-first)"/>
+      </xsl:call-template>
+      
+      <td class="tbd">point of contact (example needed)</td>
+      
+<!-- Each risk has one or more remediations; the one with @type='planned' is of interest.
+     The Guide (p 20) also has validation logic regarding assignment of recommendation-origin/@type
+      and @uuid-ref together; not implemented here. -->
+      
+      <!-- Valid data may have more than one remediation marked 'planned'; is that a warning condition? -->
+      <xsl:variable name="planned-remediation" select="remediation[@type='planned']"/>
+      
+      <xsl:call-template name="emit-value-td">
+        <xsl:with-param name="these"
+          select="$planned-remediation/required/description"/>
+        <xsl:with-param name="echo" expand-text="true" tunnel="true">resources required</xsl:with-param>
+        <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
+      </xsl:call-template>
+      
+      <xsl:call-template name="emit-value-td">
+        <xsl:with-param name="these"
+          select="$planned-remediation/(title, description)"/>
+        <xsl:with-param name="echo" expand-text="true" tunnel="true">overall remediation plan</xsl:with-param>
+        <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
+      </xsl:call-template>
+      
+      <td class="tbd">original detection date (not mapped)</td>
+      
+      <xsl:variable name="latest-scheduled-end"
+        select="max($planned-remediation/schedule/task/end[. castable as xs:dateTime] ! xs:dateTime(.) )"/>
+      
+      <xsl:call-template name="emit-value-td">
+        <xsl:with-param name="these" select="$planned-remediation/schedule/task/end[xs:dateTime(.) = $latest-scheduled-end][1]"/>
+        <xsl:with-param name="echo" expand-text="true" tunnel="true">scheduled completion date</xsl:with-param>
+        <xsl:with-param name="date-format" tunnel="yes" as="xs:string">[D]/[M]/[Y]</xsl:with-param>
+        <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
+      </xsl:call-template>
+      
+      <xsl:call-template name="emit-value-td">
+        <xsl:with-param name="these" select="$planned-remediation/schedule/task"/>
+        <xsl:with-param name="echo" expand-text="true" tunnel="true">planned milestones</xsl:with-param>
+      </xsl:call-template>
+      
+      <xsl:call-template name="emit-value-td">
+        <xsl:with-param name="these" select="remediation-tracking/tracking-entry"/>
+        <xsl:with-param name="echo" expand-text="true" tunnel="true">milestone changes</xsl:with-param>
+      </xsl:call-template>
+          
+      <td class="tbd">status date</td>
+      <td class="tbd">vendor dependency</td>
+      <td class="tbd">last vendor check-in date</td>
+      <td class="tbd">vendor dependent product name</td>
+      
+      <xsl:variable name="initial-risks" select="risk-metric[@system=$fedramp-system][@class='initial']"/>
+      <xsl:variable name="residual-risks" select="risk-metric[@system=$fedramp-system][@class='residual']"/>
+        
+      <!-- not using emit-value-td here b/c sorting -->
+      <td>        
+        <xsl:apply-templates select="$initial-risks" mode="inscribe-into-td">
+          <xsl:sort select="@name"/>
+          <xsl:with-param name="echo" expand-text="true" tunnel="true">original risk rating</xsl:with-param>
+        </xsl:apply-templates>
+      </td>
+      <td>
+        <xsl:apply-templates select="$residual-risks" mode="inscribe-into-td">
+          <xsl:sort select="@name"/>
+          <xsl:with-param name="echo" expand-text="true" tunnel="true">adjusted risk rating</xsl:with-param>
+        </xsl:apply-templates>
+      </td>
+
+<!-- Risk Adjustment is 'Yes' if there are residual risks given a different value from corresponding initial risks -->
+      <td>
+        <xsl:choose>
+          <xsl:when test="some $r in $residual-risks satisfies not($r = $initial-risks[@name=$r/@name])">Yes</xsl:when>
+          <xsl:otherwise>No</xsl:otherwise>
+        </xsl:choose>
+      </td>
+      
+      <td>
+        <xsl:choose>
+          <xsl:when test="risk-metric/@name='false-positive'">Yes</xsl:when>
+          <xsl:otherwise>No</xsl:otherwise>
+        </xsl:choose>
+      </td>
+      
+      <xsl:call-template name="emit-value-td">
+        <xsl:with-param name="these" select="risk-metric[@name='operational-requirement'][@system=$fedramp-system]"/>
+        <xsl:with-param name="echo" expand-text="true" tunnel="true">operational requirement</xsl:with-param>
+      </xsl:call-template>
+      
+      <xsl:variable name="OR-observation" select="$parent-if-first/observation[prop[@name='conformity'][@ns=$fedramp-ns]='operational-requirement']"/>
+      
+      <xsl:call-template name="emit-value-td">
+        <xsl:with-param name="these" select="$OR-observation"/>
+        <xsl:with-param name="echo" expand-text="true" tunnel="true">deviation rationale</xsl:with-param>
+      </xsl:call-template>
+      
+      <xsl:call-template name="emit-value-td">
+        <xsl:with-param name="these" select="$OR-observation/relevant-evidence"/>
+        <xsl:with-param name="echo" expand-text="true" tunnel="true">supporting documents</xsl:with-param>
+      </xsl:call-template>
+      
+      <td class="tbd">comments</td>
+      <td class="tbd">auto-approve</td>
     </tr>
   </xsl:template>
   
@@ -451,6 +546,11 @@ table.uniform caption {{ text-align: left; color: {$properties?red};
 table.poam th,
 table.poam td {{ border: thin solid black; text-align: left; vertical-align: bottom }}
 
+table.poam th > *:first-child {{ margin-top: 0em }}
+table.poam td > *:first-child {{ margin-top: 0em }}
+table.poam th > *:last-child  {{ margin-bottom: 0em }}
+table.poam td > *:last-child  {{ margin-bottom: 0em }}
+
 table.poam.combined tr.closed td {{ background-color: {$properties?light.blue} }}
 
 .lbl {{ font-family: sans-serif; font-weight: bold; font-size: 80% }}
@@ -494,8 +594,7 @@ td details[open] {{ position: absolute; z-index: 1; min-width: 20em; max-width: 
   color: {$properties?vivid.blue};
   font-size: 90%; margin-top: 1em }}
 
-.val, .rem {{ font-family: monospace; text-decoration: underline }}
-.val {{ font-weight: bold }}
+.rem {{ font-family: monospace; text-decoration: underline }}
 
 span.choice {{ font-weight: 600; color: {$properties?header.color} }}
 

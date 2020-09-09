@@ -832,7 +832,7 @@
             </description>
             <prop name="ipv4-address">10.1.1.1</prop>
             <prop name="ipv6-address">0000:0000:0000:0000</prop>
-            <prop name="virtual">no</prop>
+            <prop name="virtual">maybe</prop>
             <prop name="public">no</prop>
             <prop name="fqdn">dns.name</prop>
             <prop name="uri">uniform.resource.identifier</prop>

@@ -7,6 +7,11 @@
     xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0"
     exclude-result-prefixes="#all">
 
+
+   <xsl:variable name="fedramp-system" as="xs:string">https://fedramp.gov</xsl:variable>
+   
+   <xsl:variable name="fedramp-ns" as="xs:string">https://fedramp.gov/ns/oscal</xsl:variable>
+   
    <!-- import fallback logic first -->
    <xsl:import href="oscal_catalog_html.xsl"/>
    
@@ -71,44 +76,144 @@
       <!-- $these will be a collection of nodes for display, representing a value setting
            set on an inventory item or on a component referenced by an inventory item. -->
       <xsl:param name="these" as="node()*"/>
-      <xsl:param name="echo"/>
-      <xsl:param name="validate" as="element()*" select="()"/>
       <td>
-         <p>
-            <xsl:call-template name="emit-value">
-               <xsl:with-param name="these" select="$these"/>
-               <xsl:with-param name="echo" select="$echo"/>
-               <!-- emit 'missing' warnings when the info item $this includes nothing inside a component. -->
-            </xsl:call-template>
-            <xsl:for-each select="$these">
-               <xsl:apply-templates mode="check-value" select="$validate">
-                  <xsl:with-param name="who" select="."/>
-               </xsl:apply-templates>
-            </xsl:for-each>
-            <!-- emitting nbsp to ensure contents -->
-            <xsl:text>&#xA0;</xsl:text>
-         </p>
-         <!-- if the value is given on an annotation, we want the remarks also -->
-         <xsl:apply-templates mode="value" select="$these/self::annotation/remarks[matches(string(),'\S')]"/>
+         <xsl:apply-templates select="$these" mode="inscribe-into-td"/>
+         <xsl:call-template name="warn-unless-accepted">
+            <xsl:with-param name="these" select="$these"/>
+         </xsl:call-template>
       </td>
    </xsl:template>
+   
+   <xsl:template match="*" mode="inscribe-into-td">
+      <xsl:param name="validate" as="element()*" tunnel="true"/>
+      <p>
+         <xsl:call-template name="emit-value">
+            <xsl:with-param name="these" select="."/>
+         </xsl:call-template>
+         <xsl:apply-templates mode="check-value" select="$validate">
+            <xsl:with-param name="who" select="."/>
+         </xsl:apply-templates>
+         <!-- emitting nbsp to ensure contents -->
+         <xsl:text>&#xA0;</xsl:text>
+      </p>
+   </xsl:template>
+   
+   <xsl:template match="annotation" mode="inscribe-into-td">
+      <xsl:param name="validate" as="element()*" tunnel="true"/>
+      <p>
+         <xsl:call-template name="emit-value">
+            <xsl:with-param name="these" select="."/>
+            <!-- emit 'missing' warnings when the info item $this includes nothing inside a component. -->
+         </xsl:call-template>
+         <xsl:apply-templates mode="check-value" select="$validate">
+            <xsl:with-param name="who" select="."/>
+         </xsl:apply-templates>
+         <!-- emitting nbsp to ensure contents -->
+         <xsl:text>&#xA0;</xsl:text>
+      </p>
+      <!-- if the value is given on an annotation, we want the remarks also -->
+      <xsl:apply-templates mode="value" select="remarks[matches(string(),'\S')]"/>      
+   </xsl:template>
+    
+   <!-- Addressing formatting requirements of POA&M  -->
+   <xsl:template match="task" mode="inscribe-into-td">
+      <xsl:variable name="dates" select="(start,end)[. castable as xs:dateTime]"/>
+      <xsl:variable name="date-format" select="'[Y]-[M01]-[D01]'"/>
+      <p>
+         <xsl:number format="(1) "/>
+         <xsl:value-of select="string-join($dates ! xs:dateTime(.) ! format-dateTime(.,$date-format),' to ')"/>
+         <xsl:for-each select="title">
+            <xsl:text> </xsl:text>
+            <em class="inline-title">
+               <xsl:apply-templates/>
+            </em>
+         </xsl:for-each>
+         <!-- emitting nbsp to ensure contents -->
+         <xsl:text>&#xA0;</xsl:text>
+      </p>
+      <xsl:apply-templates select="description" mode="inscribe-into-td"/>      
+   </xsl:template>
+   
+   <!-- Also addressing formatting requirements of POA&M  -->
+   <xsl:template match="remediation-tracking/tracking-entry" mode="inscribe-into-td">
+      <xsl:variable name="date-format" select="'[Y]-[M01]-[D01]'"/>
+      <p>
+         <xsl:number format="(1) "/>
+         <xsl:value-of select="date-time-stamp ! xs:dateTime(.) ! format-dateTime(.,$date-format)"/>
+         <xsl:for-each select="title">
+            <xsl:text> </xsl:text>
+            <em class="inline-title">
+               <xsl:apply-templates/>
+            </em>
+         </xsl:for-each>
+         <!-- emitting nbsp to ensure contents -->
+         <xsl:text>&#xA0;</xsl:text>
+      </p>
+      <xsl:apply-templates select="description" mode="inscribe-into-td"/>      
+   </xsl:template>
+   
+   <xsl:template match="observation" mode="inscribe-into-td">
+      <xsl:param name="validate" as="element()*" tunnel="true"/>
+      <div class="observation">
+         <xsl:apply-templates select="title,description" mode="#current"/>
+      </div>
+   </xsl:template>
+   
+   <xsl:template priority="2" match="observation/relevant-evidence[(@href castable as xs:anyURI) and not(starts-with(@href,'#'))]" mode="inscribe-into-td">
+      <xsl:param name="validate" as="element()*" tunnel="true"/>
+      <div class="evidence">
+         <a href="{@href}">
+           <xsl:apply-templates mode="#current"/>
+         </a>
+      </div>
+   </xsl:template>
+   
+   <xsl:template match="observation/relevant-evidence" mode="inscribe-into-td">
+      <xsl:param name="validate" as="element()*" tunnel="true"/>
+      <div class="evidence">
+         <xsl:apply-templates mode="#current"/>
+      </div>
+   </xsl:template>
+   
+   <xsl:template match="title" mode="inscribe-into-td">
+      <h5>
+         <xsl:apply-templates/>
+      </h5>
+   </xsl:template>
+   
+   <xsl:template match="description" mode="inscribe-into-td">
+      <!-- switching out of mode -->
+      <xsl:apply-templates/>
+   </xsl:template>
+   
    
    <xsl:template name="emit-value">
       <xsl:param name="these" as="node()*"/>
       <!-- setting $warn-if-missing requires at least one node in $accepting -->
-      <xsl:param name="warn-if-missing" tunnel="true" select="false()"/>
-      <xsl:param name="accepting"       tunnel="true" select="$these"/>
-      <xsl:param name="echo"/>
+      <!--<xsl:param name="warn-if-missing" tunnel="true" select="false()"/>
+      <xsl:param name="accepting"       tunnel="true" select="$these"/>-->
       <xsl:for-each select="$these">
          <xsl:if test="not(position() eq 1)">; </xsl:if>
          <xsl:apply-templates select="." mode="value"/>
       </xsl:for-each>
+      <xsl:call-template name="warn-unless-accepted">
+         <xsl:with-param name="these" select="$these"/>
+      </xsl:call-template>
+   </xsl:template>
+   
+   <xsl:template name="warn-unless-accepted">
+      <xsl:param name="these" as="node()*"/>
+      <xsl:param name="echo" tunnel="true"/>
+      <xsl:param name="warn-if-missing" tunnel="true" select="false()"/>
+      <xsl:param name="accepting"       tunnel="true" select="$these"/>
       <xsl:if test="empty($accepting) and $warn-if-missing" expand-text="true">
-         <span class="ERROR">Missing{ $echo[$trace] ! (': ' || .) }</span>
+         <!-- if tracing is on, we transcribe the echo into the page as "Missing"; otherwise just "Missing" -->
+         <span class="ERROR">Missing{ if ($tracing) then (': ' || $echo) else '' }</span>
          <xsl:call-template name="warn-if-tracing">
             <xsl:with-param name="warning">NO VALUE FOUND for { $echo }</xsl:with-param>
          </xsl:call-template>
       </xsl:if>
+      
    </xsl:template>
    
    <!-- Mode 'value' produces spans marked 'val'
@@ -148,11 +253,31 @@
       </span>
    </xsl:template>
    
-   <xsl:template mode="value" match="prop[@ns='https://fedramp.gov/ns/oscal'][@name='security-eauth-level']">
+   <xsl:template match="task/start | task/end" mode="value">
+      <!-- The format can be provided higher in the template call stack. -->
+      <xsl:param name="date-format" tunnel="yes" as="xs:string">[D] [MNn] [Y]</xsl:param>
+      <span class="val">
+         <xsl:variable name="date-value" select="substring-before(.,'T')"/>
+         <xsl:value-of select="$date-value[. castable as xs:date] => xs:date() => format-date($date-format)"/>
+         <xsl:if test="not($date-value castable as xs:date)">
+            <xsl:value-of select="."/>
+         </xsl:if>
+      </span>
+   </xsl:template>
+   
+   <xsl:template mode="value" match="prop[@ns=$fedramp-ns][@name='security-eauth-level']">
       <xsl:call-template name="lookup-value">
          <xsl:with-param name="who" select="."/>
          <xsl:with-param name="where" select="$fedramp-value-registry/*/f:value-set[@name='eauth-level']"/>
       </xsl:call-template>
+   </xsl:template>
+   
+   <xsl:template mode="value" match="risk-metric[@system=$fedramp-system]" expand-text="true">
+      <xsl:for-each select="@name">
+        <span class="lbl">{ substring(.,1,1) ! upper-case(.) }{ substring(.,2) }</span>
+         <xsl:text>: </xsl:text>
+      </xsl:for-each>
+      <span class="val">{ substring(.,1,1) ! upper-case(.) }{ substring(.,2) }</span>
    </xsl:template>
    
    <xsl:template mode="value" match="system-characteristics/security-sensitivity-level">
@@ -226,7 +351,7 @@
    </xsl:template>
    
    <xsl:template name="js-inline">
-      <script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript">
+      <script type="text/javascript">
          function flashClass(whose,flag) {
          var flashers = document.getElementsByClassName(whose);
          /* for (i=0; i <xsl:text disable-output-escaping="yes">&lt;</xsl:text> flashers.length; i++) { flashers[i].classList.toggle(flag) } */

@@ -4,7 +4,7 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <meta itemprop="nominal_source_uri" content="file:/C:/Users/wap1/Documents/usnistgov/fedramp-automation/resources/specs/FedRAMP-SSP-OSCAL-workup.xml">
       <meta itemprop="production_xslt" content="file:/C:/Users/wap1/Documents/usnistgov/fedramp-automation/resources/modules/oscal_general_html.xsl">
-      <meta itemprop="production_timestamp" content="2020-09-03T17:42:20.125-04:00">
+      <meta itemprop="production_timestamp" content="2020-09-09T13:46:29.804-04:00">
       <title>FedRAMP System Security Plan (SSP) - WORKUP demo</title>
       <style type="text/css">
 @import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
@@ -283,7 +283,7 @@ main > span, section > span { display: block }
                   <tbody>
                      <tr>
                         <td>
-                           <p><span class="val">Information Type Name</span>&nbsp;</p>
+                           <h5>Information Type Name</h5>
                         </td>
                         <td>
                            <p><span class="val">C.2.4.1</span>&nbsp;</p>
@@ -666,10 +666,13 @@ main > span, section > span { display: block }
                      <p><span class="val">i-1</span> (item)</p>
                   </td>
                   <td>
-                     <p><span class="val">10.1.1.1</span>; <span class="val">0000:0000:0000:0000</span>&nbsp;</p>
+                     <p><span class="val">10.1.1.1</span>&nbsp;</p>
+                     <p><span class="val">0000:0000:0000:0000</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">no</span>&nbsp;</p>
+                     <p><span class="val">maybe</span> 
+                        <details class="validation-error">
+                           <summary>ERROR:</summary> value 'maybe ' is not permitted here: should be (one of) yes, no</details>&nbsp;</p>
                   </td>
                   <td>
                      <p><span class="val">no</span>&nbsp;</p>
@@ -715,7 +718,8 @@ main > span, section > span { display: block }
                         </details>
                   </td>
                   <td>
-                     <p><span class="val">software-name</span>; <span class="val">V 0.0.0</span>&nbsp;</p>
+                     <p><span class="val">software-name</span>&nbsp;</p>
+                     <p><span class="val">V 0.0.0</span>&nbsp;</p>
                   </td>
                   <td>
                      <p><span class="val">Vendor Name</span>&nbsp;</p>
@@ -740,16 +744,20 @@ main > span, section > span { display: block }
                            </details>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">Serial #</span>; <span class="val">Asset Tag</span>&nbsp;</p>
+                     <p><span class="val">Serial #</span>&nbsp;</p>
+                     <p><span class="val">Asset Tag</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">VLAN Identifier</span>; <span class="val">Network Identifier</span>&nbsp;</p>
+                     <p><span class="val">VLAN Identifier</span>&nbsp;</p>
+                     <p><span class="val">Network Identifier</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">[SAMPLE]Person Name 7</span>; <span class="val">[SAMPLE] IT Department</span>&nbsp;</p>
+                     <p><span class="val">[SAMPLE]Person Name 7</span>&nbsp;</p>
+                     <p><span class="val">[SAMPLE] IT Department</span>&nbsp;</p>
                   </td>
                   <td>
-                     <p><span class="val">infrastructure</span>; <span class="val">database</span>&nbsp;</p>
+                     <p><span class="val">infrastructure</span>&nbsp;</p>
+                     <p><span class="val">database</span>&nbsp;</p>
                   </td>
                   <td>
                      <p><span class="val">component-id</span>&nbsp;</p>
@@ -761,7 +769,8 @@ main > span, section > span { display: block }
                      <p class="component-notice">1&nbsp;component</p>
                   </td>
                   <td>
-                     <p><span class="val">10.2.2.2</span>; <span class="val">0000:0000:0000:0000</span>&nbsp;</p>
+                     <p><span class="val">10.2.2.2</span>&nbsp;</p>
+                     <p><span class="val">0000:0000:0000:0000</span>&nbsp;</p>
                   </td>
                   <td>
                      <p><span class="val">no</span>&nbsp;</p>
@@ -778,39 +787,23 @@ main > span, section > span { display: block }
                   <td>
                      <p><span class="val">00:00:00:00:00:00</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p><span class="ERROR">Missing: allows-authenticated-scan</span>&nbsp;</p>
-                  </td>
+                  <td><span class="ERROR">Missing</span></td>
                   <td>
                      <p><span class="val">Baseline Configuration Name</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
                   <td>
                      <p><span class="val">Physical location of Asset</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td>
                      <p><span class="val">Patch-Level</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
                   <td>
                      <p>
                         <details class="value-details">
@@ -819,65 +812,36 @@ main > span, section > span { display: block }
                            <p>COMMENTS: If needed, provide additional information about this inventory item.</p>
                            </details>&nbsp;</p>
                   </td>
+                  <td></td>
+                  <td></td>
                   <td>
-                     <p>&nbsp;</p>
+                     <p><span class="val">[SAMPLE]Person Name 1</span>&nbsp;</p>
+                     <p><span class="val">[SAMPLE] IT Department</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="val">[SAMPLE]Person Name 1</span>; <span class="val">[SAMPLE] IT Department</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
                </tr>
                <tr class="inventory component c1-component hiding">
                   <td onclick="javascript:flashClass('c1-component','hiding')">
                      <p><span class="val">c1</span> (component)</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: allows-authenticated-scan</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: OS name and version</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
                   <td>
                      <p><span class="val">os</span>&nbsp;</p>
                   </td>
                   <td>
                      <p><span class="val">Model Number</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
                   <td>
                      <p><span class="val">Version Number</span>&nbsp;</p>
                   </td>
@@ -887,9 +851,7 @@ main > span, section > span { display: block }
                   <td>
                      <p><span class="val">Patch Level</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
                   <td>
                      <p>
                         <details class="value-details">
@@ -898,15 +860,9 @@ main > span, section > span { display: block }
                            <p>COMMENTS: Provide other comments as needed.</p>
                            </details>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: admin/owner</span>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
                   <td>
                      <p><span class="val">infrastructure</span>&nbsp;</p>
                   </td>
@@ -922,128 +878,60 @@ main > span, section > span { display: block }
                   <td>
                      <p><span class="val">10.3.3.3</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: allows-authenticated-scan</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td>
                      <p><span class="val">yes</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: admin/owner</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td></td>
                </tr>
                <tr class="inventory component c-2-component hiding">
                   <td onclick="javascript:flashClass('c-2-component','hiding')">
                      <p><span class="val">c-2</span> (component)</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: allows-authenticated-scan</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td>
                      <p><span class="val">database</span>&nbsp;</p>
                   </td>
                   <td>
                      <p><span class="val">Model Number</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
                   <td>
                      <p><span class="val">Version Number</span>&nbsp;</p>
                   </td>
                   <td>
                      <p><span class="val">Vendor Name</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
                   <td>
                      <p>
                         <details class="value-details">
@@ -1052,21 +940,14 @@ main > span, section > span { display: block }
                            <p>COMMENTS: Provide other comments as needed.</p>
                            </details>&nbsp;</p>
                   </td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
                   <td>
-                     <p>&nbsp;</p>
+                     <p><span class="val">infrastructure</span>&nbsp;</p>
+                     <p><span class="val">database</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: admin/owner</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="val">infrastructure</span>; <span class="val">database</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
                </tr>
                <tr class="inventory line-item">
                   <td onclick="javascript:flashClass('c-3-component','hiding')">
@@ -1076,116 +957,52 @@ main > span, section > span { display: block }
                   <td>
                      <p><span class="val">10.4.4.4</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: allows-authenticated-scan</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td>
                      <p><span class="val">yes</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: admin/owner</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td></td>
                </tr>
                <tr class="inventory component c-3-component hiding">
                   <td onclick="javascript:flashClass('c-3-component','hiding')">
                      <p><span class="val">c-3</span> (component)</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: allows-authenticated-scan</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: OS name and version</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
                   <td>
                      <p><span class="val">os</span>&nbsp;</p>
                   </td>
                   <td>
                      <p><span class="val">Model Number</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
                   <td>
                      <p><span class="val">Version Number</span>&nbsp;</p>
                   </td>
@@ -1195,9 +1012,7 @@ main > span, section > span { display: block }
                   <td>
                      <p><span class="val">Patch Level</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
                   <td>
                      <p>
                         <details class="value-details">
@@ -1206,15 +1021,9 @@ main > span, section > span { display: block }
                            <p>COMMENTS: Provide other comments as needed.</p>
                            </details>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: admin/owner</span>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
                   <td>
                      <p><span class="val">infrastructure</span>&nbsp;</p>
                   </td>
@@ -1230,95 +1039,41 @@ main > span, section > span { display: block }
                   <td>
                      <p><span class="val">10.5.5.5</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td>
                      <p><span class="val">yes</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: admin/owner</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td></td>
                </tr>
                <tr class="inventory component c-4-component hiding">
                   <td onclick="javascript:flashClass('c-4-component','hiding')">
                      <p><span class="val">c-4</span> (component)</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td>
                      <p><span class="val">no</span>&nbsp;</p>
                      <details class="value-details">
@@ -1330,54 +1085,28 @@ main > span, section > span { display: block }
                   <td>
                      <p><span class="val">Baseline Config. Name</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
                   <td>
                      <p><span class="val">appliance</span> 
                         <details class="validation-error">
                            <summary>ERROR:</summary> value 'appliance ' is not permitted here: should be (one of) os, database, web-server,
                            dns-server, email-server, directory-server, pbx, firewall, router, switch, storage-array</details>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: admin/owner</span>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
                   <td>
                      <p><span class="val">web</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
                </tr>
                <tr class="inventory line-item">
                   <td onclick="javascript:flashClass('c-5-component','hiding')">
@@ -1387,39 +1116,17 @@ main > span, section > span { display: block }
                   <td>
                      <p><span class="val">10.6.6.6</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: allows-authenticated-scan</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td>
                      <p><span class="val">no</span>&nbsp;</p>
                      <details class="value-details">
@@ -1428,80 +1135,38 @@ main > span, section > span { display: block }
                         <p>Asset wasn't running at time of scan.</p>
                         </details>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: admin/owner</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td></td>
                </tr>
                <tr class="inventory component c-5-component hiding">
                   <td onclick="javascript:flashClass('c-5-component','hiding')">
                      <p><span class="val">c-5</span> (component)</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: allows-authenticated-scan</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: OS name and version</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
                   <td>
                      <p><span class="val">os</span>&nbsp;</p>
                   </td>
                   <td>
                      <p><span class="val">Model Number</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
                   <td>
                      <p><span class="val">Version Number</span>&nbsp;</p>
                   </td>
@@ -1511,9 +1176,7 @@ main > span, section > span { display: block }
                   <td>
                      <p><span class="val">Patch Level</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
                   <td>
                      <p>
                         <details class="value-details">
@@ -1522,15 +1185,9 @@ main > span, section > span { display: block }
                            <p>COMMENTS: Provide other comments as needed.</p>
                            </details>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: admin/owner</span>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
                   <td>
                      <p><span class="val">infrastructure</span>&nbsp;</p>
                   </td>
@@ -1546,128 +1203,60 @@ main > span, section > span { display: block }
                   <td>
                      <p><span class="val">10.7.7.7</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: allows-authenticated-scan</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td>
                      <p><span class="val">yes</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: admin/owner</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td></td>
                </tr>
                <tr class="inventory component c-6-component hiding">
                   <td onclick="javascript:flashClass('c-6-component','hiding')">
                      <p><span class="val">c-6</span> (component)</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: allows-authenticated-scan</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td>
                      <p><span class="val">database</span>&nbsp;</p>
                   </td>
                   <td>
                      <p><span class="val">Model Number</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
                   <td>
                      <p><span class="val">Version Number</span>&nbsp;</p>
                   </td>
                   <td>
                      <p><span class="val">Vendor Name</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
                   <td>
                      <p>
                         <details class="value-details">
@@ -1676,21 +1265,14 @@ main > span, section > span { display: block }
                            <p>COMMENTS: Provide other comments as needed.</p>
                            </details>&nbsp;</p>
                   </td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
                   <td>
-                     <p>&nbsp;</p>
+                     <p><span class="val">infrastructure</span>&nbsp;</p>
+                     <p><span class="val">database</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: admin/owner</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="val">infrastructure</span>; <span class="val">database</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
                </tr>
                <tr class="inventory line-item">
                   <td onclick="javascript:flashClass('c-7-component','hiding')">
@@ -1700,39 +1282,17 @@ main > span, section > span { display: block }
                   <td>
                      <p><span class="val">10.8.8.8</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: allows-authenticated-scan</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td>
                      <p><span class="val">no</span>&nbsp;</p>
                      <details class="value-details">
@@ -1741,80 +1301,38 @@ main > span, section > span { display: block }
                         <p>Asset wasn't running at time of scan.</p>
                         </details>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: admin/owner</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td></td>
                </tr>
                <tr class="inventory component c-7-component hiding">
                   <td onclick="javascript:flashClass('c-7-component','hiding')">
                      <p><span class="val">c-7</span> (component)</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: allows-authenticated-scan</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: OS name and version</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
                   <td>
                      <p><span class="val">os</span>&nbsp;</p>
                   </td>
                   <td>
                      <p><span class="val">Model Number</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
                   <td>
                      <p><span class="val">Version Number</span>&nbsp;</p>
                   </td>
@@ -1824,9 +1342,7 @@ main > span, section > span { display: block }
                   <td>
                      <p><span class="val">Patch Level</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
                   <td>
                      <p>
                         <details class="value-details">
@@ -1835,15 +1351,9 @@ main > span, section > span { display: block }
                            <p>COMMENTS: Provide other comments as needed.</p>
                            </details>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: admin/owner</span>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
                   <td>
                      <p><span class="val">infrastructure</span>&nbsp;</p>
                   </td>
@@ -1855,149 +1365,61 @@ main > span, section > span { display: block }
                   <td onclick="javascript:flashClass('i-2-component','hiding')">
                      <p><span class="val">i-2</span> (item)</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: allows-authenticated-scan</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td>
                      <p><span class="val">yes</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: admin/owner</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td></td>
                </tr>
                <tr class="inventory line-item">
                   <td onclick="javascript:flashClass('i-3-component','hiding')">
                      <p><span class="val">i-3</span> (item)</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: allows-authenticated-scan</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td>
                      <p><span class="val">yes</span>&nbsp;</p>
                   </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p><span class="ERROR">Missing: admin/owner</span>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
-                  <td>
-                     <p>&nbsp;</p>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="ERROR">Missing</span></td>
+                  <td></td>
+                  <td></td>
                </tr>
             </table>
          </section>

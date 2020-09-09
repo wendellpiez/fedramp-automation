@@ -59,7 +59,7 @@
             <p>This System Security Plan provides an overview of the security requirements for 
                <xsl:call-template name="emit-value">
                   <xsl:with-param name="these" select="$ssp/*/system-characteristics/system-name"/>
-                  <xsl:with-param name="echo">system name</xsl:with-param>
+                  <xsl:with-param name="echo" tunnel="true">system name</xsl:with-param>
                </xsl:call-template>
              and describes the controls in place or planned for implementation to provide a level of security appropriate for the information to be transmitted, processed or stored by the system.  Information security is vital to our critical infrastructure and its effective performance and protection is a key component of our national security program. Proper management of information technology systems is essential to ensure the confidentiality, integrity and availability of the data transmitted, processed or stored by the <f:generate item="system-short-name"/> system.</p>
             <p>The security safeguards implemented for the <f:generate item="system-short-name"/> system meet the policy and control requirements set forth in this System Security Plan. All systems are subject to monitoring consistent with applicable laws, regulations, agency policies, procedures and practices.</p>
@@ -82,11 +82,11 @@
                <xsl:call-template name="emit-value-td">
                   <xsl:with-param name="these"
                      select="$ssp/*/system-characteristics/system-id[@identifier-type = 'https://fedramp.gov']"/>
-                  <xsl:with-param name="echo">FedRAMP identifier</xsl:with-param>
+                  <xsl:with-param name="echo" tunnel="true">FedRAMP identifier</xsl:with-param>
                </xsl:call-template>
                <xsl:call-template name="emit-value-td">
                   <xsl:with-param name="these" select="$ssp/*/system-characteristics/system-name"/>
-                  <xsl:with-param name="echo">system name (full)</xsl:with-param>
+                  <xsl:with-param name="echo" tunnel="true">system name (full)</xsl:with-param>
                </xsl:call-template>
 
                <td>
@@ -100,7 +100,7 @@
    <xsl:template mode="boilerplate" match="f:generate[@item='system-short-name']">
       <xsl:call-template name="emit-value">
          <xsl:with-param name="these" select="$ssp/*/system-characteristics/system-name-short"/>
-         <xsl:with-param name="echo">system name (abbreviated)</xsl:with-param>
+         <xsl:with-param name="echo" tunnel="true">system name (abbreviated)</xsl:with-param>
       </xsl:call-template>
    </xsl:template>
    
@@ -126,7 +126,7 @@
                   <xsl:call-template name="emit-value-td">
                      <xsl:with-param name="these"
                         select="$ssp/*/system-characteristics/security-sensitivity-level"/>
-                     <xsl:with-param name="echo">system sensitivity level</xsl:with-param>
+                     <xsl:with-param name="echo" tunnel="true">system sensitivity level</xsl:with-param>
                   </xsl:call-template>
                
             </tr>
@@ -246,33 +246,33 @@
                   
                      <xsl:call-template name="emit-value-td">
                         <xsl:with-param name="these" select="title"/>
-                        <xsl:with-param name="echo">information type (name)</xsl:with-param>
+                        <xsl:with-param name="echo" tunnel="true">information type (name)</xsl:with-param>
                      </xsl:call-template>
                   
                   
                      <xsl:call-template name="emit-value-td">
                         <xsl:with-param name="these"
                            select="information-type-id[@system = 'https://doi.org/10.6028/NIST.SP.800-60v2r1']"/>
-                        <xsl:with-param name="echo">NIST 800-600 information type
+                        <xsl:with-param name="echo" tunnel="true">NIST 800-600 information type
                            identifier</xsl:with-param>
                      </xsl:call-template>
                   
                   
                      <xsl:call-template name="emit-value-td">
                         <xsl:with-param name="these" select="confidentiality-impact/selected"/>
-                        <xsl:with-param name="echo">confidentiality impact level</xsl:with-param>
+                        <xsl:with-param name="echo" tunnel="true">confidentiality impact level</xsl:with-param>
                      </xsl:call-template>
                   
                   
                      <xsl:call-template name="emit-value-td">
                         <xsl:with-param name="these" select="integrity-impact/selected"/>
-                        <xsl:with-param name="echo">integrity impact level</xsl:with-param>
+                        <xsl:with-param name="echo" tunnel="true">integrity impact level</xsl:with-param>
                      </xsl:call-template>
                   
                   
                      <xsl:call-template name="emit-value-td">
                         <xsl:with-param name="these" select="availability-impact/selected"/>
-                        <xsl:with-param name="echo">availability impact level</xsl:with-param>
+                        <xsl:with-param name="echo" tunnel="true">availability impact level</xsl:with-param>
                      </xsl:call-template>
                   
                </tr>
@@ -308,7 +308,7 @@
                <xsl:call-template name="emit-value-td">
                   <xsl:with-param name="these"
                      select="$ssp/*/system-characteristics/security-impact-level/security-objective-confidentiality"/>
-                  <xsl:with-param name="echo">confidentiality objective</xsl:with-param>
+                  <xsl:with-param name="echo" tunnel="true">confidentiality objective</xsl:with-param>
                </xsl:call-template>
 
             
@@ -319,7 +319,7 @@
                <xsl:call-template name="emit-value-td">
                   <xsl:with-param name="these"
                      select="$ssp/*/system-characteristics/security-impact-level/security-objective-integrity"/>
-                  <xsl:with-param name="echo">integrity objective</xsl:with-param>
+                  <xsl:with-param name="echo" tunnel="true">integrity objective</xsl:with-param>
                </xsl:call-template>
             
          </tr>
@@ -329,7 +329,7 @@
                   <xsl:call-template name="emit-value-td">
                      <xsl:with-param name="these"
                         select="$ssp/*/system-characteristics/security-impact-level/security-objective-availability"/>
-                     <xsl:with-param name="echo">availability objective</xsl:with-param>
+                     <xsl:with-param name="echo" tunnel="true">availability objective</xsl:with-param>
                   </xsl:call-template>
                
             </tr>
@@ -347,7 +347,7 @@
                   <xsl:call-template name="emit-value-td">
                      <xsl:with-param name="these"
                         select="$ssp/*/system-characteristics/security-sensitivity-level"/>
-                     <xsl:with-param name="echo">security sensitivity level</xsl:with-param>
+                     <xsl:with-param name="echo" tunnel="true">security sensitivity level</xsl:with-param>
                   </xsl:call-template>
                
             </tr>
@@ -362,7 +362,7 @@
          <p>Note: NIST SP 800-63-3, Digital Identity Guidelines, does not recognize the four Levels of Assurance model previously used by federal agencies and described in OMB M-04-04, instead requiring agencies to individually select levels corresponding to each function being performed.</p>
          <p>The digital identity level is <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="$ssp/*/system-characteristics/prop[@ns='https://fedramp.gov/ns/oscal'][@name='security-eauth-level']"/>
-            <xsl:with-param name="echo">security sensitivity level</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">security sensitivity level</xsl:with-param>
          </xsl:call-template>.</p>
          <p>Additional digital identity information can be found in <a>Section 15 Attachments Digital Identity Level Selection</a>.</p>
       </section>
@@ -401,7 +401,7 @@
          <p>The Authorizing Official (AO) or Designated Approving Authority (DAA) for this information system is
             <xsl:call-template name="emit-value">
                <xsl:with-param name="these" select="$authorizing-party[1]"/>
-               <xsl:with-param name="echo">authorizing official</xsl:with-param>
+               <xsl:with-param name="echo" tunnel="true">authorizing official</xsl:with-param>
             </xsl:call-template>.</p>
       </section>
    </xsl:template>
@@ -737,7 +737,7 @@
             <p>
                <xsl:call-template name="emit-value">
                   <xsl:with-param name="these" select="$this-asset-id"/>
-                  <xsl:with-param name="echo">unique asset identifier</xsl:with-param>
+                  <xsl:with-param name="echo" tunnel="true">unique asset identifier</xsl:with-param>
                </xsl:call-template>
                <xsl:text> (</xsl:text>
                <xsl:value-of select="replace(local-name(), '^inventory-', '')"/>
@@ -749,19 +749,19 @@
          </td>
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='ipv4-address'] | prop[@name='ipv6-address']"/>
-            <xsl:with-param name="echo">ip address (v4 or v6)</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">ip address (v4 or v6)</xsl:with-param>
          </xsl:call-template>
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='virtual']"/>
-            <xsl:with-param name="echo">virtual</xsl:with-param>
-            <xsl:with-param name="validate" as="element()*">
+            <xsl:with-param name="echo" tunnel="true">virtual</xsl:with-param>
+            <xsl:with-param name="validate" as="element()*" tunnel="true">
                <f:allow-only lookup="virtual"/>
             </xsl:with-param>
          </xsl:call-template>
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='public']"/>
-            <xsl:with-param name="echo">public</xsl:with-param>
-            <xsl:with-param name="validate" as="element()*">
+            <xsl:with-param name="echo" tunnel="true">public</xsl:with-param>
+            <xsl:with-param name="validate" as="element()*" tunnel="true">
                <f:allow-only lookup="public"/>
             </xsl:with-param>
          </xsl:call-template>
@@ -771,24 +771,24 @@
          </xsl:call-template>-->
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='uri']"/>
-            <xsl:with-param name="echo">DNS name / uri</xsl:with-param>            
+            <xsl:with-param name="echo" tunnel="true">DNS name / uri</xsl:with-param>            
          </xsl:call-template>
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='netbios-name']"/>
-            <xsl:with-param name="echo">netbios-name</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">netbios-name</xsl:with-param>
          </xsl:call-template>
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='mac-address']"/>
-            <xsl:with-param name="echo">mac-address</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">mac-address</xsl:with-param>
          </xsl:call-template>
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="annotation[@name='allows-authenticated-scan']"/>
-            <xsl:with-param name="echo">allows-authenticated-scan</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">allows-authenticated-scan</xsl:with-param>
             
             <xsl:with-param name="warn-if-missing" tunnel="yes" select="true()"/>
             <xsl:with-param name="accepting"       tunnel="yes" select="($integrated-item | $components)/annotation[@name='allows-authenticated-scan']"/>
             
-            <xsl:with-param name="validate" as="element()*">
+            <xsl:with-param name="validate" as="element()*" tunnel="true">
                <f:allow-only lookup="allows-authenticated-scan"/>
             </xsl:with-param>
          </xsl:call-template>
@@ -809,7 +809,7 @@
          -->
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="annotation[@name='baseline-configuration-name']"/>
-            <xsl:with-param name="echo">baseline-configuration-name</xsl:with-param>            
+            <xsl:with-param name="echo" tunnel="true">baseline-configuration-name</xsl:with-param>            
          </xsl:call-template>
          
          <xsl:variable name="os-and-version" as="element()*" expand-text="true">
@@ -822,83 +822,83 @@
          
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="$os-and-version"/>
-            <xsl:with-param name="echo">OS name and version</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">OS name and version</xsl:with-param>
             <xsl:with-param name="warn-if-missing" tunnel="yes"  select="prop[@name='asset-type']='os'"/>
             <xsl:with-param name="acceptable" tunnel="yes" select="prop[@name='software-name']"/>
          </xsl:call-template>
          
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="annotation[@name='physical-location']"/>
-            <xsl:with-param name="echo">physical-location</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">physical-location</xsl:with-param>
          </xsl:call-template>
          
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='asset-type']"/>
-            <xsl:with-param name="echo">asset-type</xsl:with-param>
-            <xsl:with-param name="validate" as="element()*">
+            <xsl:with-param name="echo" tunnel="true">asset-type</xsl:with-param>
+            <xsl:with-param name="validate" as="element()*" tunnel="true">
                <f:allow-only lookup="asset-type"/>
             </xsl:with-param>
          </xsl:call-template>
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='model']"/>
-            <xsl:with-param name="echo">model</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">model</xsl:with-param>
          </xsl:call-template>
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="annotation[@name='is-scanned']"/>
-            <xsl:with-param name="echo">"is scanned" status</xsl:with-param>
-            <xsl:with-param name="validate" as="element()*">
+            <xsl:with-param name="echo" tunnel="true">"is scanned" status</xsl:with-param>
+            <xsl:with-param name="validate" as="element()*" tunnel="true">
                <f:allow-only lookup="is-scanned"/>
                <!--<f:allow-only lookup="is-scanned"/>-->
             </xsl:with-param>
          </xsl:call-template>
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='software-name'] | prop[@name='version']"/>
-            <xsl:with-param name="echo">software name and version</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">software name and version</xsl:with-param>
          </xsl:call-template>
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these"
                select="prop[@ns='https://fedramp.gov/ns/oscal'][@name='vendor-name']"/>
-            <xsl:with-param name="echo">vendor name</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">vendor name</xsl:with-param>
          </xsl:call-template>
          
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='patch-level']"/>
-            <xsl:with-param name="echo">patch-level</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">patch-level</xsl:with-param>
          </xsl:call-template>
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="annotation[@name='function']"/>
-            <xsl:with-param name="echo">function</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">function</xsl:with-param>
          </xsl:call-template>
          
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="remarks"/>
-            <xsl:with-param name="echo">comments</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">comments</xsl:with-param>
          </xsl:call-template>
          
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='serial-number'] | prop[@name='asset-tag']"/>
-            <xsl:with-param name="echo">serial-number, asset tag</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">serial-number, asset tag</xsl:with-param>
          </xsl:call-template>
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='vlan-id'] | prop[@name='network-id']"/>
-            <xsl:with-param name="echo">vlan or network ID</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">vlan or network ID</xsl:with-param>
          </xsl:call-template>
          
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="responsible-party[@role-id='asset-owner']/key('party-by-uuid',party-uuid)/party-name,
                responsible-party[@role-id='asset-administrator']/key('party-by-uuid',party-uuid)/party-name"/>
-            <xsl:with-param name="echo">admin/owner</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">admin/owner</xsl:with-param>
             <xsl:with-param name="warn-if-missing" tunnel="yes"  select="true()"/>
          </xsl:call-template>
          
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='scan-type']"/>
-            <xsl:with-param name="echo">scan type</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">scan type</xsl:with-param>
          </xsl:call-template>
          
          <xsl:call-template name="emit-value-td">
             <xsl:with-param name="these" select="prop[@name='validation'][@ns='https://fedramp.gov/ns/oscal']"/>
-            <xsl:with-param name="echo">FIPS 140-2 validation</xsl:with-param>
+            <xsl:with-param name="echo" tunnel="true">FIPS 140-2 validation</xsl:with-param>
          </xsl:call-template>
       </tr>
 <!-- when the context is an inventory-item, there may be components - we want them too. -->
