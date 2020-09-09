@@ -243,7 +243,7 @@
       </details>
    </xsl:template>
    
-   <xsl:template match="last-modified" mode="value">
+   <xsl:template match="last-modified | collected | expires" mode="value">
       <span class="val">
          <xsl:variable name="date-value" select="substring-before(.,'T')"/>
          <xsl:value-of select="$date-value[. castable as xs:date] => xs:date() => format-date('[D] [MNn] [Y]')"/>

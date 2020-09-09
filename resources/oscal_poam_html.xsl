@@ -409,7 +409,12 @@
         <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
       </xsl:call-template>
       
-      <td class="tbd">original detection date (not mapped)</td>
+      <xsl:call-template name="emit-value-td">
+        <xsl:with-param name="these"
+          select="$parent-if-first/collected"/>
+        <xsl:with-param name="echo" expand-text="true" tunnel="true">original detection date</xsl:with-param>
+        <xsl:with-param name="warn-if-missing" tunnel="true" select="exists($parent-if-first)"/>
+      </xsl:call-template>
       
       <xsl:variable name="latest-scheduled-end"
         select="max($planned-remediation/schedule/task/end[. castable as xs:dateTime] ! xs:dateTime(.) )"/>
@@ -431,10 +436,10 @@
         <xsl:with-param name="echo" expand-text="true" tunnel="true">milestone changes</xsl:with-param>
       </xsl:call-template>
           
-      <td class="tbd">status date</td>
-      <td class="tbd">vendor dependency</td>
-      <td class="tbd">last vendor check-in date</td>
-      <td class="tbd">vendor dependent product name</td>
+      <td class="tbd">status date (???)</td>
+      <td class="tbd">vendor dependency (example needed)</td>
+      <td class="tbd">last vendor check-in date (ditto)</td>
+      <td class="tbd">vendor dependent product name (ditto)</td>
       
       <xsl:variable name="initial-risks" select="risk-metric[@system=$fedramp-system][@class='initial']"/>
       <xsl:variable name="residual-risks" select="risk-metric[@system=$fedramp-system][@class='residual']"/>
@@ -473,15 +478,15 @@
         <xsl:with-param name="echo" expand-text="true" tunnel="true">operational requirement</xsl:with-param>
       </xsl:call-template>
       
-      <xsl:variable name="OR-observation" select="$parent-if-first/observation[prop[@name='conformity'][@ns=$fedramp-ns]='operational-requirement']"/>
+      <xsl:variable name="deviations" select="$parent-if-first/observation[prop[@name='conformity'][@ns=$fedramp-ns]=('operational-requirement','risk-adjustment')]"/>
       
       <xsl:call-template name="emit-value-td">
-        <xsl:with-param name="these" select="$OR-observation"/>
+        <xsl:with-param name="these" select="$deviations"/>
         <xsl:with-param name="echo" expand-text="true" tunnel="true">deviation rationale</xsl:with-param>
       </xsl:call-template>
       
       <xsl:call-template name="emit-value-td">
-        <xsl:with-param name="these" select="$OR-observation/relevant-evidence"/>
+        <xsl:with-param name="these" select="$deviations/relevant-evidence"/>
         <xsl:with-param name="echo" expand-text="true" tunnel="true">supporting documents</xsl:with-param>
       </xsl:call-template>
       
