@@ -12,6 +12,17 @@
    
    <xsl:variable name="fedramp-ns" as="xs:string">https://fedramp.gov/ns/oscal</xsl:variable>
    
+   <xsl:variable name="use-date-format" as="xs:string">
+      <xsl:choose>
+         <xsl:when test="$set-date-format='YYYY-MM-DD'">[Y]-[M01]-[D01]</xsl:when>
+         <xsl:when test="$set-date-format='D-Mon-YYYY'">[D]-[MNn,3-3]-[Y]</xsl:when>      <xsl:when test="$set-date-format='Month D, YYYY'">[MNn] [D], [Y]</xsl:when>
+         <xsl:when test="$set-date-format='D Month YYYY'">[D] [MNn] [Y]</xsl:when>
+         <xsl:otherwise>
+            <xsl:value-of select="$set-date-format"/>
+         </xsl:otherwise>
+      </xsl:choose>
+   </xsl:variable>
+   
    <!-- import fallback logic first -->
    <xsl:import href="oscal_catalog_html.xsl"/>
    
@@ -117,8 +128,8 @@
     
    <!-- Addressing formatting requirements of POA&M  -->
    <xsl:template match="task" mode="inscribe-into-td">
+      <xsl:param name="date-format" tunnel="yes" as="xs:string" select="$use-date-format"/>
       <xsl:variable name="dates" select="(start,end)[. castable as xs:dateTime]"/>
-      <xsl:variable name="date-format" select="'[Y]-[M01]-[D01]'"/>
       <p>
          <xsl:number format="(1) "/>
          <xsl:value-of select="string-join($dates ! xs:dateTime(.) ! format-dateTime(.,$date-format),' to ')"/>
@@ -136,7 +147,7 @@
    
    <!-- Also addressing formatting requirements of POA&M  -->
    <xsl:template match="remediation-tracking/tracking-entry" mode="inscribe-into-td">
-      <xsl:variable name="date-format" select="'[Y]-[M01]-[D01]'"/>
+      <xsl:param name="date-format" tunnel="yes" as="xs:string" select="$use-date-format"/>
       <p>
          <xsl:number format="(1) "/>
          <xsl:value-of select="date-time-stamp ! xs:dateTime(.) ! format-dateTime(.,$date-format)"/>
@@ -243,19 +254,9 @@
       </details>
    </xsl:template>
    
-   <xsl:template match="last-modified | collected | expires" mode="value">
-      <span class="val">
-         <xsl:variable name="date-value" select="substring-before(.,'T')"/>
-         <xsl:value-of select="$date-value[. castable as xs:date] => xs:date() => format-date('[D] [MNn] [Y]')"/>
-         <xsl:if test="not($date-value castable as xs:date)">
-            <xsl:value-of select="."/>
-         </xsl:if>
-      </span>
-   </xsl:template>
-   
-   <xsl:template match="task/start | task/end" mode="value">
+   <xsl:template match="last-modified | collected | expires | task/start | task/end" mode="value">
       <!-- The format can be provided higher in the template call stack. -->
-      <xsl:param name="date-format" tunnel="yes" as="xs:string">[D] [MNn] [Y]</xsl:param>
+      <xsl:param name="date-format" tunnel="yes" as="xs:string" select="$use-date-format"/>
       <span class="val">
          <xsl:variable name="date-value" select="substring-before(.,'T')"/>
          <xsl:value-of select="$date-value[. castable as xs:date] => xs:date() => format-date($date-format)"/>

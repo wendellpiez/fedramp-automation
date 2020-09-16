@@ -27,8 +27,8 @@
     <xsl:template match="/">
         <xsl:comment expand-text="true"> Modified by conversion XSLT { current-dateTime() } - UUIDs refreshed </xsl:comment>
         
-        <xsl:apply-templates select="/" mode="add-new-uuids"/>
-        <!--<xsl:apply-templates mode="rewire" select="$with-new-uuids"/>-->
+        <!--<xsl:apply-templates select="/" mode="add-new-uuids"/>-->
+        <xsl:apply-templates mode="rewire" select="$with-new-uuids"/>
     </xsl:template>
     
     <!-- Fresh uuid -->

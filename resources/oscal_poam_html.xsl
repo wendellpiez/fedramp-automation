@@ -12,7 +12,7 @@
     <f:description>From an OSCAL POA&amp;M provided with its SSP, produces a POA&amp;M
       table.</f:description>
     <f:date-of-origin>2020-08-24</f:date-of-origin>
-    <f:date-last-modified>2020-08-26</f:date-last-modified>
+    <f:date-last-modified>2020-09-16</f:date-last-modified>
 
     <f:parameter name="html-page-title" as="xs:string">String for HTML page title (browser header
       bar)</f:parameter>
@@ -22,7 +22,8 @@
       ('yes','true' or 'on')</f:parameter>
     <f:parameter name="paginate" as="xs:string" default="'no'">Paginate using paged.js library for
       PDF production ('yes','true' or 'on')</f:parameter>
-
+    <f:parameter name="set-date-format" as="xs:string" default="'no'">Default date format: set this to 'YYYY-MM-DD' for '2020-04-01';'D-Mon-YYYY' for '1-Apr-2020','Month D, YYYY' for 'April 1, 2020';'D Month YYYY' for '1 April 2020'; or an XPath date-format picture string (see the <a href="https://www.w3.org/TR/xpath-functions-31/#rules-for-datetime-formatting"> XPath 3.1 rules at https://www.w3.org/TR/xpath-functions-31/#rules-for-datetime-formatting</a>)</f:parameter>
+    
     <f:dependency href="modules/oscal_general_html.xsl" role="import">Templates for OSCAL. Imports
       other modules to inherit handling for catalog contents, metadata and fallback
       logic.</f:dependency>
@@ -48,6 +49,9 @@
 
   <xsl:param name="paginate" as="xs:string">no</xsl:param>
 
+  <xsl:param name="set-date-format" as="xs:string">Month D, YYYY</xsl:param> 
+  <!--<xsl:param name="set-date-format" as="xs:string">[D]-[MNn,3-3]-[Y]</xsl:param>--> 
+  
   <xsl:variable name="paginating" select="$paginate = ('yes', 'true', 'on')"/>
 
   <xsl:variable name="fedramp-value-registry" select="document('fedramp_values.xml')"/>
@@ -96,17 +100,25 @@
       </tr>
       <tr>
         <xsl:call-template name="emit-value-td">
-          <xsl:with-param name="these" select="()"/>
+          <xsl:with-param name="these" select="$poam/*/metadata/responsible-party[@role-id='cloud-service-provider']/key('party-by-uuid',party-uuid)/party-name"/>
           <xsl:with-param name="echo" tunnel="true">CSP</xsl:with-param>
           <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
         </xsl:call-template>
         <xsl:call-template name="emit-value-td">
-          <xsl:with-param name="these" select="$ssp/*/system-characteristics/system-name-short"/>
+          <!-- XXX Acquired from back-matter resource via SSP import -->
+          <xsl:with-param name="these" select="
+            ($ssp/*/system-characteristics/system-name-short,
+            $poam/*/back-matter/resource[
+              prop[@name='conformity'][@ns=$fedramp-ns]='no-oscal-ssp' ]/title)[1]"/>
           <xsl:with-param name="echo" tunnel="true">System name</xsl:with-param>
           <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
         </xsl:call-template>
         <xsl:call-template name="emit-value-td">
-          <xsl:with-param name="these" select="()"/>
+          <xsl:with-param name="these" select="(
+            $ssp/*/system-characteristics/security-sensitivity-level,
+            $poam/*/back-matter/resource[prop[@name='conformity'][@ns=$fedramp-ns]='no-oscal-ssp']
+            
+            /prop[@name='security-sensitivity-level'][@ns=$fedramp-ns])[1]"/>
           <xsl:with-param name="echo" tunnel="true">Impact level</xsl:with-param>
           <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
         </xsl:call-template>
@@ -413,6 +425,7 @@
         <xsl:with-param name="these"
           select="$parent-if-first/collected"/>
         <xsl:with-param name="echo" expand-text="true" tunnel="true">original detection date</xsl:with-param>
+        <xsl:with-param name="date-format" tunnel="yes" as="xs:string" select="$use-date-format"/>
         <xsl:with-param name="warn-if-missing" tunnel="true" select="exists($parent-if-first)"/>
       </xsl:call-template>
       
@@ -422,7 +435,8 @@
       <xsl:call-template name="emit-value-td">
         <xsl:with-param name="these" select="$planned-remediation/schedule/task/end[xs:dateTime(.) = $latest-scheduled-end][1]"/>
         <xsl:with-param name="echo" expand-text="true" tunnel="true">scheduled completion date</xsl:with-param>
-        <xsl:with-param name="date-format" tunnel="yes" as="xs:string">[D]/[M]/[Y]</xsl:with-param>
+        <!-- showing local override of global $use-date-format
+        <xsl:with-param name="date-format" tunnel="yes" as="xs:string">[D]/[M]/[Y]</xsl:with-param>  -->
         <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
       </xsl:call-template>
       

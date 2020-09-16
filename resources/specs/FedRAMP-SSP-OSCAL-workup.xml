@@ -514,7 +514,7 @@
          <!--Does the ISA collect, maintain, or share PII information from or about the public? -->
          <prop name="pta-2" class="pta" ns="https://fedramp.gov/ns/oscal">yes</prop>
          <!--Has a Privacy Impact Assessment ever been performed for the ISA? -->
-         <prop name="pta-3" class="pta" ns="https://fedramp.gov/ns/oscal">yes</prop>
+         <prop name="pta-3" class="pta" ns="https://fedramp.gov/ns/oscal">maybe</prop>
          <!--Is there a Privacy Act System of Records Notice (SORN) for this ISA system? (If so, please specify the SORN ID.) -->
          <prop name="pta-4" class="pta" ns="https://fedramp.gov/ns/oscal">no</prop>
          <prop name="sorn-id" class="pta" ns="https://fedramp.gov/ns/oscal">[No SORN ID]</prop>

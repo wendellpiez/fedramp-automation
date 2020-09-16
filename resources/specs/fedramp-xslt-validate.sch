@@ -10,8 +10,8 @@
     <sch:ns prefix="xsl" uri="http://www.w3.org/1999/XSL/Transform"/>
     <sch:ns prefix="f"   uri="https://fedramp.gov/ns/oscal"/>
     
-    <sch:let name="strict"  value="/*/f:transformation/@validation => tokenize() = 'strict'"/>
-    <sch:let name="current" value="/*/f:transformation/@validation => tokenize() = 'current'"/>
+    <sch:let name="strict"  value="/*/f:transformation/@validation ! tokenize(.) = 'strict'"/>
+    <sch:let name="current" value="/*/f:transformation/@validation ! tokenize(.) = 'current'"/>
     
     <sch:pattern>
         <sch:rule context="f:transformation[$strict]">
