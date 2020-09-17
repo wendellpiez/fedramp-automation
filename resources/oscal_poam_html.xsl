@@ -5,30 +5,23 @@
   xmlns:f="https://fedramp.gov/ns/oscal" xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0"
   exclude-result-prefixes="#all">
 
-  <f:transformation validation="strict current">
+  <f:transformation validation="strict current" xml:space="preserve">
+
     <f:title>FedRAMP PLAN OF ACTION AND MILESTONES (POA&amp;M) display (HTML5)
       transformation</f:title>
     <f:short-title>FedRAMP POA&amp;M HTML XSLT (basic page)</f:short-title>
-    <f:description>From an OSCAL POA&amp;M provided with its SSP, produces a POA&amp;M
-      table.</f:description>
+    <f:description>From an OSCAL POA&amp;M provided with its SSP, produces a POA&amp;M table.</f:description>
     <f:date-of-origin>2020-08-24</f:date-of-origin>
-    <f:date-last-modified>2020-09-16</f:date-last-modified>
+    <f:date-last-modified>2020-09-17</f:date-last-modified>
 
-    <f:parameter name="html-page-title" as="xs:string">String for HTML page title (browser header
-      bar)</f:parameter>
-    <f:parameter name="css-link" as="xs:string?">Literal value for link to out of line CSS
-      (superseding inline CSS)</f:parameter>
-    <f:parameter name="trace" as="xs:string" default="'no'">Emit trace messages to STDOUT at runtime
-      ('yes','true' or 'on')</f:parameter>
-    <f:parameter name="paginate" as="xs:string" default="'no'">Paginate using paged.js library for
-      PDF production ('yes','true' or 'on')</f:parameter>
+    <f:parameter name="html-page-title" as="xs:string">String for HTML page title (browser header bar)</f:parameter>
+    <f:parameter name="css-link" as="xs:string?">Literal value for link to out of line CSS (superseding inline CSS)</f:parameter>
+    <f:parameter name="trace" as="xs:string" default="'no'">Emit trace messages to STDOUT at runtime ('yes','true' or 'on')</f:parameter>
+    <f:parameter name="paginate" as="xs:string" default="'no'">Paginate using paged.js library for PDF production ('yes','true' or 'on')</f:parameter>
     <f:parameter name="set-date-format" as="xs:string" default="'no'">Default date format: set this to 'YYYY-MM-DD' for '2020-04-01';'D-Mon-YYYY' for '1-Apr-2020','Month D, YYYY' for 'April 1, 2020';'D Month YYYY' for '1 April 2020'; or an XPath date-format picture string (see the <a href="https://www.w3.org/TR/xpath-functions-31/#rules-for-datetime-formatting"> XPath 3.1 rules at https://www.w3.org/TR/xpath-functions-31/#rules-for-datetime-formatting</a>)</f:parameter>
     
-    <f:dependency href="modules/oscal_general_html.xsl" role="import">Templates for OSCAL. Imports
-      other modules to inherit handling for catalog contents, metadata and fallback
-      logic.</f:dependency>
-    <f:dependency href="poam-oscal-schema.xsd" role="validate-source">When source provided is not a
-      valid OSCAL POA&amp;M (Milestone 3), the table may not populate.</f:dependency>
+    <f:dependency href="modules/oscal_general_html.xsl" role="import">Templates for OSCAL. Imports other modules to inherit handling for catalog contents, metadata and fallback logic.</f:dependency>
+    <f:dependency href="poam-oscal-schema.xsd" role="validate-source">When source provided is not a valid OSCAL POA&amp;M (Milestone 3), the table may not populate.</f:dependency>
 
     <f:result-format>HTML5 + CSS</f:result-format>
   </f:transformation>
@@ -85,13 +78,14 @@
   <xsl:variable name="main-contents" as="element()*">
     <main>
       <h1>FedRAMP Plan of Action and Milestones (POA&amp;M)</h1>
-      <xsl:call-template name="make-poam-head"/>
-      <xsl:call-template name="include-tables"/>
+        <xsl:call-template name="make-page-head"/>
+        <xsl:call-template name="include-tables"/>
     </main>
   </xsl:variable>
   
-  <xsl:template name="make-poam-head">
-    <table class="poam">
+  <xsl:template name="make-page-head">
+    
+    <!-- emulating original POA&M spreadsheet <table class="poam">
       <tr>
         <th>CSP</th>
         <th>System Name</th>
@@ -105,7 +99,7 @@
           <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
         </xsl:call-template>
         <xsl:call-template name="emit-value-td">
-          <!-- XXX Acquired from back-matter resource via SSP import -->
+          <!-\- XXX Acquired from back-matter resource via SSP import -\->
           <xsl:with-param name="these" select="
             ($ssp/*/system-characteristics/system-name-short,
             $poam/*/back-matter/resource[
@@ -128,20 +122,83 @@
           <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
         </xsl:call-template>
       </tr>
+    </table>-->
+    
+    <!-- emulating DR worksheet header (except for date field) -->
+    <table class="poam" id="poam-head">
+      <tr>
+        <th class="centered">CSP Name</th>
+        <th class="centered">System Name</th>
+        <th class="centered">Impact Level</th>
+        <th class="centered">POA&amp;M Date</th>
+        <!-- <th>DR Submission Date</th>-->
+      </tr>
+      <tr>
+        <xsl:call-template name="emit-value-td">
+          <xsl:with-param name="these" select="$poam/*/metadata/responsible-party[@role-id='cloud-service-provider']/key('party-by-uuid',party-uuid)/party-name"/>
+          <xsl:with-param name="echo" tunnel="true">CSP</xsl:with-param>
+          <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
+        </xsl:call-template>
+        <xsl:call-template name="emit-value-td">
+          <!-- XXX Acquired from back-matter resource via SSP import -->
+          <xsl:with-param name="these" select="
+            ($ssp/*/system-characteristics/system-name-short,
+            $poam/*/back-matter/resource[
+            prop[@name='conformity'][@ns=$fedramp-ns]='no-oscal-ssp' ]/title)[1]"/>
+          <xsl:with-param name="echo" tunnel="true">System name</xsl:with-param>
+          <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
+        </xsl:call-template>
+        <xsl:call-template name="emit-value-td">
+          <xsl:with-param name="these" select="(
+            $ssp/*/system-characteristics/security-sensitivity-level,
+            $poam/*/back-matter/resource[prop[@name='conformity'][@ns=$fedramp-ns]='no-oscal-ssp']
+            
+            /prop[@name='security-sensitivity-level'][@ns=$fedramp-ns])[1]"/>
+          <xsl:with-param name="echo" tunnel="true">Impact level</xsl:with-param>
+          <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
+        </xsl:call-template>
+        <xsl:call-template name="emit-value-td">
+          <xsl:with-param name="these" select="$poam/*/metadata/last-modified"/>
+          <xsl:with-param name="echo" tunnel="true">POA&amp;M date</xsl:with-param>
+          <xsl:with-param name="warn-if-missing" tunnel="true" select="true()"/>
+        </xsl:call-template>
+      </tr>
+      <tr>
+        <th colspan="4">CSP Primary POC</th>
+      </tr>
+      <tr>
+        <th class="centered">Name</th>
+        <th class="centered">Title</th>
+        <th class="centered">Phone</th>
+        <th class="centered">Email</th>
+      </tr>
+      <tr>
+        <td class="tbd">POC name (need example)</td>
+        <td class="tbd">POC title</td>
+        <td class="tbd">POC phone</td>
+        <td class="tbd">POC email</td>
+      </tr>
     </table>
   </xsl:template>
-
+  
   <xsl:function name="f:report-item-count" as="xs:string?">
     <xsl:param name="items" as="element(poam-item)*"/>
     <xsl:text expand-text="true">{ count($items) } { if (count($items) ne 1) then 'items' else 'item' }</xsl:text>
   </xsl:function>
   
-  <xsl:template name="include-tables">
+  <xsl:template name="include-tables" expand-text="true">
     <xsl:choose>
       <xsl:when test="$tables = 'combined'">
+        <xsl:variable name="all-items" select="$poam/*/poam-items/poam-item"/>
+        <h2>All items ({ f:report-item-count($all-items) })</h2>
         <xsl:call-template name="make-poam-table">
-          <xsl:with-param name="head">All items</xsl:with-param>
-          <xsl:with-param name="items" select="$poam/*/poam-items/poam-item"/>
+          <xsl:with-param name="table-id">poam-all-items</xsl:with-param>
+          <xsl:with-param name="items" select="$all-items"/>
+          <xsl:with-param name="combined" select="true()" tunnel="true"/>
+        </xsl:call-template>
+        <xsl:call-template name="make-dr-table">
+          <xsl:with-param name="table-id">dr-report-all-items</xsl:with-param>
+          <xsl:with-param name="items" select="$all-items"/>
           <xsl:with-param name="combined" select="true()" tunnel="true"/>
         </xsl:call-template>
       </xsl:when>
@@ -149,20 +206,27 @@
         <xsl:if test="not($tables='closed')">
           <!-- An item is open if it has a risk with status not 'closed' -->
           <xsl:variable name="open-items" select="$poam/*/poam-items/poam-item[risk/risk-status/normalize-space()!='closed']"/>
+          <h2>Open items ({ f:report-item-count($open-items) })</h2>
           <xsl:call-template name="make-poam-table">
-            <xsl:with-param name="head" expand-text="true">Open items ({ f:report-item-count($open-items) })</xsl:with-param>
-            <xsl:with-param name="items"
-              select="$open-items"
-            />
+            <xsl:with-param name="items" select="$open-items"/>
+            <xsl:with-param name="table-id">poam-open-items</xsl:with-param>
+          </xsl:call-template>
+          <xsl:call-template name="make-dr-table">
+            <xsl:with-param name="items" select="$open-items"/>
+            <xsl:with-param name="table-id">dr-report-open-items</xsl:with-param>
           </xsl:call-template>
         </xsl:if>
         <xsl:if test="not($tables = 'open')">
           <!-- An item is closed if it has no risk with status not marked 'closed' -->
           <xsl:variable name="closed-items" select="$poam/*/poam-items/poam-item[not(risk/risk-status/normalize-space() != 'closed')]"/>
+          <h2>Closed items ({ f:report-item-count($closed-items) })</h2>
           <xsl:call-template name="make-poam-table">
-            <xsl:with-param name="head" expand-text="true">Closed items ({ f:report-item-count($closed-items) })</xsl:with-param>
-            <xsl:with-param name="items"
-              select="$closed-items"/>
+            <xsl:with-param name="items" select="$closed-items"/>
+            <xsl:with-param name="table-id">poam-closed-items</xsl:with-param>
+          </xsl:call-template>
+          <xsl:call-template name="make-dr-table">
+            <xsl:with-param name="items" select="$closed-items"/>
+            <xsl:with-param name="table-id">dr-report-closed-items</xsl:with-param>
           </xsl:call-template>
         </xsl:if>
       </xsl:otherwise>
@@ -171,13 +235,10 @@
   
   <xsl:template name="make-poam-table">
     <xsl:param name="items" as="element(poam-item)*"/>
-    <xsl:param name="head"/>
+    <xsl:param name="table-id" required="true"/>
     <xsl:param name="combined" select="false()" tunnel="true"/>
-    <h2>
-      <xsl:sequence select="$head"/>
-    </h2>
     <xsl:if test="exists($items)">
-      <table class="poam{ ' combined'[$combined] }">
+      <table class="poam{ ' combined'[$combined] }" id="{$table-id}">
         <xsl:call-template name="make-poam-table-head"/>
         <xsl:call-template name="make-poam-table-body">
           <xsl:with-param name="items" select="$items"/>
@@ -509,6 +570,56 @@
     </tr>
   </xsl:template>
   
+  
+  <xsl:template name="make-dr-table">
+    <!-- open, closed, combined or both  -->
+    <xsl:param name="items" as="element(poam-item)*"/>
+    <xsl:param name="table-id" required="true"/>
+    <xsl:param name="combined" select="false()" tunnel="true"/>
+    <xsl:if test="exists($items)">
+      <h3>Deviation Requests</h3>
+      <table class="poam dr" id="deviation-request-report">
+        <xsl:call-template name="make-dr-table-head"/>
+        <xsl:call-template name="make-dr-table-body"/>
+      </table>
+    </xsl:if>
+      
+  </xsl:template>
+  
+  <xsl:template name="make-dr-table-head">
+    <thead>
+      <tr class="guided">
+        <td>&#xA0;</td>
+        <th class="centered" colspan="10">Vulnerability Information<!-- (Include only one POA&amp;M item per row.)--></th>
+        <th class="centered" colspan="4">Deviation Request Summary</th>
+        <th class="centered" colspan="2">Additional Information: False Positive<!--<br class="br"/>(Complete this section only if you are submitting a false positive DR.)--></th>
+        <th class="centered" colspan="3">Additional Information: Operational Requirement
+          <!--<br class="br"/>(Complete this section if you are submitting an operational requirement or a risk reduced operational requirement DR.)"--></th>
+        <th class="centered" colspan="17">Additional Information: Risk Reduction
+        <!--<br class="br"/>(Complete this section if you are submitting a risk reduction or a risk reduced operational requirement DR.)
+        <br class="br"/>Complete all fields below. Include references to the System Security Plan as applicable
+        <br class="br"/>To complete the fields in this section, use the CVSS Environmental Score Metrics definitions found here:
+        <a href="https://nvd.nist.gov/vuln-metrics">https://nvd.nist.gov/vuln-metrics</a>--></th>
+        <th class="centered">Additional Information</th>
+        <th class="centered">JAB/PMO Use Only</th>														
+        
+      </tr>
+      <tr class="guided centered">
+        
+      </tr>
+      
+      <tr class="guidance">
+
+      </tr>
+    </thead>
+  </xsl:template>
+  
+  <xsl:template name="make-dr-table-body">
+      <tbody>
+        <xsl:apply-templates select="()" mode="dr-table-row"/>
+      </tbody>
+  </xsl:template>
+    
   <xsl:template name="css-inline" expand-text="true">
     <xsl:variable name="properties" expand-text="true" as="map(*)"
       select="
@@ -564,6 +675,9 @@ table.uniform caption {{ text-align: left; color: {$properties?red};
 
 table.poam th,
 table.poam td {{ border: thin solid black; text-align: left; vertical-align: bottom }}
+
+table.poam th.centered,
+table.poam td.centered {{ text-align: center }}
 
 table.poam th > *:first-child {{ margin-top: 0em }}
 table.poam td > *:first-child {{ margin-top: 0em }}

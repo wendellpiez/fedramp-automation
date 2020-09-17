@@ -47,8 +47,8 @@
             <meta itemprop="nominal_source_uri"   content="{ document-uri(.) }"/>
             <meta itemprop="production_xslt"      content="{ document-uri(document('')) }"/>
             <meta itemprop="production_timestamp" content="{ current-dateTime() }"/>
-            <!-- Use the page title given if available, or the first element title -->
-            <title>{ if (matches($html-page-title,'\S')) then $html-page-title else /descendant::title[1]/normalize-space(.) }</title>
+            <!-- Use the page title given if available, or the title available in metadata -->
+            <title>{ if (matches($html-page-title,'\S')) then $html-page-title else /*/metadata/title/normalize-space(.) }</title>
             
             <xsl:call-template name="css-link"   use-when="matches($css-link,'\w')"/>
             <xsl:call-template name="css-inline" use-when="not(matches($css-link,'\w'))"/>
