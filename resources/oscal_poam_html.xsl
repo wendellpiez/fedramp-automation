@@ -12,7 +12,7 @@
     <f:short-title>FedRAMP POA&amp;M HTML XSLT (basic page)</f:short-title>
     <f:description>From an OSCAL POA&amp;M provided with its SSP, produces a POA&amp;M table.</f:description>
     <f:date-of-origin>2020-08-24</f:date-of-origin>
-    <f:date-last-modified>2020-09-17</f:date-last-modified>
+    <f:date-last-modified>2020-09-22</f:date-last-modified>
 
     <f:parameter name="html-page-title" as="xs:string">String for HTML page title (browser header bar)</f:parameter>
     <f:parameter name="css-link" as="xs:string?">Literal value for link to out of line CSS (superseding inline CSS)</f:parameter>
@@ -580,7 +580,9 @@
       <h3>Deviation Requests</h3>
       <table class="poam dr" id="deviation-request-report">
         <xsl:call-template name="make-dr-table-head"/>
-        <xsl:call-template name="make-dr-table-body"/>
+        <xsl:call-template name="make-dr-table-body">
+          <xsl:with-param name="items" select="$items"/>
+        </xsl:call-template>
       </table>
     </xsl:if>
       
@@ -590,24 +592,130 @@
     <thead>
       <tr class="guided">
         <td>&#xA0;</td>
-        <th class="centered" colspan="10">Vulnerability Information<!-- (Include only one POA&amp;M item per row.)--></th>
+        <th class="centered dr-grey" colspan="10">Vulnerability Information<!-- (Include only one POA&amp;M item per row.)--></th>
         <th class="centered" colspan="4">Deviation Request Summary</th>
-        <th class="centered" colspan="2">Additional Information: False Positive<!--<br class="br"/>(Complete this section only if you are submitting a false positive DR.)--></th>
+        <th class="centered dr-grey" colspan="2">Additional Information: False Positive<!--<br class="br"/>(Complete this section only if you are submitting a false positive DR.)--></th>
         <th class="centered" colspan="3">Additional Information: Operational Requirement
           <!--<br class="br"/>(Complete this section if you are submitting an operational requirement or a risk reduced operational requirement DR.)"--></th>
-        <th class="centered" colspan="17">Additional Information: Risk Reduction
+        <th class="centered dr-grey" colspan="17">Additional Information: Risk Reduction
         <!--<br class="br"/>(Complete this section if you are submitting a risk reduction or a risk reduced operational requirement DR.)
         <br class="br"/>Complete all fields below. Include references to the System Security Plan as applicable
         <br class="br"/>To complete the fields in this section, use the CVSS Environmental Score Metrics definitions found here:
         <a href="https://nvd.nist.gov/vuln-metrics">https://nvd.nist.gov/vuln-metrics</a>--></th>
         <th class="centered">Additional Information</th>
-        <th class="centered">JAB/PMO Use Only</th>														
-        
-      </tr>
-      <tr class="guided centered">
+        <th class="centered" colspan="15">JAB/PMO Use Only</th>														
         
       </tr>
       
+      <tr class="guided">
+        <td>DR Number</td>
+        <td class="dr-grey">POA&amp;M ID</td>
+        <td class="dr-grey">Scan ID</td>
+        <td class="dr-grey">Assets Impacted</td>
+        <td class="dr-grey">Vulnerability Name</td>
+        <td class="dr-grey">Vulnerability Source</td>
+        <td class="dr-grey">Initial Risk Rating</td>
+        <td class="dr-grey">Original Detection Date</td>
+        <td class="dr-grey">Tool-Provided Vulnerability Description</td>
+        <td class="dr-grey">Tool-Provided Recommended Action</td>
+        <td class="dr-grey">CSP-Provided Vulnerability Information (Optional)</td>
+        <td>Type of DR</td>
+        <td>Requested Risk Rating/Impact </td>
+        <td>DR Submission Date</td>
+        <td>DR Rationale</td>
+        <td class="dr-grey">Evidence Description</td>
+        <td class="dr-grey">List of Evidence Attachments</td>
+        <td>Operational Impact&#10;Statement</td>
+        <td>Justification</td>
+        <td>List of Operational&#10;Requirement Attachments</td>
+        <td class="dr-grey">Attack Vector</td>
+        <td class="dr-grey">Attack Vector Explanation</td>
+        <td class="dr-grey">Attack Complexity</td>
+        <td class="dr-grey">Attack Complexity Explanation</td>
+        <td class="dr-grey">Privileges Required</td>
+        <td class="dr-grey">Privileges Required Explanation</td>
+        <td class="dr-grey">User Interaction</td>
+        <td class="dr-grey">User Interaction Explanation</td>
+        <td class="dr-grey">Impact Metrics: Confidentiality</td>
+        <td class="dr-grey">Impact Metrics: Confidentiality Explanation</td>
+        <td class="dr-grey">Impact Metrics: Integrity</td>
+        <td class="dr-grey">Impact Metrics: Integrity Explanation</td>
+        <td class="dr-grey">Impact Metrics: Availability</td>
+        <td class="dr-grey">Impact Metrics: Availability Explanation</td>
+        <td class="dr-grey">Remediation Level</td>
+        <td class="dr-grey">Remediation Level Explanation</td>
+        <td class="dr-grey">List of Risk Reduction</td>
+        <td>Deviation Status</td>
+        <td>Date Submitted to JAB TRs</td>
+        <td class="dr-light-grey">GSA Review &#10;Status</td>
+        <td class="dr-light-grey">GSA  Reviewer&#10;Name</td>
+        <td class="dr-light-grey">GSA  Status Date</td>
+        <td class="dr-light-grey">GSA Comments</td>
+        <td class="dr-steel">DOD Review &#10;Status</td>
+        <td class="dr-steel">DOD Reviewer&#10;Name</td>
+        <td class="dr-steel">DOD  Status Date</td>
+        <td class="dr-steel">DOD Comments</td>
+        <td class="dr-light-olive">DHS Review &#10;Status</td>
+        <td class="dr-light-olive">DHS Reviewer&#10;Name</td>
+        <td class="dr-light-olive">DHS  Status Date</td>
+        <td class="dr-light-olive">DHS Comments</td>
+        <td class="dr-dark-grey">CSP Comments</td>
+      </tr>
+      <!--<tr class="guidance"> // dropped pending determination on UI
+        <td>Text Field</td>
+        <td class="dr-grey">Text Field</td>
+        <td class="dr-grey">Text Field</td>
+        <td class="dr-grey">Text Field</td>
+        <td class="dr-grey">Text Field</td>
+        <td class="dr-grey">Text Field</td>
+        <td class="dr-grey">Please choose from the drop down menu below.</td>
+        <td class="dr-grey">Date</td>
+        <td class="dr-grey">Text Field </td>
+        <td class="dr-grey">Text Field </td>
+        <td class="dr-grey">Text Field </td>
+        <td>Please choose from the drop down menu below.</td>
+        <td>Please choose from the drop down menu below.</td>
+        <td>Date</td>
+        <td>Text Field </td>
+        <td class="dr-grey">Text Field </td>
+        <td class="dr-grey">Attach evidence, such as<!-\- lf -\-> screen shots. List evidence<!-\- lf -\-> attachments here.</td>
+        <td>Explain the limitations that<!-\- lf -\-> prevent the vulnerability<!-\- lf -\-> from being fixed. Include<!-\- lf -\-> negative operational<!-\- lf -\-> impacts of remediation.</td>
+        <td>For a Moderate<!-\- lf -\-> vulnerability that is not<!-\- lf -\-> being mitigated to Low,<!-\- lf -\-> explain why the<!-\- lf -\-> authorizing official should<!-\- lf -\-> accept the risk without<!-\- lf -\-> mitigating it.</td>
+        <td>Attach evidence, such as<!-\- lf -\-> screen shots. List evidence<!-\- lf -\-> attachments here.</td>
+        <td class="dr-grey">Please choose from the drop down menu below.</td>
+        <td class="dr-grey">Describe whether local access, physical access, or network access is required for vulnerability exploitation. Describe how, based on the CSP’s implemented security model, the necessary access is reduced or not available.</td>
+        <td class="dr-grey">Please choose from the drop down menu below.</td>
+        <td class="dr-grey">Low attack complexity means that an attacker can exploit the vulnerability at any time, at all times. High attack complexity means that a successful attack depends on conditions outside of the attacker’s control.</td>
+        <td class="dr-grey">Please choose from the drop down menu below.</td>
+        <td class="dr-grey">No privileges required can be exploited by an unauthorized user. Low privileges require a normal authenticated user to exploit the vulnerability. High privileges require an Administrator or System level authenticated user to exploit the vulnerability. Describe any security controls that prevent or reduce the likelihood of a vulnerability exploitation attempt having the required privileges on the system.</td>
+        <td class="dr-grey">Please choose from the drop down menu below.</td>
+        <td class="dr-grey">Describe any security controls<!-\- lf -\-> that prevent or reduce the<!-\- lf -\-> likelihood of necessary user<!-\- lf -\-> interaction on the system.</td>
+        <td class="dr-grey">Please choose from the drop down menu below.</td>
+        <td class="dr-grey">High if all information is disclosed to an attacker or some critical information is disclosed. Low if some information can be obtained and/or the attacker does not have control over the kind or degree. None if no information is disclosed.</td>
+        <td class="dr-grey">Please choose from the drop down menu below.</td>
+        <td class="dr-grey">High if an attacker can modify information at any time or only some critical information can be modified. Low if some information can be modified and the attacker does not have control over the kind or degree. None if there is no integrity loss.</td>
+        <td class="dr-grey">Please choose from the drop down menu below.</td>
+        <td class="dr-grey">High if an attacker can cause a resource to become completely unavailable or if the resource is a critical component and can become partially available. Low if an attacker can cause reduced performance or interrupt resources availability or response. None if there is no availability impact.</td>
+        <td class="dr-grey">Please choose from the drop down menu below.</td>
+        <td class="dr-grey">“Official fix” means that a complete vendor solution is available; either the vendor has issued an official patch, or an upgrade is available. “Temporary fix” means that there is an official but temporary fix available. This includes instances where the vendor issues a temporary hotfix, tool, or workaround. “Workaround” means that there is an unofficial, nonvendor solution available. In some cases, users of the affected technology will create a patch of their own or provide steps to work around or otherwise mitigate the vulnerability. “Unavailable” means that there is either no solution available or it is impossible to apply. Describe any remediation that has been taken to address the vulnerability on the affected system(s).</td>
+        <td class="dr-grey">Attach evidence, such as<!-\- lf -\-> screen shots. List evidence<!-\- lf -\-> attachments here.</td>
+        <td>Please use the space to provide any additional information you believe is relevant to this deviation request.</td>
+        <td>Please choose from the drop down menu below.</td>
+        <td>Date</td>
+        <td class="dr-light-grey">Please choose from the drop down menu below.</td>
+        <td class="dr-light-grey">Text Field </td>
+        <td class="dr-light-grey">Date</td>
+        <td class="dr-light-grey">Text Field </td>
+        <td class="dr-steel">Please choose from the drop down menu below.</td>
+        <td class="dr-steel">Text Field </td>
+        <td class="dr-steel">Date</td>
+        <td class="dr-steel">Text Field </td>
+        <td class="dr-light-olive">Please choose from the drop down menu below.</td>
+        <td class="dr-light-olive">Text Field </td>
+        <td class="dr-light-olive">Date</td>
+        <td class="dr-light-olive">Text Field </td>
+        <td class="dr-dark-grey">Text Field </td>
+      </tr>-->
       <tr class="guidance">
 
       </tr>
@@ -615,11 +723,89 @@
   </xsl:template>
   
   <xsl:template name="make-dr-table-body">
-      <tbody>
-        <xsl:apply-templates select="()" mode="dr-table-row"/>
-      </tbody>
+    <xsl:param name="items" as="element(poam-item)*" required="true"/>
+    <tbody>
+      <xsl:apply-templates select="$items/risk" mode="dr-table-row"/>
+    </tbody>
   </xsl:template>
     
+    <xsl:template mode="dr-table-row" match="risk">
+      <xsl:variable name="poam-item" select="parent::*"/>
+      <xsl:variable name="parent-if-first" select=".[empty(preceding-sibling::risk)]/parent::*"/>
+      <tr class="guided">
+        <td class="tbd">DR Number</td>
+        <td class="dr-grey tbd">POA&amp;M ID</td>
+        <td class="dr-grey tbd">Scan ID</td>
+        <td class="dr-grey tbd">Assets Impacted</td>
+        <xsl:call-template name="emit-value-td">
+          <xsl:with-param name="these"
+            select="title"/>
+          <xsl:with-param name="class">dr-grey</xsl:with-param>
+          <xsl:with-param name="echo" tunnel="true">Vulnerability Name (weakness name)</xsl:with-param>
+        </xsl:call-template>
+        <td class="dr-grey tbd">Vulnerability Source</td>
+        <td class="dr-grey tbd">Initial Risk Rating</td>
+        <td class="dr-grey tbd">Original Detection Date</td>
+        <xsl:call-template name="emit-value-td">
+          <xsl:with-param name="these"
+            select="description"/>
+          <xsl:with-param name="class">dr-grey</xsl:with-param>
+          <xsl:with-param name="echo" tunnel="true">Tool-Provided Vulnerability Description</xsl:with-param>
+        </xsl:call-template>
+        <xsl:call-template name="emit-value-td">
+          <xsl:with-param name="these"
+            select="remediation[@type='recommendation']"/>
+          <xsl:with-param name="class">dr-grey</xsl:with-param>
+          <xsl:with-param name="echo" tunnel="true">Tool-Provided Recommended Action</xsl:with-param>
+        </xsl:call-template>
+        
+        <td class="tbd">CSP-Provided Vulnerability Information (Optional)</td>
+        
+        
+        <td>Type of DR</td>
+        <td>Requested Risk Rating/Impact </td>
+        <td>DR Submission Date</td>
+        <td>DR Rationale</td>
+        <td class="dr-grey">Evidence Description</td>
+        <td class="dr-grey">List of Evidence Attachments</td>
+        <td>Operational Impact&#10;Statement</td>
+        <td>Justification</td>
+        <td>List of Operational&#10;Requirement Attachments</td>
+        <td class="dr-grey">Attack Vector</td>
+        <td class="dr-grey">Attack Vector Explanation</td>
+        <td class="dr-grey">Attack Complexity</td>
+        <td class="dr-grey">Attack Complexity Explanation</td>
+        <td class="dr-grey">Privileges Required</td>
+        <td class="dr-grey">Privileges Required Explanation</td>
+        <td class="dr-grey">User Interaction</td>
+        <td class="dr-grey">User Interaction Explanation</td>
+        <td class="dr-grey">Impact Metrics: Confidentiality</td>
+        <td class="dr-grey">Impact Metrics: Confidentiality Explanation</td>
+        <td class="dr-grey">Impact Metrics: Integrity</td>
+        <td class="dr-grey">Impact Metrics: Integrity Explanation</td>
+        <td class="dr-grey">Impact Metrics: Availability</td>
+        <td class="dr-grey">Impact Metrics: Availability Explanation</td>
+        <td class="dr-grey">Remediation Level</td>
+        <td class="dr-grey">Remediation Level Explanation</td>
+        <td class="dr-grey">List of Risk Reduction</td>
+        <td>Deviation Status</td>
+        <td>Date Submitted to JAB TRs</td>
+        <td class="dr-light-grey">GSA Review &#10;Status</td>
+        <td class="dr-light-grey">GSA  Reviewer&#10;Name</td>
+        <td class="dr-light-grey">GSA  Status Date</td>
+        <td class="dr-light-grey">GSA Comments</td>
+        <td class="dr-steel">DOD Review &#10;Status</td>
+        <td class="dr-steel">DOD Reviewer&#10;Name</td>
+        <td class="dr-steel">DOD  Status Date</td>
+        <td class="dr-steel">DOD Comments</td>
+        <td class="dr-light-olive">DHS Review &#10;Status</td>
+        <td class="dr-light-olive">DHS Reviewer&#10;Name</td>
+        <td class="dr-light-olive">DHS  Status Date</td>
+        <td class="dr-light-olive">DHS Comments</td>
+        <td class="dr-dark-grey">CSP Comments</td>
+      </tr>
+      
+    </xsl:template>
   <xsl:template name="css-inline" expand-text="true">
     <xsl:variable name="properties" expand-text="true" as="map(*)"
       select="
@@ -635,15 +821,27 @@
           'vivid.blue': '#1a4480',
           'deep.blue': '#162e51',
           'bg.color': '#f2f2f2',
-          'att13.pale': '#daeef3',
-          'att13.steel': '#b8cce4',
-          'att13.aqua': '#92cddc',
-          'att13.olive': '#c4d79b'
+          'attachment13.pale': '#daeef3',
+          'attachment13.steel': '#b8cce4',
+          'attachment13.aqua': '#92cddc',
+          'attachment13.olive': '#c4d79b',
+          'dr.form.grey': '#bfbfbf',
+          'dr.form.light.grey': '#d9d9d9',
+          'dr.form.steel': '#b8cce4',
+          'dr.form.light.olive': '#d8e4bc',
+          'dr.form.dark.grey': '#a6a6a6'
+          
         }"/>
     <style type="text/css">
          <xsl:text xml:space="preserve" disable-output-escaping="true">
 @import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
 @import url(http://fonts.googleapis.com/css?family=Muli:400,700);
+
+.dr-grey {{ background-color: {$properties?dr.form.grey} }}
+.dr-light-grey {{ background-color: {$properties?dr.form.light.grey} }}
+.dr-steel {{ background-color: {$properties?dr.form.steel} }} /* happens to be the same as Attachment 13 */
+.dr-light-olive {{ background-color: {$properties?dr.form.light.olive} }}
+.dr-dark-grey {{ background-color: {$properties?dr.form.dark.grey} }}
 
 html, body {{ background-color: {$properties?white};
               color: { $properties?body.color };

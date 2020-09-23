@@ -87,7 +87,11 @@
       <!-- $these will be a collection of nodes for display, representing a value setting
            set on an inventory item or on a component referenced by an inventory item. -->
       <xsl:param name="these" as="node()*"/>
+      <xsl:param name="class"/>
       <td>
+         <xsl:for-each select="$class">
+            <xsl:attribute name="class" select="."/>
+         </xsl:for-each>
          <xsl:apply-templates select="$these" mode="inscribe-into-td"/>
          <xsl:call-template name="warn-unless-accepted">
             <xsl:with-param name="these" select="$these"/>
@@ -163,7 +167,7 @@
       <xsl:apply-templates select="description" mode="inscribe-into-td"/>      
    </xsl:template>
    
-   <xsl:template match="observation" mode="inscribe-into-td">
+   <xsl:template match="observation | remediation" mode="inscribe-into-td">
       <xsl:param name="validate" as="element()*" tunnel="true"/>
       <div class="observation">
          <xsl:apply-templates select="title,description" mode="#current"/>
