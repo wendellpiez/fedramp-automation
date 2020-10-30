@@ -89,7 +89,7 @@
       <xsl:param name="these" as="node()*"/>
       <xsl:param name="class"/>
       <td>
-         <xsl:for-each select="$class">
+         <xsl:for-each select="$class[matches(.,'\S')]">
             <xsl:attribute name="class" select="."/>
          </xsl:for-each>
          <xsl:apply-templates select="$these" mode="inscribe-into-td"/>

@@ -11,7 +11,7 @@
     <f:description>From OSCAL SSP provided with its baselines, produces a self-contained page
       display with look/feel emulating the published FedRAMP SSP template.</f:description>
     <f:date-of-origin>2020-08-05</f:date-of-origin>
-    <f:date-last-modified>2020-09-22</f:date-last-modified>
+    <f:date-last-modified>2020-10-13</f:date-last-modified>
 
     <f:parameter name="html-page-title" as="xs:string">String for HTML page title (browser header
       bar)</f:parameter>
