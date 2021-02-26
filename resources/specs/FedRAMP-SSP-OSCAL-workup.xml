@@ -1148,6 +1148,7 @@
          </statement>
       </implemented-requirement>
       <implemented-requirement control-id="at-1" uuid="333d7053-e55f-4ddc-8b08-dd2549ed9b29">
+         <prop name="implementation-status">implemented</prop>
          <prop name="planned-completion-date" ns="https://fedramp.gov/ns/oscal">2020-11-27Z</prop>
          <annotation name="implementation-status"
                      ns="https://fedramp.gov/ns/oscal"
